@@ -8,16 +8,20 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>在Ubuntu中安装MySQL | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在终端中敲入如下命令1$ sudo apt-get install mysql-server">
+  <meta name="description" content="在终端中敲入如下命令1$ sudo apt-get install mysql-server  根据提示点Y即可 1$ sudo apt-get install mysql-client  接下来修改MySQL配置，用vim或是gedit均可，由于我比较懒，所以用gedit 1$ sudo gedit &#x2F;etc&#x2F;mysql&#x2F;mysql.conf.d&#x2F;mysqld.cnf  这样后就进入到MySQL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在Ubuntu中安装MySQL">
 <meta property="og:url" content="http://yoursite.com/2020/03/19/%E5%9C%A8Ubuntu%E4%B8%AD%E5%AE%89%E8%A3%85MySQL/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="在终端中敲入如下命令1$ sudo apt-get install mysql-server">
+<meta property="og:description" content="在终端中敲入如下命令1$ sudo apt-get install mysql-server  根据提示点Y即可 1$ sudo apt-get install mysql-client  接下来修改MySQL配置，用vim或是gedit均可，由于我比较懒，所以用gedit 1$ sudo gedit &#x2F;etc&#x2F;mysql&#x2F;mysql.conf.d&#x2F;mysqld.cnf  这样后就进入到MySQL">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://yoursite.com/2020/03/19/%E5%9C%A8Ubuntu%E4%B8%AD%E5%AE%89%E8%A3%85MySQL/001.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/19/%E5%9C%A8Ubuntu%E4%B8%AD%E5%AE%89%E8%A3%85MySQL/002.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/19/%E5%9C%A8Ubuntu%E4%B8%AD%E5%AE%89%E8%A3%85MySQL/003.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/19/%E5%9C%A8Ubuntu%E4%B8%AD%E5%AE%89%E8%A3%85MySQL/004.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/19/%E5%9C%A8Ubuntu%E4%B8%AD%E5%AE%89%E8%A3%85MySQL/005.png">
 <meta property="article:published_time" content="2020-03-19T05:19:37.000Z">
-<meta property="article:modified_time" content="2020-03-19T05:23:00.289Z">
+<meta property="article:modified_time" content="2020-03-19T05:47:17.296Z">
 <meta property="article:author" content="Sher6J">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://yoursite.com/2020/03/19/%E5%9C%A8Ubuntu%E4%B8%AD%E5%AE%89%E8%A3%85MySQL/001.png">
@@ -178,6 +182,22 @@
       
         <h3 id="在终端中敲入如下命令"><a href="#在终端中敲入如下命令" class="headerlink" title="在终端中敲入如下命令"></a>在终端中敲入如下命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install mysql-server</span><br></pre></td></tr></table></figure>
 <p><img src="/2020/03/19/%E5%9C%A8Ubuntu%E4%B8%AD%E5%AE%89%E8%A3%85MySQL/001.png" alt></p>
+<p>根据提示点Y即可</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install mysql-client</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/03/19/%E5%9C%A8Ubuntu%E4%B8%AD%E5%AE%89%E8%A3%85MySQL/002.png" alt></p>
+<p>接下来修改MySQL配置，用vim或是gedit均可，由于我比较懒，所以用gedit</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo gedit /etc/mysql/mysql.conf.d/mysqld.cnf</span><br></pre></td></tr></table></figure>
+
+<p>这样后就进入到MySQL配置文件：<br>为了可以远程访问，注释掉 bind-address = 127.0.0.1 这行</p>
+<p><img src="/2020/03/19/%E5%9C%A8Ubuntu%E4%B8%AD%E5%AE%89%E8%A3%85MySQL/003.png" alt></p>
+<p>在配置文件中的[mysqld]这一块中加入 skip-grant-tables，目的是为了跳过密码直接登录，因为我希望登录都输入秘密，所以我将这行注释到，同时为了防止中文乱码，要加入 character-set-server=utf8，配置后我的[mysqld]这一块如下：<br><img src="/2020/03/19/%E5%9C%A8Ubuntu%E4%B8%AD%E5%AE%89%E8%A3%85MySQL/004.png" alt></p>
+<p>比较重要的是port参数，众所周知MySQL的端口为3306，不建议修改。</p>
+<p>输入 sudo service mysql start 启动MySQL</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo service mysql start</span><br></pre></td></tr></table></figure>
+<p>输入 mysql -uroot -p 后填入root密码即可进入数据库</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mysql -uroot -p</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/03/19/%E5%9C%A8Ubuntu%E4%B8%AD%E5%AE%89%E8%A3%85MySQL/005.png" alt></p>
+<p>以上就是在Ubuntu中安装MySQL数据库的详细过程，最重要的是MySQL配置文件的配置，配置好MySQL服务后即可用其他图形化界面来操作数据库，推荐使用phpMyAdmin。</p>
 
       
 
@@ -272,8 +292,8 @@
 <nav id="article-nav">
   
   
-    <a href="/2020/03/18/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">在Ubuntu18上安装MySQL</div>
+    <a href="/2020/03/18/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Hello World</div>
       <i class="icon-circle-right"></i>
     </a>
   

@@ -174,6 +174,22 @@
       
         <h3 id="在终端中敲入如下命令"><a href="#在终端中敲入如下命令" class="headerlink" title="在终端中敲入如下命令"></a>在终端中敲入如下命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install mysql-server</span><br></pre></td></tr></table></figure>
 <p><img src="/2020/03/19/%E5%9C%A8Ubuntu%E4%B8%AD%E5%AE%89%E8%A3%85MySQL/001.png" alt></p>
+<p>根据提示点Y即可</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install mysql-client</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/03/19/%E5%9C%A8Ubuntu%E4%B8%AD%E5%AE%89%E8%A3%85MySQL/002.png" alt></p>
+<p>接下来修改MySQL配置，用vim或是gedit均可，由于我比较懒，所以用gedit</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo gedit /etc/mysql/mysql.conf.d/mysqld.cnf</span><br></pre></td></tr></table></figure>
+
+<p>这样后就进入到MySQL配置文件：<br>为了可以远程访问，注释掉 bind-address = 127.0.0.1 这行</p>
+<p><img src="/2020/03/19/%E5%9C%A8Ubuntu%E4%B8%AD%E5%AE%89%E8%A3%85MySQL/003.png" alt></p>
+<p>在配置文件中的[mysqld]这一块中加入 skip-grant-tables，目的是为了跳过密码直接登录，因为我希望登录都输入秘密，所以我将这行注释到，同时为了防止中文乱码，要加入 character-set-server=utf8，配置后我的[mysqld]这一块如下：<br><img src="/2020/03/19/%E5%9C%A8Ubuntu%E4%B8%AD%E5%AE%89%E8%A3%85MySQL/004.png" alt></p>
+<p>比较重要的是port参数，众所周知MySQL的端口为3306，不建议修改。</p>
+<p>输入 sudo service mysql start 启动MySQL</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo service mysql start</span><br></pre></td></tr></table></figure>
+<p>输入 mysql -uroot -p 后填入root密码即可进入数据库</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mysql -uroot -p</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/03/19/%E5%9C%A8Ubuntu%E4%B8%AD%E5%AE%89%E8%A3%85MySQL/005.png" alt></p>
+<p>以上就是在Ubuntu中安装MySQL数据库的详细过程，最重要的是MySQL配置文件的配置，配置好MySQL服务后即可用其他图形化界面来操作数据库，推荐使用phpMyAdmin。</p>
 
       
 
@@ -187,71 +203,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/03/19/%E5%9C%A8Ubuntu%E4%B8%AD%E5%AE%89%E8%A3%85MySQL/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-我的第一篇博客" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/03/18/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/">在Ubuntu18上安装MySQL</a>
-    </h1>
-  
-
-        
-        <a href="/2020/03/18/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" class="archive-article-date">
-  	<time datetime="2020-03-18T14:15:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="输入命令"><a href="#输入命令" class="headerlink" title="输入命令"></a>输入命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install mysql-server</span><br></pre></td></tr></table></figure>
-<p><img src="/images/001.png" alt></p>
-<p>内容</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/03/18/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/">展开全文 >></a>
         </p>
       
 

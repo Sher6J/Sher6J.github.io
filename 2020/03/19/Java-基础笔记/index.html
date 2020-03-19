@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>Java--基础笔记 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="##Java基础类型1.整数类型：  byte：1 short：2 int(默认)：4 long:8  2.浮点类型：  float：4 double(默认):8  3.字符类型：  char:2  4.布尔类型  boolean:1##类型转换1.自动类型转换：把一个表示数据范围小的数值或者变量赋值给另一个表示数据范围大的变量。这种转换方式是自动的,直接书写即可。  2.强制类型转换：把一个表示">
+  <meta name="description" content="Java基础类型1.整数类型：  byte：1 short：2 int(默认)：4 long:8  2.浮点类型：  float：4 double(默认):8  3.字符类型：  char:2  4.布尔类型  boolean:1类型转换1.自动类型转换：把一个表示数据范围小的数值或者变量赋值给另一个表示数据范围大的变量。这种转换方式是自动的,直接书写即可。  2.强制类型转换：把一个表示数据范围">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java--基础笔记">
 <meta property="og:url" content="http://yoursite.com/2020/03/19/Java-%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="##Java基础类型1.整数类型：  byte：1 short：2 int(默认)：4 long:8  2.浮点类型：  float：4 double(默认):8  3.字符类型：  char:2  4.布尔类型  boolean:1##类型转换1.自动类型转换：把一个表示数据范围小的数值或者变量赋值给另一个表示数据范围大的变量。这种转换方式是自动的,直接书写即可。  2.强制类型转换：把一个表示">
+<meta property="og:description" content="Java基础类型1.整数类型：  byte：1 short：2 int(默认)：4 long:8  2.浮点类型：  float：4 double(默认):8  3.字符类型：  char:2  4.布尔类型  boolean:1类型转换1.自动类型转换：把一个表示数据范围小的数值或者变量赋值给另一个表示数据范围大的变量。这种转换方式是自动的,直接书写即可。  2.强制类型转换：把一个表示数据范围">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://yoursite.com/2020/03/19/Java-%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/Overload.png">
 <meta property="og:image" content="http://yoursite.com/2020/03/19/Java-%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/Override.png">
 <meta property="og:image" content="http://yoursite.com/2020/03/19/Java-%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/1.png">
 <meta property="article:published_time" content="2020-03-19T09:53:39.000Z">
-<meta property="article:modified_time" content="2020-03-19T12:38:21.552Z">
+<meta property="article:modified_time" content="2020-03-19T13:29:53.068Z">
 <meta property="article:author" content="Sher6J">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://yoursite.com/2020/03/19/Java-%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/Overload.png">
@@ -178,7 +178,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>##Java基础类型<br>1.整数类型：</p>
+        <h2 id="Java基础类型"><a href="#Java基础类型" class="headerlink" title="Java基础类型"></a>Java基础类型</h2><p>1.整数类型：</p>
 <ul>
 <li>byte：1</li>
 <li>short：2</li>
@@ -196,7 +196,7 @@
 </ul>
 <p>4.布尔类型</p>
 <ul>
-<li>boolean:1<br>##类型转换<br>1.自动类型转换：把一个表示数据范围小的数值或者变量赋值给另一个表示数据范围大的变量。这种转换方式是自动的,直接书写即可。</li>
+<li>boolean:1<h2 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h2>1.自动类型转换：把一个表示数据范围小的数值或者变量赋值给另一个表示数据范围大的变量。这种转换方式是自动的,直接书写即可。</li>
 </ul>
 <p>2.强制类型转换：把一个表示数据范围大的数值或者变量赋值给另一个表示数据范围小的变量。</p>
 <ul>
@@ -204,7 +204,7 @@
 <li>如：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> num1 = <span class="number">5.5</span>;</span><br><span class="line"><span class="keyword">int</span> num2 = (<span class="keyword">int</span>) num1; <span class="comment">// 将double类型的num1强制转换为int类型</span></span><br></pre></td></tr></table></figure>
 3.转换的数据类型，数据范围从小到大：</li>
 <li>byte -&gt; short -&gt; int -&gt; long -&gt; float -&gt; double</li>
-<li>char -&gt; int -&gt; long -&gt; float -&gt; double<br>##运算符<br>####只记录需要注意的运算符， +-等基本运算符不计入笔记<br>1.逻辑运算符</li>
+<li>char -&gt; int -&gt; long -&gt; float -&gt; double<h2 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h2><h4 id="只记录需要注意的运算符，-等基本运算符不计入笔记"><a href="#只记录需要注意的运算符，-等基本运算符不计入笔记" class="headerlink" title="只记录需要注意的运算符， +-等基本运算符不计入笔记"></a>只记录需要注意的运算符， +-等基本运算符不计入笔记</h4>1.逻辑运算符</li>
 <li>&amp;(逻辑与)：a&amp;b,a和b都是true,结果为true,否则为false</li>
 <li>|(逻辑或)：a|b,a和b都是false,结果为false,否则为true</li>
 <li>^(逻辑异或)：a^b,a和b结果不同为true,相同为false</li>
@@ -223,7 +223,7 @@
 <p>4.三元运算符</p>
 <ul>
 <li>关系表达式 ? 表达式1 : 表达式2;<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> c = a &gt; b ? a : b; <span class="comment">// 判断 a&gt;b 是否为真,如果为真取a的值,如果为假,取b的值</span></span><br></pre></td></tr></table></figure>
-##流程控制语句<br>1.顺序结构</li>
+<h2 id="流程控制语句"><a href="#流程控制语句" class="headerlink" title="流程控制语句"></a>流程控制语句</h2>1.顺序结构</li>
 </ul>
 <p>2.分支结构：if, switch. if没什么可说的，switch做点笔记</p>
 <ul>
@@ -236,7 +236,7 @@
 <li>死循环(无限循环)的三种格式<ol>
 <li>for(;;){}</li>
 <li>while(true){}</li>
-<li>do {} while(true);<br>##数组<br>1.数组初始化</li>
+<li>do {} while(true);<h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2>1.数组初始化</li>
 </ol>
 </li>
 <li>动态初始化：数据类型 [] 数组名 = new 数据类型[数组长度];<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>[] arr = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">3</span>];</span><br></pre></td></tr></table></figure></li>
@@ -249,7 +249,7 @@
 <li>本地方法栈 JVM在使用操作系统功能的时候使用,和我们开发无关。</li>
 <li>方法区 存储可以运行的class文件。</li>
 <li>堆内存 存储对象或者数组,new来创建的,都存储在堆内存。</li>
-<li>方法栈 方法运行时使用的内存,比如main方法运行,进入方法栈中执行。<br>##方法method<br>####方法的  重载Overload和重写Override<br>####完全不同的两个概念<br>1.重载Overload</li>
+<li>方法栈 方法运行时使用的内存,比如main方法运行,进入方法栈中执行。<h2 id="方法method"><a href="#方法method" class="headerlink" title="方法method"></a>方法method</h2><h4 id="方法的-重载Overload和重写Override"><a href="#方法的-重载Overload和重写Override" class="headerlink" title="方法的  重载Overload和重写Override"></a>方法的  重载Overload和重写Override</h4><h4 id="完全不同的两个概念"><a href="#完全不同的两个概念" class="headerlink" title="完全不同的两个概念"></a>完全不同的两个概念</h4>1.重载Overload</li>
 </ul>
 <p><img src="/2020/03/19/Java-%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/Overload.png" alt></p>
 <ul>
@@ -305,7 +305,7 @@
 <ul>
 <li>方法重载是一个类中定义了多个方法名相同,而他们的参数的数量不同或数量相同而类型和次序不同,则称为方法的重载(Overloading)。</li>
 <li>方法重写是在子类存在方法与父类的方法的名字相同,而且参数的个数与类型一样,返回值也一样的方法,就称为重写(Overriding)。</li>
-<li>方法重载是一个类的多态性表现,而方法重写是子类与父类的一种多态性表现。<br>##类和对象<br>类的定义和对象的创建与室友不做赘述</li>
+<li>方法重载是一个类的多态性表现,而方法重写是子类与父类的一种多态性表现。<h2 id="类和对象"><a href="#类和对象" class="headerlink" title="类和对象"></a>类和对象</h2>类的定义和对象的创建与室友不做赘述</li>
 </ul>
 <p>1.类和对象的关系</p>
 <ul>
@@ -430,7 +430,7 @@
 </li>
 <li>设计理念区别<ul>
 <li>抽象类：对类抽象,包括属性、行为</li>
-<li>接口：对行为抽象,主要是行为<br>##Java的三大特性</li>
+<li>接口：对行为抽象,主要是行为<h2 id="Java的三大特性"><a href="#Java的三大特性" class="headerlink" title="Java的三大特性"></a>Java的三大特性</h2></li>
 </ul>
 </li>
 </ul>

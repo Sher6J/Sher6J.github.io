@@ -8,12 +8,12 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>在Ubuntu中安装MySQL | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在终端中敲入如下命令1$ sudo apt-get install mysql-server  根据提示点Y即可 1$ sudo apt-get install mysql-client  接下来修改MySQL配置，用vim或是gedit均可，由于我比较懒，所以用gedit 1$ sudo gedit &#x2F;etc&#x2F;mysql&#x2F;mysql.conf.d&#x2F;mysqld.cnf  这样后就进入到MySQL">
+  <meta name="description" content="在终端中敲入如下命令1$ sudo apt-get install mysql-server  根据提示点Y即可">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在Ubuntu中安装MySQL">
 <meta property="og:url" content="http://yoursite.com/2020/03/19/%E5%9C%A8Ubuntu%E4%B8%AD%E5%AE%89%E8%A3%85MySQL/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="在终端中敲入如下命令1$ sudo apt-get install mysql-server  根据提示点Y即可 1$ sudo apt-get install mysql-client  接下来修改MySQL配置，用vim或是gedit均可，由于我比较懒，所以用gedit 1$ sudo gedit &#x2F;etc&#x2F;mysql&#x2F;mysql.conf.d&#x2F;mysqld.cnf  这样后就进入到MySQL">
+<meta property="og:description" content="在终端中敲入如下命令1$ sudo apt-get install mysql-server  根据提示点Y即可">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://yoursite.com/2020/03/19/%E5%9C%A8Ubuntu%E4%B8%AD%E5%AE%89%E8%A3%85MySQL/001.png">
 <meta property="og:image" content="http://yoursite.com/2020/03/19/%E5%9C%A8Ubuntu%E4%B8%AD%E5%AE%89%E8%A3%85MySQL/002.png">
@@ -21,8 +21,11 @@
 <meta property="og:image" content="http://yoursite.com/2020/03/19/%E5%9C%A8Ubuntu%E4%B8%AD%E5%AE%89%E8%A3%85MySQL/004.png">
 <meta property="og:image" content="http://yoursite.com/2020/03/19/%E5%9C%A8Ubuntu%E4%B8%AD%E5%AE%89%E8%A3%85MySQL/005.png">
 <meta property="article:published_time" content="2020-03-19T05:19:37.000Z">
-<meta property="article:modified_time" content="2020-03-19T05:47:17.296Z">
+<meta property="article:modified_time" content="2020-03-20T03:59:53.013Z">
 <meta property="article:author" content="Sher6J">
+<meta property="article:tag" content="Ubuntu">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="MySQL">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://yoursite.com/2020/03/19/%E5%9C%A8Ubuntu%E4%B8%AD%E5%AE%89%E8%A3%85MySQL/001.png">
   
@@ -183,6 +186,7 @@
         <h3 id="在终端中敲入如下命令"><a href="#在终端中敲入如下命令" class="headerlink" title="在终端中敲入如下命令"></a>在终端中敲入如下命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install mysql-server</span><br></pre></td></tr></table></figure>
 <p><img src="/2020/03/19/%E5%9C%A8Ubuntu%E4%B8%AD%E5%AE%89%E8%A3%85MySQL/001.png" alt></p>
 <p>根据提示点Y即可</p>
+<a id="more"></a>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install mysql-client</span><br></pre></td></tr></table></figure>
 <p><img src="/2020/03/19/%E5%9C%A8Ubuntu%E4%B8%AD%E5%AE%89%E8%A3%85MySQL/002.png" alt></p>
 <p>接下来修改MySQL配置，用vim或是gedit均可，由于我比较懒，所以用gedit</p>
@@ -227,6 +231,25 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Ubuntu</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">MySQL</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -426,6 +449,26 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">JavaSE</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>

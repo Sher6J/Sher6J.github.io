@@ -246,342 +246,9 @@
 <li>float：4</li>
 <li>double(默认):8</li>
 </ul>
-<p>3.字符类型：</p>
-<ul>
-<li>char:2</li>
-</ul>
-<p>4.布尔类型</p>
-<ul>
-<li>boolean:1<h2 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h2>1.自动类型转换：把一个表示数据范围小的数值或者变量赋值给另一个表示数据范围大的变量。这种转换方式是自动的,直接书写即可。</li>
-</ul>
-<p>2.强制类型转换：把一个表示数据范围大的数值或者变量赋值给另一个表示数据范围小的变量。</p>
-<ul>
-<li>强制类型转换格式:目标数据类型 变量名 = (目标数据类型)值或者变量;</li>
-<li>如：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> num1 = <span class="number">5.5</span>;</span><br><span class="line"><span class="keyword">int</span> num2 = (<span class="keyword">int</span>) num1; <span class="comment">// 将double类型的num1强制转换为int类型</span></span><br></pre></td></tr></table></figure>
-3.转换的数据类型，数据范围从小到大：</li>
-<li>byte -&gt; short -&gt; int -&gt; long -&gt; float -&gt; double</li>
-<li>char -&gt; int -&gt; long -&gt; float -&gt; double<h2 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h2><h4 id="只记录需要注意的运算符，-等基本运算符不计入笔记"><a href="#只记录需要注意的运算符，-等基本运算符不计入笔记" class="headerlink" title="只记录需要注意的运算符， +-等基本运算符不计入笔记"></a>只记录需要注意的运算符， +-等基本运算符不计入笔记</h4>1.逻辑运算符</li>
-<li>&amp;(逻辑与)：a&amp;b,a和b都是true,结果为true,否则为false</li>
-<li>|(逻辑或)：a|b,a和b都是false,结果为false,否则为true</li>
-<li>^(逻辑异或)：a^b,a和b结果不同为true,相同为false</li>
-<li>!(逻辑非)：!a,结果和a的结果正好相反</li>
-</ul>
-<p>2.短路逻辑运算符</p>
-<ul>
-<li>&amp;&amp;(短路与)：作用和&amp;相同,但是有短路效果</li>
-<li>||(短路或)：作用和|相同,但是有短路效果</li>
-</ul>
-<p>3.什么是短路？</p>
-<ul>
-<li>逻辑与&amp;,无论左边真假,右边都要执行；短路与&amp;&amp;,如果左边为真,右边执行;如果左边为假,右边不执行。</li>
-<li>逻辑或|,无论左边真假,右边都要执行；短路或||,如果左边为假,右边执行;如果左边为真,右边不执行。</li>
-</ul>
-<p>4.三元运算符</p>
-<ul>
-<li>关系表达式 ? 表达式1 : 表达式2;<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> c = a &gt; b ? a : b; <span class="comment">// 判断 a&gt;b 是否为真,如果为真取a的值,如果为假,取b的值</span></span><br></pre></td></tr></table></figure>
-<h2 id="流程控制语句"><a href="#流程控制语句" class="headerlink" title="流程控制语句"></a>流程控制语句</h2>1.顺序结构</li>
-</ul>
-<p>2.分支结构：if, switch. if没什么可说的，switch做点笔记</p>
-<ul>
-<li>switch具有穿透功能，何谓穿透，如下面代码：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span>(month) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">    <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">    <span class="keyword">case</span> <span class="number">12</span>:</span><br><span class="line">        System.out.println(<span class="string">"冬季"</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-当判断month==1时，由于case 1中没有break，所以程序会一直向下执行到知道有break的case语句，所以month==1时，程序会输出“冬季”。</li>
-<li>现在的switch语句中参数支持字符串</li>
-</ul>
-<p>3.循环结构：for, while, do……while. 也没什么可多说的，增强for以后再说，此处写点小笔记</p>
-<ul>
-<li>死循环(无限循环)的三种格式<ol>
-<li>for(;;){}</li>
-<li>while(true){}</li>
-<li>do {} while(true);<h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2>1.数组初始化</li>
-</ol>
-</li>
-<li>动态初始化：数据类型 [] 数组名 = new 数据类型[数组长度];<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>[] arr = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">3</span>];</span><br></pre></td></tr></table></figure></li>
-<li>静态初始化：数据类型 [] 数组名 = new 数据类型[]{元素1,元素2,…};</li>
-<li>静态初始化简化格式：数据类型 [] 数组名 = {元素1,元素2,…};</li>
-</ul>
-<p>2.Java中的内存分配：目前只需要记住两个内存,分别是:栈内存和堆内存</p>
-<ul>
-<li>寄存器 给CPU使用,和我们开发无关。</li>
-<li>本地方法栈 JVM在使用操作系统功能的时候使用,和我们开发无关。</li>
-<li>方法区 存储可以运行的class文件。</li>
-<li>堆内存 存储对象或者数组,new来创建的,都存储在堆内存。</li>
-<li>方法栈 方法运行时使用的内存,比如main方法运行,进入方法栈中执行。<h2 id="方法method"><a href="#方法method" class="headerlink" title="方法method"></a>方法method</h2><h4 id="方法的-重载Overload和重写Override"><a href="#方法的-重载Overload和重写Override" class="headerlink" title="方法的  重载Overload和重写Override"></a>方法的  重载Overload和重写Override</h4><h4 id="完全不同的两个概念"><a href="#完全不同的两个概念" class="headerlink" title="完全不同的两个概念"></a>完全不同的两个概念</h4>1.重载Overload</li>
-</ul>
-<p><img src="/2020/03/19/Java-%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/Overload.png" alt></p>
-<ul>
-<li>方法重载指同一个类中定义的多个方法之间的关系,满足下列条件的多个方法相互构成重载<ol>
-<li>多个方法在同一个类中</li>
-<li>多个方法具有相同的方法名</li>
-<li>多个方法的参数不相同,类型不同或者数量不同</li>
-</ol>
-</li>
-<li>注意：<ol>
-<li>重载仅对应方法的定义,与方法的调用无关,调用方式参照标准格式</li>
-<li>重载仅针对同一个类中方法的名称与参数进行识别,与返回值无关,换句话说不能通过返回值来判定两个方法是否相互构成重载</li>
-</ol>
-</li>
-<li>重载规则:<ul>
-<li>被重载的方法必须改变参数列表(参数个数或类型不一样)；</li>
-<li>被重载的方法可以改变返回类型；</li>
-<li>被重载的方法可以改变访问修饰符；</li>
-<li>被重载的方法可以声明新的或更广的检查异常；</li>
-<li>方法能够在同一个类中或者在一个子类中被重载;</li>
-<li>无法以返回值类型作为重载函数的区分标准。</li>
-</ul>
-</li>
-</ul>
-<p>2.重写Override</p>
-<p><img src="/2020/03/19/Java-%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/Override.png" alt></p>
-<ul>
-<li>方法重写概念：子类出现了和父类中一模一样的方法声明(方法名一样,参数列表也必须一样)</li>
-<li>方法重写的应用场景：当子类需要父类的功能,而功能主体子类有自己特有内容时,可以重写父类中的方法,这样,即沿袭了父类的功能,又定义了子类特有的内容</li>
-<li>方法重写的注意事项<ul>
-<li>私有方法不能被重写(父类私有成员子类是不能继承的)</li>
-<li>子类方法访问权限不能更低(public &gt; 默认 &gt; 私有)</li>
-</ul>
-</li>
-<li>方法的重写规则<ul>
-<li>参数列表必须完全与被重写方法的相同。</li>
-<li>返回类型与被重写方法的返回类型可以不相同，但是必须是父类返回值的派生类（java5 及更早版本返回类型要一样，java7 及更高版本可以不同）。</li>
-<li>访问权限不能比父类中被重写的方法的访问权限更低。例如：如果父类的一个方法被声明为 public，那么在子类中重写该方法就不能声明为 protected。</li>
-<li>父类的成员方法只能被它的子类重写。</li>
-<li>声明为 final 的方法不能被重写。</li>
-<li>声明为 static 的方法不能被重写，但是能够被再次声明。</li>
-<li>子类和父类在同一个包中，那么子类可以重写父类所有方法，除了声明为 private 和 final 的方法。</li>
-<li>子类和父类不在同一个包中，那么子类只能够重写父类的声明为 public 和 protected 的非 final 方法。</li>
-<li>重写的方法能够抛出任何非强制异常，无论被重写的方法是否抛出异常。但是，重写的方法不能抛出新的强制性异常，或者比被重写方法声明的更广泛的强制性异常，反之则可以。</li>
-<li>构造方法不能被重写。</li>
-<li>如果不能继承一个方法，则不能重写这个方法。</li>
-</ul>
-</li>
-</ul>
-<p>3.重写与重载区别：</p>
-<p><img src="/2020/03/19/Java-%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/1.png" alt></p>
-<p>方法的重写(Overriding)和重载(Overloading)是java多态性的不同表现，重写是父类与子类之间多态性的一种表现，重载可以理解成多态的具体表现形式。</p>
-<ul>
-<li>方法重载是一个类中定义了多个方法名相同,而他们的参数的数量不同或数量相同而类型和次序不同,则称为方法的重载(Overloading)。</li>
-<li>方法重写是在子类存在方法与父类的方法的名字相同,而且参数的个数与类型一样,返回值也一样的方法,就称为重写(Overriding)。</li>
-<li>方法重载是一个类的多态性表现,而方法重写是子类与父类的一种多态性表现。<h2 id="类和对象"><a href="#类和对象" class="headerlink" title="类和对象"></a>类和对象</h2>类的定义和对象的创建与室友不做赘述</li>
-</ul>
-<p>1.类和对象的关系</p>
-<ul>
-<li>类:类是对现实生活中一类具有共同属性和行为的事物的抽象</li>
-<li>对象:是能够看得到摸的着的真实存在的实体</li>
-<li>简单理解: 类是对事物的一种描述,对象则为具体存在的事物</li>
-</ul>
-<p>2.this关键字</p>
-<p>this修饰的变量用于指代成员变量,其主要作用是(区分局部变量和成员变量的重名问题)</p>
-<ul>
-<li>方法的形参如果与成员变量同名,不带this修饰的变量指的是形参,而不是成员变量</li>
-<li>方法的形参没有与成员变量同名,不带this修饰的变量指的是成员变量</li>
-<li>简单理解,this代表当前调用方法的引用,哪个对象调用的方法,this就代表哪一个对象</li>
-</ul>
-<p>3.super关键字<br>   涉及类的继承</p>
-<ul>
-<li>this&amp;super 关键字:<ul>
-<li>this :代表本类对象的引用</li>
-<li>super :代表父类存储空间的标识(可以理解为父类对象引用)</li>
-</ul>
-</li>
-<li>this和super的使用分别<ul>
-<li>成员变量:<ul>
-<li>this. 成员变量 - 访问本类成员变量</li>
-<li>super. 成员变量 - 访问父类成员变量</li>
-</ul>
-</li>
-<li>成员方法:<ul>
-<li>this. 成员方法 - 访问本类成员方法</li>
-<li>super. 成员方法 - 访问父类成员方法</li>
-</ul>
-</li>
-<li>构造方法:<ul>
-<li>this(…) - 访问本类构造方法</li>
-<li>super(…) - 访问父类构造方法</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>4.构造方法：</p>
-<ul>
-<li>格式:<br>public class 类名{<br>修饰符 类名( 参数 ) {<br>}<br>}</li>
-<li>功能:主要是完成对象数据的初始化</li>
-<li>注意：<ul>
-<li>构造方法的创建：如果没有定义构造方法,系统将给出一个默认的无参数构造方法；如果定义了构造方法,系统将不再提供默认的构造方法</li>
-<li>构造方法的重载：如果自定义了带参构造方法,还要使用无参数构造方法,就必须再写一个无参数构造方法</li>
-<li>推荐的使用方式<br>无论是否使用,都手工书写无参数构造方法</li>
-</ul>
-</li>
-<li>IntelliJ Idea开发工具中可以用 alt + insert 快捷键自动生成如构造方法,get/set方法,重写等方法等</li>
-</ul>
-<p>5.权限修饰符–可访问，级别由高到低</p>
-<ul>
-<li>private：同一个类中</li>
-<li>默认：同一个类中；同一个包中子类、无关类</li>
-<li>protected：同一个类中；同一个包中子类、无关类；不同包中子类</li>
-<li>public：同一个类中；同一个包中子类、无关类；不同包中子类；不同包中无关类</li>
-</ul>
-<p>6.final关键字</p>
-<ul>
-<li>final 代表最终的意思,可以修饰成员方法,成员变量,类,意思就是不能再改变<ul>
-<li>final 修饰类:该类不能被继承(不能有子类,但是可以有父类)</li>
-<li>final 修饰方法:该方法不能被重写</li>
-<li>final 修饰变量:表明该变量是一个常量,不能再次赋值</li>
-</ul>
-</li>
-</ul>
-<p>7.static关键字</p>
-<ul>
-<li>static的概念：static 关键字是静态的意思,可以修饰成员方法,成员变量</li>
-<li>static修饰的特点<ol>
-<li>被类的所有对象共享,这也是我们判断是否使用静态关键字的条件</li>
-<li>可以通过类名调用当然,也可以通过对象名调用,推荐使用类名调用</li>
-</ol>
-</li>
-<li>static的访问特点<ul>
-<li>非静态的成员方法<ul>
-<li>能访问静态的成员变量</li>
-<li>能访问非静态的成员变量</li>
-<li>能访问静态的成员方法</li>
-<li>能访问非静态的成员方法</li>
-</ul>
-</li>
-<li>静态的成员方法<ul>
-<li>能访问静态的成员变量</li>
-<li>能访问静态的成员方法</li>
-</ul>
-</li>
-<li>即－－静态成员方法只能访问静态成员</li>
-</ul>
-</li>
-</ul>
-<p>8.类、抽象类、接口关系梳理，具体概念语法等不做赘述</p>
-<ul>
-<li>类和接口<ul>
-<li>类与类的关系<ul>
-<li>继承关系,只能单继承,但是可以多层继承</li>
-</ul>
-</li>
-<li>类与接口的关系<ul>
-<li>实现关系,可以单实现,也可以多实现,还可以在继承一个类的同时实现多个接口</li>
-</ul>
-</li>
-<li>接口与接口的关系<ul>
-<li>继承关系,可以单继承,也可以多继承</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>抽象类和接口<ul>
-<li>成员区别<ul>
-<li>抽象类：变量,常量;有构造方法;有抽象方法,也有非抽象方法</li>
-<li>接口：常量;抽象方法</li>
-</ul>
-</li>
-<li>关系区别<ul>
-<li>类与类：继承,单继承</li>
-<li>类与接口：实现,可以单实现,也可以多实现</li>
-<li>接口与接口：继承,单继承,多继承</li>
-</ul>
-</li>
-<li>设计理念区别<ul>
-<li>抽象类：对类抽象,包括属性、行为</li>
-<li>接口：对行为抽象,主要是行为<h2 id="Java的三大特性"><a href="#Java的三大特性" class="headerlink" title="Java的三大特性"></a>Java的三大特性</h2></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>1.封装</p>
-<ul>
-<li>封装是面向对象编程语言对客观世界的模拟,客观世界里成员变量都是隐藏在对象内部的,外界是无法直接操作的</li>
-<li>封装原则：将类的某些信息隐藏在类内部,不允许外部程序直接访问,而是通过该类提供的方法来实现对隐藏信息的操作和访问成员变量private,提供对应的getXxx()/setXxx()方法</li>
-<li>封装好处：通过方法来控制成员变量的操作,提高了代码的安全性 把代码用方法进行封装,提高了代码的复用<br>性</li>
-</ul>
-<p>2.继承</p>
-<ul>
-<li>继承的概念：继承是面向对象三大特征之一,可以使得子类具有父类的属性和方法,还可以在子类中重新定义,以及追加属性和方法<ul>
-<li>实现继承的格式：继承通过 extends实现<ul>
-<li>格式: class 子类 extends 父类 { }</li>
-<li>举例: class Dog extends Animal { }</li>
-</ul>
-</li>
-<li>继承带来的好处：继承可以让类与类之间产生关系,子父类关系,产生子父类后,子类则可以使用父类中非私有的成员</li>
-</ul>
-</li>
-<li>继承的好处和弊端(理解)<ul>
-<li>继承好处<ul>
-<li>提高了代码的复用性 (多个类相同的成员可以放到同一个类中)</li>
-<li>提高了代码的维护性 (如果方法的代码需要修改,修改一处即可)</li>
-</ul>
-</li>
-<li>继承弊端<ul>
-<li>继承让类与类之间产生了关系,类的耦合性增强了,当父类发生变化时子类实现也不得不跟着变化,削弱了子类的独立性</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>继承的应用场景:使用继承,需要考虑类与类之间是否存在 is..a的关系,不能盲目使用继承<ul>
-<li>is..a 的关系:谁是谁的一种,例如:老师和学生是人的一种,那人就是父类,学生和老师就是子类</li>
-</ul>
-</li>
-<li>继承中的访问特点<ul>
-<li>继承中变量的访问特点：在子类方法中访问一个变量,采用的是就近原则。<ol>
-<li>子类局部范围找</li>
-<li>子类成员范围找</li>
-<li>父类成员范围找</li>
-<li>如果都没有就报错(不考虑父亲的父亲…)</li>
-</ol>
-</li>
-<li>继承中构造方法的访问特点<ol>
-<li>子类中所有的构造方法默认都会访问父类中无参的构造方法</li>
-<li>子类会继承父类中的数据,可能还会使用父类的数据。</li>
-</ol>
-<ul>
-<li>所以,子类初始化之前,一定要先完成父类数据的初始化,原因在于,每一个子类构造方法的第一条语句默认都是:super()</li>
-<li>问题:如果父类中没有无参构造方法,只有带参构造方法,该怎么办呢?<ol>
-<li>通过使用super关键字去显示的调用父类的带参构造方法</li>
-<li>在父类中自己提供一个无参构造方法</li>
-</ol>
-<ul>
-<li>推荐方案:自己给出无参构造方法</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>继承中成员方法的访问特点：通过子类对象访问一个方法<ol>
-<li>子类成员范围找</li>
-<li>父类成员范围找</li>
-<li>如果都没有就报错(不考虑父亲的父亲…)</li>
-</ol>
-</li>
-</ul>
-</li>
-</ul>
-<p>3.多态</p>
-<ul>
-<li>多态的概述<ul>
-<li>什么是多态：同一个对象,在不同时刻表现出来的不同形态</li>
-<li>多态的前提<ul>
-<li>要有继承或实现关系</li>
-<li>要有方法的重写</li>
-<li>要有父类引用指向子类对象</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>多态中的成员访问特点<ul>
-<li>成员变量：编译看父类,运行看父类</li>
-<li>成员方法：编译看父类,运行看子类</li>
-</ul>
-</li>
-<li>多态中的转型<ul>
-<li>向上转型：父类引用指向子类对象就是向上转型</li>
-<li>向下转型：格式 子类型 对象名 = (子类型)父类引用;</li>
-</ul>
-</li>
-</ul>
-
+        
+          <a class="article-more-a" href="/2020/03/19/Java-%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/#more">more >></a>
+        
       
 
       
@@ -589,6 +256,21 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">JavaSE</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -646,22 +328,9 @@
         <h3 id="在终端中敲入如下命令"><a href="#在终端中敲入如下命令" class="headerlink" title="在终端中敲入如下命令"></a>在终端中敲入如下命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install mysql-server</span><br></pre></td></tr></table></figure>
 <p><img src="/2020/03/19/%E5%9C%A8Ubuntu%E4%B8%AD%E5%AE%89%E8%A3%85MySQL/001.png" alt></p>
 <p>根据提示点Y即可</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install mysql-client</span><br></pre></td></tr></table></figure>
-<p><img src="/2020/03/19/%E5%9C%A8Ubuntu%E4%B8%AD%E5%AE%89%E8%A3%85MySQL/002.png" alt></p>
-<p>接下来修改MySQL配置，用vim或是gedit均可，由于我比较懒，所以用gedit</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo gedit /etc/mysql/mysql.conf.d/mysqld.cnf</span><br></pre></td></tr></table></figure>
-
-<p>这样后就进入到MySQL配置文件：<br>为了可以远程访问，注释掉 bind-address = 127.0.0.1 这行</p>
-<p><img src="/2020/03/19/%E5%9C%A8Ubuntu%E4%B8%AD%E5%AE%89%E8%A3%85MySQL/003.png" alt></p>
-<p>在配置文件中的[mysqld]这一块中加入 skip-grant-tables，目的是为了跳过密码直接登录，因为我希望登录都输入秘密，所以我将这行注释到，同时为了防止中文乱码，要加入 character-set-server=utf8，配置后我的[mysqld]这一块如下：<br><img src="/2020/03/19/%E5%9C%A8Ubuntu%E4%B8%AD%E5%AE%89%E8%A3%85MySQL/004.png" alt></p>
-<p>比较重要的是port参数，众所周知MySQL的端口为3306，不建议修改。</p>
-<p>输入 sudo service mysql start 启动MySQL</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo service mysql start</span><br></pre></td></tr></table></figure>
-<p>输入 mysql -uroot -p 后填入root密码即可进入数据库</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mysql -uroot -p</span><br></pre></td></tr></table></figure>
-<p><img src="/2020/03/19/%E5%9C%A8Ubuntu%E4%B8%AD%E5%AE%89%E8%A3%85MySQL/005.png" alt></p>
-<p>以上就是在Ubuntu中安装MySQL数据库的详细过程，最重要的是MySQL配置文件的配置，配置好MySQL服务后即可用其他图形化界面来操作数据库，推荐使用phpMyAdmin。</p>
-
+        
+          <a class="article-more-a" href="/2020/03/19/%E5%9C%A8Ubuntu%E4%B8%AD%E5%AE%89%E8%A3%85MySQL/#more">more >></a>
+        
       
 
       
@@ -669,6 +338,25 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Ubuntu</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">MySQL</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -869,6 +557,26 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">JavaSE</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>

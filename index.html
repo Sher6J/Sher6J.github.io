@@ -359,6 +359,13 @@
 <li>数组的初始化：创建一个数字数组时，所有元素初始化为0；boolean数组的元素会初始化为false；对象数组的元素则初始化为一个特殊值null，这表示这些元素（还）未存放任何对象。</li>
 <li>数组的排序：使用Arrays类中的sort方法，该方法用了优化的快速排序算法：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int[] a &#x3D; new int[10000];</span><br><span class="line">......</span><br><span class="line">Arrays.sort(a);</span><br></pre></td></tr></table></figure></li>
 <li>for each循环语句不能自动处理二维数组中的每一个元素。它是按照行，也就是一维数组处理的。要想访问二维数组a的所有元素，需要使用两个嵌套的循环，如下：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for (double[] row : a) &#123;</span><br><span class="line">    for (double value : row) &#123;</span><br><span class="line">        do something with value</span><br><span class="line">    &#125;           </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h2></li>
+<li>在接口声明中，不需要把方法声明为public，这是因为接口中所有方法都自动是public。但是，在实现接口时，必须把方法声明为public，否则，编译器得认为这个方法的访问属性是包可见性，即类的默认访问属性。</li>
+<li><ol>
+<li>接口中的方法自动地设置为public；</li>
+<li>接口中的域自动设置为public static final。</li>
+<li>在Java SE 8中，允许接口中增加静态方法。</li>
+</ol>
 </li>
 </ul>
 
@@ -1057,10 +1064,6 @@
 
 
   
-  
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
-    </nav>
   
 
 

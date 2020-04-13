@@ -6,17 +6,29 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>菜菜六甲的博客</title>
+  <title>mybatis入门 | 菜菜六甲的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="想努力成为大厂程序猿的辣鸡在读研究生">
-<meta property="og:type" content="website">
-<meta property="og:title" content="菜菜六甲的博客">
-<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+  <meta name="description" content="MyBatis框架具体代码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mybatis入门">
+<meta property="og:url" content="http://yoursite.com/2020/04/13/MyBatis%E5%85%A5%E9%97%A8/index.html">
 <meta property="og:site_name" content="菜菜六甲的博客">
-<meta property="og:description" content="想努力成为大厂程序猿的辣鸡在读研究生">
+<meta property="og:description" content="MyBatis框架具体代码">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/2020/04/13/MyBatis%E5%85%A5%E9%97%A8/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/04/13/MyBatis%E5%85%A5%E9%97%A8/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8%E7%BB%93%E6%9E%84%E5%85%B3%E7%B3%BB.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/04/13/MyBatis%E5%85%A5%E9%97%A8/IDEA%E6%A8%A1%E6%9D%BF.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/04/13/MyBatis%E5%85%A5%E9%97%A8/%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/04/13/MyBatis%E5%85%A5%E9%97%A8/%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%9C.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/04/13/MyBatis%E5%85%A5%E9%97%A8/%E8%AF%A6%E7%BB%86%E8%BF%87%E7%A8%8B.jpg">
+<meta property="article:published_time" content="2020-04-13T00:41:07.000Z">
+<meta property="article:modified_time" content="2020-04-13T02:23:03.023Z">
 <meta property="article:author" content="Sher6J">
+<meta property="article:tag" content="数据库">
+<meta property="article:tag" content="MyBatis">
+<meta property="article:tag" content="框架">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/04/13/MyBatis%E5%85%A5%E9%97%A8/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8.jpg">
   
     <link rel="alternative" href="/atom.xml" title="菜菜六甲的博客" type="application/atom+xml">
   
@@ -148,45 +160,125 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-Java-基础笔记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-MyBatis入门" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/03/19/Java-%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/">Java--基础笔记</a>
+    <h1 class="article-title" itemprop="name">
+      mybatis入门
     </h1>
   
 
         
-        <a href="/2020/03/19/Java-%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/" class="archive-article-date">
-  	<time datetime="2020-03-19T09:53:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-19</time>
+        <a href="/2020/04/13/MyBatis%E5%85%A5%E9%97%A8/" class="archive-article-date">
+  	<time datetime="2020-04-13T00:41:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-13</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="Java基础类型"><a href="#Java基础类型" class="headerlink" title="Java基础类型"></a>Java基础类型</h2><p>1.整数类型：</p>
+        <h1 id="MyBatis框架"><a href="#MyBatis框架" class="headerlink" title="MyBatis框架"></a>MyBatis框架</h1><p><a href>具体代码</a></p>
+<a id="more"></a>
+
+<hr>
+<h2 id="第1章-JDBC传统编程缺点及MyBatis入门"><a href="#第1章-JDBC传统编程缺点及MyBatis入门" class="headerlink" title="第1章 JDBC传统编程缺点及MyBatis入门"></a>第1章 JDBC传统编程缺点及MyBatis入门</h2><h3 id="JDBC编程回顾"><a href="#JDBC编程回顾" class="headerlink" title="JDBC编程回顾"></a>JDBC编程回顾</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    Connection connection = <span class="keyword">null</span>;</span><br><span class="line">    PreparedStatement preparedStatement = <span class="keyword">null</span>;</span><br><span class="line">    ResultSet resultSet = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">//加载数据库驱动</span></span><br><span class="line">        Class.forName(<span class="string">"com.mysql.jdbc.Driver"</span>);</span><br><span class="line">        <span class="comment">//通过驱动管理类获取数据库链接</span></span><br><span class="line">        connection = DriverManager.getConnection(<span class="string">"jdbc:mysql://localhost:3306/mybatis?characterEncoding=utf-8"</span>,<span class="string">"root"</span>, <span class="string">"root"</span>);</span><br><span class="line">        <span class="comment">//定义 sql 语句 ?表示占位符</span></span><br><span class="line">        String sql = <span class="string">"select * from user where username = ?"</span>;</span><br><span class="line">        <span class="comment">//获取预处理 statement</span></span><br><span class="line">        preparedStatement = connection.prepareStatement(sql);</span><br><span class="line">        <span class="comment">//设置参数，第一个参数为 sql 语句中参数的序号（从 1 开始），第二个参数为设置的参数值</span></span><br><span class="line">        preparedStatement.setString(<span class="number">1</span>, <span class="string">"王五"</span>);</span><br><span class="line">        <span class="comment">//向数据库发出 sql 执行查询，查询出结果集</span></span><br><span class="line">        resultSet = preparedStatement.executeQuery();</span><br><span class="line">        <span class="comment">//遍历查询结果集</span></span><br><span class="line">        <span class="keyword">while</span>(resultSet.next())&#123;</span><br><span class="line">            System.out.println(resultSet.getString(<span class="string">"id"</span>)+<span class="string">""</span>+resultSet.getString(<span class="string">"username"</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;<span class="keyword">finally</span>&#123;</span><br><span class="line">        <span class="comment">//释放资源</span></span><br><span class="line">        <span class="keyword">if</span>(resultSet!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                resultSet.close();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(preparedStatement!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                preparedStatement.close();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(connection!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                connection.close();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>具体的JDBC技术相关的说明见博文<a href>JDBC核心技术</a></p>
+</blockquote>
+<h4 id="传统JDBC技术的弊端"><a href="#传统JDBC技术的弊端" class="headerlink" title="传统JDBC技术的弊端"></a>传统JDBC技术的弊端</h4><ol>
+<li>数据库链接创建、释放频繁造成系统资源浪费从而影响系统性能，如果使用数据库链接池可解决此问题。</li>
+<li>Sql 语句在代码中硬编码，造成代码不易维护，实际应用 sql 变化的可能较大，sql 变动需要改变 java代码。</li>
+<li>使用 preparedStatement 向占有位符号传参数存在硬编码，因为 sql 语句的 where 条件不一定，可能多也可能少，修改 sql 还要修改代码，系统不易维护。</li>
+<li>对结果集解析存在硬编码（查询列名），sql 变化导致解析代码变化，系统不易维护，如果能将数据库记录封装成 pojo 对象解析比较方便。<blockquote>
+<p>说明：POJO（Plain Ordinary Java Object）简单的Java对象，实际就是普通JavaBeans</p>
+</blockquote>
+<h3 id="MyBatis环境搭建"><a href="#MyBatis环境搭建" class="headerlink" title="MyBatis环境搭建"></a>MyBatis环境搭建</h3>首先是创建Maven工程（不叙述如何创建），在Maven工程的依赖坐标pom.xml中添加 Mybatis3.4.5 的坐标：<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.4.5<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+有趣MyBatis是持久层框架，持久层是和数据库打交道的层，所以同时要引入mysql的依赖坐标<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.1.6<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="数据库环境搭建"><a href="#数据库环境搭建" class="headerlink" title="数据库环境搭建"></a>数据库环境搭建</h3>用于学习Mybatis我们在数据库中建立数据库’mybatis’，并建立如下4个表</li>
+</ol>
+<p><img src="/2020/04/13/MyBatis%E5%85%A5%E9%97%A8/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8.jpg" alt="数据库表">   <img src="/2020/04/13/MyBatis%E5%85%A5%E9%97%A8/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8%E7%BB%93%E6%9E%84%E5%85%B3%E7%B3%BB.jpg" alt="数据库表结构关系"></p>
+<p>其中表的结构关系见第二张图，总结如下：</p>
+<ol>
+<li>一个用户user可以有多个账户account，即用户表和账户表示一对多关系</li>
+<li>一个账户account只能对应一个用户user，即账户表和用户表是一对一关系</li>
+<li>一个角色role可以对应多个用户user， 一个用户也可以对应对个角色，即用户表和角色表是多对多关系<blockquote>
+<p>说明：账户表通过外键连接用户表，账户表是从表，用户表是主表；而用户和角色的多对多关系通过中间表user_role实现</p>
+</blockquote>
+<h3 id="MyBatis入门案例"><a href="#MyBatis入门案例" class="headerlink" title="MyBatis入门案例"></a>MyBatis入门案例</h3><h4 id="首先编写数据库中表对应的实体类"><a href="#首先编写数据库中表对应的实体类" class="headerlink" title="首先编写数据库中表对应的实体类"></a>首先编写数据库中表对应的实体类</h4>实体类的代码不做赘述<h4 id="编写-持久层-接口-UserDao"><a href="#编写-持久层-接口-UserDao" class="headerlink" title="编写 持久层 接口 UserDao"></a>编写 持久层 接口 UserDao</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserDao</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 查询所有操作</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function">List&lt;User&gt; <span class="title">findAll</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="编写主配置文件SqlMapConfig-xml"><a href="#编写主配置文件SqlMapConfig-xml" class="headerlink" title="编写主配置文件SqlMapConfig.xml"></a>编写主配置文件SqlMapConfig.xml</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">configuration</span></span></span><br><span class="line"><span class="meta">        <span class="meta-keyword">PUBLIC</span> <span class="meta-string">"-//mybatis.org//DTD Config 3.0//EN"</span></span></span><br><span class="line"><span class="meta">        <span class="meta-string">"http://mybatis.org/dtd/mybatis-3-config.dtd"</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--上面是使用mybatis的约束配置，记不住可以通过IDEA模板输入--&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- mybatis的主配置文件 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 配置环境 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">environments</span> <span class="attr">default</span>=<span class="string">"mysql"</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 配置mysql的环境--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">environment</span> <span class="attr">id</span>=<span class="string">"mysql"</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 配置事务的类型--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">transactionManager</span> <span class="attr">type</span>=<span class="string">"JDBC"</span>&gt;</span><span class="tag">&lt;/<span class="name">transactionManager</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 配置数据源（连接池） --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">dataSource</span> <span class="attr">type</span>=<span class="string">"POOLED"</span>&gt;</span></span><br><span class="line">                <span class="comment">&lt;!-- 配置连接数据库的4个基本信息 --&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"driver"</span> <span class="attr">value</span>=<span class="string">"com.mysql.jdbc.Driver"</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"url"</span> <span class="attr">value</span>=<span class="string">"jdbc:mysql://localhost:3306/mybatis"</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"username"</span> <span class="attr">value</span>=<span class="string">"root"</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">value</span>=<span class="string">"root"</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">dataSource</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">environment</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">environments</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 指定映射配置文件的位置，映射配置文件指的是每个dao独立的配置文件 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mappers</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mapper</span> <span class="attr">resource</span>=<span class="string">"cn/sher6j/dao/UserDao.xml"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">mappers</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ol>
 <ul>
-<li>byte：1</li>
-<li>short：2</li>
-<li>int(默认)：4</li>
-<li>long:8</li>
+<li>配置文件中首先引入mybatis的约束配置，约束配置不可能说全都背下来，我是进行了模板输入，在IDEA中进行自定义模板，如图所示，建议把经常用的模板式代码都可以制作相应模板</li>
 </ul>
-<p>2.浮点类型：</p>
+<p><img src="/2020/04/13/MyBatis%E5%85%A5%E9%97%A8/IDEA%E6%A8%A1%E6%9D%BF.jpg" alt="IDEA模板"></p>
 <ul>
-<li>float：4</li>
-<li>double(默认):8</li>
+<li>在配置文件中不可缺少的就是连接数据库的4个主要信息：<ol>
+<li>数据库驱动 —— com.mysql.jdbc.Driver固定写法</li>
+<li>URL —— jdbc:mysql://localhost:3306/mybatis<blockquote>
+<p>端口号3306位MySQL数据库默认端口号，可以更改，mybatis是具体的数据库</p>
+</blockquote>
+</li>
+<li>用户名 —— 我的是root</li>
+<li>密码 —— 我的也是root哈哈<blockquote>
+<p>说明：<br>指定映射配置文件的位置，映射配置文件指的是每个dao独立的配置文件，此处代码可以有别的实现方式，这里先这样做。<br>同时需要注意在IDEA资源resourses路径下创建文件夹时不要用如cn.sher6j.dao格式，这样的话创建出的文件是一级目录，在resourses路径下应该用cn/sher6j/dao创建三级目录。</p>
+</blockquote>
+</li>
+</ol>
+</li>
 </ul>
-        
-          <a class="article-more-a" href="/2020/03/19/Java-%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/#more">more >></a>
-        
+<h4 id="编写持久层接口的映射文件UserDao-xml"><a href="#编写持久层接口的映射文件UserDao-xml" class="headerlink" title="编写持久层接口的映射文件UserDao.xml"></a>编写持久层接口的映射文件UserDao.xml</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">mapper</span></span></span><br><span class="line"><span class="meta">        <span class="meta-keyword">PUBLIC</span> <span class="meta-string">"-//mybatis.org//DTD Mapper 3.0//EN"</span></span></span><br><span class="line"><span class="meta">        <span class="meta-string">"http://mybatis.org/dtd/mybatis-3-mapper.dtd"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">"cn.sher6j.dao.UserDao"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--配置查询所有--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"findAll"</span> <span class="attr">resultType</span>=<span class="string">"cn.sher6j.domain.User"</span>&gt;</span></span><br><span class="line">        select * from user</span><br><span class="line">    <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>要求：</p>
+<ol>
+<li>创建位置：必须和持久层接口在相同的包中。</li>
+<li>名称：必须以持久层接口名称命名文件名，扩展名是.xml<br>如图：</li>
+</ol>
+<p><img src="/2020/04/13/MyBatis%E5%85%A5%E9%97%A8/%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84.jpg" alt="目录结构"></p>
+<h4 id="编写测试类"><a href="#编写测试类" class="headerlink" title="编写测试类"></a>编写测试类</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span><span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">//1.读取配置文件</span></span><br><span class="line">        InputStream in = Resources.getResourceAsStream(<span class="string">"SqlMapConfig.xml"</span>);</span><br><span class="line">        <span class="comment">//2.创建SqlSessionFactory工厂</span></span><br><span class="line">        SqlSessionFactoryBuilder builder = <span class="keyword">new</span> SqlSessionFactoryBuilder();</span><br><span class="line">        SqlSessionFactory factory = builder.build(in);</span><br><span class="line">        <span class="comment">//3.使用工厂生产SqlSession对象</span></span><br><span class="line">        SqlSession session = factory.openSession();</span><br><span class="line">        <span class="comment">//4.使用SqlSession创建Dao接口的代理对象</span></span><br><span class="line">        UserDao userDao = session.getMapper(UserDao<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">        <span class="comment">//5.使用代理对象执行方法</span></span><br><span class="line">        List&lt;User&gt; users = userDao.findAll();</span><br><span class="line">        <span class="keyword">for</span>(User user : users)&#123;</span><br><span class="line">            System.out.println(user);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//6.释放资源</span></span><br><span class="line">        session.close();</span><br><span class="line">        in.close();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>注释中表明的6个步骤即为使用Mybatis和数据库交互的基本步骤，具体的源码分析见博文<a href>MyBatis源码分析</a></p>
+<h3 id="测试结果"><a href="#测试结果" class="headerlink" title="测试结果"></a>测试结果</h3><p><img src="/2020/04/13/MyBatis%E5%85%A5%E9%97%A8/%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%9C.jpg" alt="查询结果"></p>
+<p>观察详细过程我们可以发现，由于我们在 SQLMapConfig.xml 主配置文件中用了数据库连接池</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dataSource</span> <span class="attr">type</span>=<span class="string">"POOLED"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>所以我们可以看到如下过程：</p>
+<p><img src="/2020/04/13/MyBatis%E5%85%A5%E9%97%A8/%E8%AF%A6%E7%BB%86%E8%BF%87%E7%A8%8B.jpg" alt="详细过程"></p>
+<p>在一开始取得了数据库链接，然后在用完连接后，将链接归还到了数据库连接池中。</p>
+<p>Mybatis的入门案例就记录到此。</p>
+
       
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/zfb.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/wx.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -197,11 +289,15 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">数据库</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">JavaSE</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">MyBatis</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">框架</a>
         		</li>
       		
 		</ul>
@@ -210,16 +306,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/03/19/Java-%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/04/13/MyBatis%E5%85%A5%E9%97%A8/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2020/04/08/JDBC%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">JDBC核心技术</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -239,98 +394,14 @@
 
 
 
-
-  
-    <article id="post-在Ubuntu中安装MySQL" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/03/19/%E5%9C%A8Ubuntu%E4%B8%AD%E5%AE%89%E8%A3%85MySQL/">在Ubuntu中安装MySQL</a>
-    </h1>
-  
-
-        
-        <a href="/2020/03/19/%E5%9C%A8Ubuntu%E4%B8%AD%E5%AE%89%E8%A3%85MySQL/" class="archive-article-date">
-  	<time datetime="2020-03-19T05:19:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="在终端中敲入如下命令"><a href="#在终端中敲入如下命令" class="headerlink" title="在终端中敲入如下命令"></a>在终端中敲入如下命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install mysql-server</span><br></pre></td></tr></table></figure>
-<p><img src="/2020/03/19/%E5%9C%A8Ubuntu%E4%B8%AD%E5%AE%89%E8%A3%85MySQL/001.png" alt></p>
-<p>根据提示点Y即可</p>
-        
-          <a class="article-more-a" href="/2020/03/19/%E5%9C%A8Ubuntu%E4%B8%AD%E5%AE%89%E8%A3%85MySQL/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Ubuntu</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">MySQL</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/03/19/%E5%9C%A8Ubuntu%E4%B8%AD%E5%AE%89%E8%A3%85MySQL/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
   
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
-    </nav>
+  
+
+  
+
+  
+
   
 
 
@@ -353,8 +424,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,

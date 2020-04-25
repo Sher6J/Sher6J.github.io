@@ -6,17 +6,30 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: 递归 | 菜菜六甲的博客</title>
+  <title>Linux上安装JDK环境 | 菜菜六甲的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="想努力成为大厂程序猿的辣鸡在读研究生">
-<meta property="og:type" content="website">
-<meta property="og:title" content="菜菜六甲的博客">
-<meta property="og:url" content="http://yoursite.com/tags/%E9%80%92%E5%BD%92/index.html">
+  <meta name="description" content="在CentOS上安装JDK环境首先我们需要知道的是，在CentOS上有系统自带的JDK环境，而要安装新的JDK环境的话，我测试了如果不卸载掉系统自带JDK环境的话，则即使配置了环境变量也不会使新的JDK环境生效，所以我们应该先卸载掉系统自带的JDK环境。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux上安装JDK环境">
+<meta property="og:url" content="http://yoursite.com/2020/04/25/Linux%E4%B8%8A%E5%AE%89%E8%A3%85JDK%E7%8E%AF%E5%A2%83/index.html">
 <meta property="og:site_name" content="菜菜六甲的博客">
-<meta property="og:description" content="想努力成为大厂程序猿的辣鸡在读研究生">
+<meta property="og:description" content="在CentOS上安装JDK环境首先我们需要知道的是，在CentOS上有系统自带的JDK环境，而要安装新的JDK环境的话，我测试了如果不卸载掉系统自带JDK环境的话，则即使配置了环境变量也不会使新的JDK环境生效，所以我们应该先卸载掉系统自带的JDK环境。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/2020/04/25/Linux%E4%B8%8A%E5%AE%89%E8%A3%85JDK%E7%8E%AF%E5%A2%83/%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8DJDK.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/04/25/Linux%E4%B8%8A%E5%AE%89%E8%A3%85JDK%E7%8E%AF%E5%A2%83/%E5%8D%B8%E8%BD%BD%E8%87%AA%E5%B8%A6java%E7%8E%AF%E5%A2%83.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/04/25/Linux%E4%B8%8A%E5%AE%89%E8%A3%85JDK%E7%8E%AF%E5%A2%83/%E7%A7%BB%E5%8A%A8java%E7%9A%84%E5%8E%8B%E7%BC%A9%E5%8C%85%E5%88%B0Linux%E4%B8%AD.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/25/Linux%E4%B8%8A%E5%AE%89%E8%A3%85JDK%E7%8E%AF%E5%A2%83/%E8%A7%A3%E5%8E%8B%E5%AE%8Cjava%E5%8E%8B%E7%BC%A9%E5%8C%85.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/04/25/Linux%E4%B8%8A%E5%AE%89%E8%A3%85JDK%E7%8E%AF%E5%A2%83/%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/04/25/Linux%E4%B8%8A%E5%AE%89%E8%A3%85JDK%E7%8E%AF%E5%A2%83/%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/04/25/Linux%E4%B8%8A%E5%AE%89%E8%A3%85JDK%E7%8E%AF%E5%A2%83/%E6%88%90%E5%8A%9F%E4%BA%86.jpg">
+<meta property="article:published_time" content="2020-04-25T15:12:04.000Z">
+<meta property="article:modified_time" content="2020-04-25T15:49:42.850Z">
 <meta property="article:author" content="Sher6J">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="CentOS">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/04/25/Linux%E4%B8%8A%E5%AE%89%E8%A3%85JDK%E7%8E%AF%E5%A2%83/%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8DJDK.jpg">
   
     <link rel="alternative" href="/atom.xml" title="菜菜六甲的博客" type="application/atom+xml">
   
@@ -148,68 +161,226 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Linux上安装JDK环境" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/20/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-070-%E7%88%AC%E6%A5%BC%E6%A2%AF/" class="archive-article-date">
-  	<time datetime="2020-03-20T15:19:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-20</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/20/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-070-%E7%88%AC%E6%A5%BC%E6%A2%AF/">算法-力扣[070]爬楼梯</a>
+    <h1 class="article-title" itemprop="name">
+      Linux上安装JDK环境
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2020/04/25/Linux%E4%B8%8A%E5%AE%89%E8%A3%85JDK%E7%8E%AF%E5%A2%83/" class="archive-article-date">
+  	<time datetime="2020-04-25T15:12:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-25</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="在CentOS上安装JDK环境"><a href="#在CentOS上安装JDK环境" class="headerlink" title="在CentOS上安装JDK环境"></a>在CentOS上安装JDK环境</h2><p>首先我们需要知道的是，在CentOS上有系统自带的JDK环境，而要安装新的JDK环境的话，我测试了如果不卸载掉系统自带JDK环境的话，则即使配置了环境变量也不会使新的JDK环境生效，所以我们应该先卸载掉系统自带的JDK环境。</p>
+<a id="more"></a>
+
+<p>输入以下命令查看系统自带的JDK环境</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep jdk</span><br></pre></td></tr></table></figure>
+
+<p>如图所示</p>
+<p><img src="/2020/04/25/Linux%E4%B8%8A%E5%AE%89%E8%A3%85JDK%E7%8E%AF%E5%A2%83/%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8DJDK.jpg" alt="查看当前JDK.jpg"></p>
+<p>可以发现自带了两个JDK环境，分别进行卸载，用以下命令进行JDK环境的卸载</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y remove + 具体的JDK环境</span><br></pre></td></tr></table></figure>
+
+<p>如图所示</p>
+<p><img src="/2020/04/25/Linux%E4%B8%8A%E5%AE%89%E8%A3%85JDK%E7%8E%AF%E5%A2%83/%E5%8D%B8%E8%BD%BD%E8%87%AA%E5%B8%A6java%E7%8E%AF%E5%A2%83.jpg" alt="卸载自带java环境.jpg"></p>
+<p>在卸载掉系统自带的JDK环境后，我们就可以安装自己需要的JDK了，我要安装的是JDK8。</p>
+<p>首先创建目录/usr/java</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir &#x2F;usr&#x2F;java</span><br></pre></td></tr></table></figure>
+
+<p>然后利用Xftp工具将下载好的JDK压缩文件移动到该目录下</p>
+<p><img src="/2020/04/25/Linux%E4%B8%8A%E5%AE%89%E8%A3%85JDK%E7%8E%AF%E5%A2%83/%E7%A7%BB%E5%8A%A8java%E7%9A%84%E5%8E%8B%E7%BC%A9%E5%8C%85%E5%88%B0Linux%E4%B8%AD.png" alt="移动java的压缩包到Linux中.png"></p>
+<p>将压缩文件进行解压，解压压缩文件的命令如下，可以用 tar-最小微分进行记忆</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf +压缩文件具体名称</span><br></pre></td></tr></table></figure>
+
+<p>解压完压缩包后将压缩文件删除即可</p>
+<p><img src="/2020/04/25/Linux%E4%B8%8A%E5%AE%89%E8%A3%85JDK%E7%8E%AF%E5%A2%83/%E8%A7%A3%E5%8E%8B%E5%AE%8Cjava%E5%8E%8B%E7%BC%A9%E5%8C%85.jpg" alt="解压完java压缩包.jpg"></p>
+<p>然后配置环境变量，输入如下命令配置系统环境变量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim &#x2F;etc&#x2F;profile</span><br></pre></td></tr></table></figure>
+
+<p>在环境变量文件的末尾加入如下代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME&#x3D;&#x2F;usr&#x2F;java&#x2F;jdk1.8.0_251</span><br><span class="line">export JRE_HOME&#x3D;$&#123;JAVA_HOME&#125;&#x2F;jre</span><br><span class="line">export JAVA_PATH&#x3D;$&#123;JAVA_HOME&#125;&#x2F;bin:$&#123;JRE_HOME&#125;&#x2F;bin</span><br><span class="line">export PATA&#x3D;$PATH:$&#123;JAVA_PATH&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在修改完环境变量后，<strong>一定一定要记住</strong>要让环境变量生效，输入以下命令即可：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source &#x2F;etc&#x2F;profile</span><br></pre></td></tr></table></figure>
+
+<p>如图所示：</p>
+<p><img src="/2020/04/25/Linux%E4%B8%8A%E5%AE%89%E8%A3%85JDK%E7%8E%AF%E5%A2%83/%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F.jpg" alt="配置环境变量.jpg"></p>
+<p>在配置完环境变量后，执行<strong>java -version</strong>查看java的版本，但是我却出现了 <strong>cannot  excute binary file</strong> 的错误，这是因为安装的JDK和系统的环境位数不匹配造成的，比如我安装的是64位的JDK，但是我的操作系统环境确是32位的，那怎么查看系统环境呢？可以用如下命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getconfig LONG_BIG</span><br></pre></td></tr></table></figure>
+
+<p>如图发现我的系统是32位的：</p>
+<p><img src="/2020/04/25/Linux%E4%B8%8A%E5%AE%89%E8%A3%85JDK%E7%8E%AF%E5%A2%83/%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F.jpg" alt="查看系统.jpg"></p>
+<p>在更换了JDK为32后再按照之前的方式安装JDK环境即可，最终成功</p>
+<p><img src="/2020/04/25/Linux%E4%B8%8A%E5%AE%89%E8%A3%85JDK%E7%8E%AF%E5%A2%83/%E6%88%90%E5%8A%9F%E4%BA%86.jpg" alt="成功了.jpg"></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/zfb.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/wx.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">力扣</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">递归</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">CentOS</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/04/25/Linux%E4%B8%8A%E5%AE%89%E8%A3%85JDK%E7%8E%AF%E5%A2%83/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2020/04/13/MyBatis%E5%85%A5%E9%97%A8/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">mybatis入门</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -232,9 +403,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,

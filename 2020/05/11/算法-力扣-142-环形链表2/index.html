@@ -15,13 +15,19 @@
 <meta property="og:site_name" content="菜菜六甲的博客">
 <meta property="og:description" content="力扣[142]环形链表2题目给定一个链表，返回链表开始入环的第一个节点。 如果链表无环，则返回 null。 为了表示给定链表中的环，我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。 如果 pos 是 -1，则在该链表中没有环。 说明：不允许修改给定的链表。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/2020/05/11/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A82/1.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/11/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A82/2.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/11/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A82/6.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/11/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A82/7.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/11/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A82/11.png">
 <meta property="article:published_time" content="2020-05-11T02:18:06.000Z">
-<meta property="article:modified_time" content="2020-05-11T02:31:55.245Z">
+<meta property="article:modified_time" content="2020-05-11T03:59:01.977Z">
 <meta property="article:author" content="Sher6J">
 <meta property="article:tag" content="算法">
 <meta property="article:tag" content="力扣">
 <meta property="article:tag" content="链表">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/05/11/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A82/1.png">
   
     <link rel="alternative" href="/atom.xml" title="菜菜六甲的博客" type="application/atom+xml">
   
@@ -180,6 +186,62 @@
 
 <p><strong>进阶：</strong><br>你是否可以不用额外空间解决此题？</p>
 <p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/linked-list-cycle-ii" target="_blank" rel="noopener">https://leetcode-cn.com/problems/linked-list-cycle-ii</a></p>
+<h3 id="解法一：利用哈希集"><a href="#解法一：利用哈希集" class="headerlink" title="解法一：利用哈希集"></a>解法一：利用哈希集</h3><p>在环形链表1<a href="http://sher6j.cn/2020/05/11/算法-力扣-141-环形链表/#more" target="_blank" rel="noopener">环形链表</a>的解法一种我们利用哈希集对链表访问过的节点进行了跟踪，而环形链表2的题目仍然可以用哈希集来记录链表访问过的节点，同样的道理，第一次出现访问的节点已经出现在哈希集中时，则该节点即为链表开始入环的第一个节点。代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">detectCycle</span><span class="params">(ListNode head)</span> </span>&#123;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 利用HashMap，将访问过的节点及其对应的索引存入到HashMap中</span></span><br><span class="line"><span class="comment">         * 但是发现力扣上只需要返回节点值即可，输出打印语句其主方法里已经写好了</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line"><span class="comment">//        if (head == null || head.next == null) &#123;</span></span><br><span class="line"><span class="comment">//            System.out.println("no cycle");</span></span><br><span class="line"><span class="comment">//            return null;</span></span><br><span class="line"><span class="comment">//        &#125;</span></span><br><span class="line"><span class="comment">//        HashMap&lt;ListNode, Integer&gt; map = new HashMap&lt;&gt;();</span></span><br><span class="line"><span class="comment">//        ListNode current = head;</span></span><br><span class="line"><span class="comment">//        int index = 0;</span></span><br><span class="line"><span class="comment">//        while (current.next != null) &#123;</span></span><br><span class="line"><span class="comment">//            map.put(current, index);</span></span><br><span class="line"><span class="comment">//            current = current.next;</span></span><br><span class="line"><span class="comment">//            index ++;</span></span><br><span class="line"><span class="comment">//            if (map.keySet().contains(current)) &#123;</span></span><br><span class="line"><span class="comment">//                System.out.println("tail connects to node index " + map.get(current));</span></span><br><span class="line"><span class="comment">//                return current;</span></span><br><span class="line"><span class="comment">//            &#125;</span></span><br><span class="line"><span class="comment">//        &#125;</span></span><br><span class="line"><span class="comment">//        System.out.println("no cycle");</span></span><br><span class="line"><span class="comment">//        return null;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 哈希集</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">if</span> (head == <span class="keyword">null</span> || head.next == <span class="keyword">null</span>) &#123; <span class="comment">//链表为空或只有一个节点则无环</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        HashSet&lt;Object&gt; set = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line">        ListNode current = head;</span><br><span class="line">        <span class="keyword">while</span> (current.next != <span class="keyword">null</span>) &#123;</span><br><span class="line">            set.add(current);</span><br><span class="line">            current = current.next;</span><br><span class="line">            <span class="keyword">if</span> (set.contains(current)) &#123; <span class="comment">//第一次出现已经在哈希集中的节点时直接返回该节点</span></span><br><span class="line">                <span class="keyword">return</span> current;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这种解法就同第一题一样，<strong>时间复杂度为O(n)</strong>，<strong>空间复杂度也为O(n)</strong>。下面考虑解法二。</p>
+<h3 id="解法二：快慢指针"><a href="#解法二：快慢指针" class="headerlink" title="解法二：快慢指针"></a>解法二：快慢指针</h3><p>同环形链表<a href="http://sher6j.cn/2020/05/11/算法-力扣-141-环形链表/#more" target="_blank" rel="noopener">环形链表</a>的解法二一样，考虑快慢指针，但是问题就是，我们如何利用快慢指针来找到环形列表的入口呢？</p>
+<p>思路是这样的：首先算法应该分两个部分：</p>
+<ul>
+<li>第一，判断链表是否有环，第一步就和141题环形链表一样即可</li>
+<li>第二，在一直链表有环的基础上，得到环的入口节点</li>
+</ul>
+<p>假设给出的链表为如下链表：</p>
+<p><img src="/2020/05/11/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A82/1.png" alt></p>
+<p>首先判断链表是否有环：由141题的解法二可以很容易得到下面思路：</p>
+<ol>
+<li><p><strong>双指针第一次相遇：</strong> 设两指针 <code>fast</code>，<code>slow</code> 指向链表头部 <code>head</code>，<code>fast</code> 每轮走 2 步，即<code>fast = fast.next.next</code>，<code>slow</code> 每轮走 1 步，即<code>slow = slow.next</code>；</p>
+<p><img src="/2020/05/11/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A82/2.png" alt></p>
+<p>经过遍历后会出现以下两种结果：</p>
+<ul>
+<li><p><strong>第一种结果：</strong> <code>fast</code> 指针走到链表末端即且<code>fast == null</code>或<code>fast.next == null</code>，说明链表无环，直接返回 <code>null</code>；</p>
+</li>
+<li><p><strong>第二种结果：</strong> 当<code>fast == slow</code>时， 两指针在环中<strong>第一次相遇</strong> 。如图所示</p>
+<p><img src="/2020/05/11/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A82/6.png" alt></p>
+<p>下面分析此时<code>fast</code> 与 <code>slow</code>走过的 <strong>步数关系</strong> ：</p>
+<ul>
+<li><p>设链表共有 <strong>a+b</strong> 个节点，其中 链表头部到链表入口 有 <strong>a</strong> 个节点（不计链表入口节点）， 链表环有<strong>b</strong>个节点（a 和 b 是未知数，例如图解上链表 a=4 , b=5）；设两指针分别走了 <code>f</code>，<code>s</code> 步，则有：</p>
+<ol>
+<li><code>fast</code> 走的步数是<code>slow</code>步数的 2 倍，即 <code>f = 2s</code>；</li>
+<li><code>fast</code> 比 <code>slow</code>多走了 <strong>n</strong> 个环的长度，即 <code>f = s + nb</code>；（  双指针都走过 a 步，然后在环内绕圈直到重合，重合时 fast 比 slow 多走环的长度整数倍 ）；</li>
+</ol>
+</li>
+<li><p>以上两式相减得：<code>f = 2nb</code>，<code>s = nb</code>，即<code>fast</code>和<code>slow</code> 指针分别走了 <strong>2n</strong>，*<em>n *</em>个 环的周长 .</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>此时的状态应该是：</p>
+<ul>
+<li>假设让指针从链表头部一直向前走并统计步数<code>k</code>，那么所有走到链表入口节点时的步数应该是：<strong>k=a+nb</strong>（先走 a步到入口节点，之后每绕 1 圈环（ b 步）都会再次到入口节点）。</li>
+<li>经过上面分析得出，<code>slow</code> 指针走过的步数为 <strong>nb</strong>步。所以只要想办法让 <code>slow</code> 再走 <strong>a</strong> 步停下来，然后<code>slow</code>指针的位置即为环的入口。</li>
+<li>下面的问题就是 <strong>a的值</strong> 未知，怎么得到a的值呢？依然是使用双指针法。我们构建一个指针，此指针需要有以下性质：此指针和<code>slow</code>指针一起向前走 a 步后，之后这两个指针一定在入口点重合。不难想到这个指针该是链表的<strong>头指针</strong>！！！</li>
+</ul>
+</li>
+<li><p><strong>双指针第二次相遇：</strong></p>
+<ul>
+<li><p><code>slow</code>指针位置不变 ，将<code>fast</code>指针重新指向链表头部节点 ；<code>slow</code>和<code>fast</code>同时每轮向前走 1步；</p>
+<p><img src="/2020/05/11/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A82/7.png" alt></p>
+</li>
+<li><p>当 <code>fast</code> 指针走到f = a步时，<code>slow</code> 指针走到s = a+nb步时，此时 <strong>两指针重合，并同时指向链表环入口</strong></p>
+<p><img src="/2020/05/11/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A82/11.png" alt></p>
+</li>
+</ul>
+</li>
+</ol>
+<p>最后返回<code>fast</code>或<code>slow</code>指向的节点均可，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">detectCycle</span><span class="params">(ListNode head)</span> </span>&#123;</span><br><span class="line">        ListNode fast = head, slow = head; <span class="comment">//起始快慢指针均指向头结点</span></span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (fast == <span class="keyword">null</span> || fast.next == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">            fast = fast.next.next;</span><br><span class="line">            slow = slow.next;</span><br><span class="line">            <span class="keyword">if</span> (fast == slow) <span class="keyword">break</span>; <span class="comment">//确定了链表有环路，完成第一步，退出循环</span></span><br><span class="line">        &#125;</span><br><span class="line">        fast = head; <span class="comment">//令快指针从头开始走，并变为每步走1步</span></span><br><span class="line">        <span class="keyword">while</span> (slow != fast) &#123;</span><br><span class="line">            slow = slow.next;</span><br><span class="line">            fast = fast.next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> fast;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
 
       
 
@@ -430,14 +492,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">JavaSE</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">redis</a>
               </li>
              
@@ -447,6 +501,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">CentOS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">JavaSE</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -466,6 +528,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">MyBatis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">框架</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Ubuntu</a>
               </li>
              
@@ -482,11 +552,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">MyBatis</a>
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">框架</a>
+                <a href="javascript:void(0)" class="js-tag color3">力扣</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -498,19 +572,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">力扣</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">数组</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -518,7 +580,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">

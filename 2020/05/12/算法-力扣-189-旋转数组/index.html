@@ -6,23 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>算法--力扣[283]移动零 | 菜菜六甲的博客</title>
+  <title>算法-力扣-189-旋转数组 | 菜菜六甲的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="力扣[283]移动零题目：给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。示例: 输入: [0,1,0,3,12]输出: [1,3,12,0,0] 说明:必须在原数组上操作，不能拷贝额外的数组。尽量减少操作次数。">
+  <meta name="description" content="力扣[189]旋转数组题目给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="算法--力扣[283]移动零">
-<meta property="og:url" content="http://yoursite.com/2020/03/20/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-283-%E7%A7%BB%E5%8A%A8%E9%9B%B6/index.html">
+<meta property="og:title" content="算法-力扣-189-旋转数组">
+<meta property="og:url" content="http://yoursite.com/2020/05/12/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-189-%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84/index.html">
 <meta property="og:site_name" content="菜菜六甲的博客">
-<meta property="og:description" content="力扣[283]移动零题目：给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。示例: 输入: [0,1,0,3,12]输出: [1,3,12,0,0] 说明:必须在原数组上操作，不能拷贝额外的数组。尽量减少操作次数。">
+<meta property="og:description" content="力扣[189]旋转数组题目给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-03-20T09:44:30.000Z">
-<meta property="article:modified_time" content="2020-03-20T10:30:00.672Z">
+<meta property="og:image" content="http://yoursite.com/2020/05/12/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-189-%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84/1.png">
+<meta property="article:published_time" content="2020-05-12T02:12:38.000Z">
+<meta property="article:modified_time" content="2020-05-12T03:48:04.545Z">
 <meta property="article:author" content="Sher6J">
-<meta property="article:tag" content="Java">
-<meta property="article:tag" content="算法">
-<meta property="article:tag" content="力扣">
-<meta property="article:tag" content="数组">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/05/12/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-189-%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84/1.png">
   
     <link rel="alternative" href="/atom.xml" title="菜菜六甲的博客" type="application/atom+xml">
   
@@ -154,46 +152,46 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-算法-力扣-283-移动零" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-算法-力扣-189-旋转数组" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      算法--力扣[283]移动零
+      算法-力扣-189-旋转数组
     </h1>
   
 
         
-        <a href="/2020/03/20/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-283-%E7%A7%BB%E5%8A%A8%E9%9B%B6/" class="archive-article-date">
-  	<time datetime="2020-03-20T09:44:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-20</time>
+        <a href="/2020/05/12/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-189-%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84/" class="archive-article-date">
+  	<time datetime="2020-05-12T02:12:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-12</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="力扣-283-移动零"><a href="#力扣-283-移动零" class="headerlink" title="力扣[283]移动零"></a>力扣[283]移动零</h2><h3 id="题目："><a href="#题目：" class="headerlink" title="题目："></a>题目：</h3><p>给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。<br>示例:</p>
-<p>输入: [0,1,0,3,12]<br>输出: [1,3,12,0,0]</p>
-<p>说明:必须在原数组上操作，不能拷贝额外的数组。尽量减少操作次数。</p>
+        <h2 id="力扣-189-旋转数组"><a href="#力扣-189-旋转数组" class="headerlink" title="力扣[189]旋转数组"></a>力扣[189]旋转数组</h2><h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><p>给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。</p>
 <a id="more"></a>
 
-<h3 id="题解1"><a href="#题解1" class="headerlink" title="题解1"></a>题解1</h3><p>所谓要把0移动到数组后面，其实就是把非0数给移动到数组前面，而每个非0数需要移动的步数其实就是这个非0数前面0的个数。</p>
-<p>举例输入数组为 [0, 1, 0, 3, 5]，</p>
-<p>其输出数组应为 [1, 3, 0, 0, 5]。</p>
-<p>我们发现，元素1前面有1个零，则元素1向前移动了1个位置，元素3前面有2个零，则元素3向前移动了2个位置。即，若元素num前有count个零，则元素num会向前移动count个位置，在移动完所有元素后，将剩余元素赋值为0即可。<br>代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> count = <span class="number">0</span>; <span class="comment">//用来记录某元素前的0元素个数</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (nums[i] == <span class="number">0</span>) &#123;</span><br><span class="line">        count ++;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        nums[i - count] = nums[i]; <span class="comment">//将该元素向前移动count个位置</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//将其余元素依次赋值为0</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = nums.length - count; i &lt; nums.length; i++) &#123;</span><br><span class="line">    nums[i] = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="题解2"><a href="#题解2" class="headerlink" title="题解2"></a>题解2</h2><p>类似的逻辑，将零元素移动到数组末尾， 相当于将非零元素移动到数组的前面，保证相对顺序即可。遍历数组，将非零0的元素移动数组前方，用index下标记录。遍历结束后，对index值后的元素统一设为0即可。</p>
-<p>举例输入数组为 [0, 1, 0, 3, 5]，</p>
-<p>我们至于要让非零元素依次移动到数组前面-&gt; [1, 3, 5]，剩余元素赋值为0即可。代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> index = <span class="number">0</span>; <span class="comment">//记录非零元素在输出时应该在的位置</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> num : nums) &#123;</span><br><span class="line">    <span class="keyword">if</span> (num != <span class="number">0</span>) &#123;</span><br><span class="line">        nums[index++] = num; <span class="comment">//将非零元素移动到应该在的位置</span></span><br><span class="line">    &#125;       </span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//剩余元素赋值为0</span></span><br><span class="line"><span class="keyword">while</span> (index &lt; nums.length) &#123;</span><br><span class="line">    nums[index++] = <span class="number">0</span>;    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="题解3"><a href="#题解3" class="headerlink" title="题解3"></a>题解3</h2><p>在每次循环中，由指针j用来记录标记当前数组第一个0元素交换后的索引，指针i标记第一个非0且不在最终位置元素的索引，然后将这两个元素进行互换，最终所有0元素都会在非0元素的后面。</p>
-<p>举例输入数组为 [0, 1, 0, 3, 5]，</p>
-<p>第一个非零元素1应出现在索引为0的位置，即j=0,而1非零，其索引为1，即i=1，</p>
-<p>另i，j对应元素交换后，数组为 [1, 0, 0, 3, 5]，然后j=1，知道i=3时，再进行交换，数为[1, 3, 0, 0, 5]。代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (nums[i] != <span class="number">0</span>) &#123;</span><br><span class="line">        nums[j] = nums[i];</span><br><span class="line">        <span class="keyword">if</span> (i != j)&#123;</span><br><span class="line">            nums[i] = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        j++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>记录了此题的三种时间复杂度为O(n)的三种不同思路的解法，其他复杂解法不做赘述。</p>
+<p>示例 1:</p>
+<p>输入: [1,2,3,4,5,6,7] 和 k = 3<br>输出: [5,6,7,1,2,3,4]<br>解释:<br>向右旋转 1 步: [7,1,2,3,4,5,6]<br>向右旋转 2 步: [6,7,1,2,3,4,5]<br>向右旋转 3 步: [5,6,7,1,2,3,4]</p>
+<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/rotate-array" target="_blank" rel="noopener">https://leetcode-cn.com/problems/rotate-array</a></p>
+<h3 id="题解一：暴力旋转"><a href="#题解一：暴力旋转" class="headerlink" title="题解一：暴力旋转"></a>题解一：暴力旋转</h3><p>考虑直接旋转k个位置不容易，那最简单的方法是旋转 1 个位置 ，<strong>每次将数组旋转 1 个元素，旋转 k 次即可</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 暴力旋转</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">int</span> temp, previous;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; k; i++) &#123;</span><br><span class="line">            previous = nums[nums.length - <span class="number">1</span>];</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; nums.length; j++) &#123;</span><br><span class="line">                temp = nums[j];</span><br><span class="line">                nums[j] = previous;</span><br><span class="line">                previous = temp;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>将数组旋转1个元素时间复杂度为O(n)，一共需要旋转k次，所以<strong>时间复杂度为O(n)</strong>，<strong>空间复杂度</strong>显然为<strong>O(1)</strong></p>
+<h3 id="题解二：开辟一个新的数组空间"><a href="#题解二：开辟一个新的数组空间" class="headerlink" title="题解二：开辟一个新的数组空间"></a>题解二：开辟一个新的数组空间</h3><p>这种方法还是很好想的，开辟新的数组赋值后，再讲新数组的值赋给原数组即可</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 开辟新数组，空间复杂度为O(n)</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">int</span>[] temp = <span class="keyword">new</span> <span class="keyword">int</span>[nums.length];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">            temp[(i + k) % nums.length] = nums[i];</span><br><span class="line">        &#125;</span><br><span class="line"><span class="comment">//        nums = temp; //错误写法</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">            nums[i] = temp[i];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里需要注意代码中加了注释的一行，必须为原数组内容重新赋值，而不能讲原数组指向新数组，如果不用下面循环将内容重新赋值的方法，而是用注释掉的错误写法的话，原数组内容并不会发生改变，原因是：<strong>Java总是采用按值调用</strong>，也就是说，<strong>方法得到的是所有参数值的一个副本</strong>，具体说就是，<strong>方法不能修改传递给它的任何参数变量的内容</strong>。具体解释这段话，我们知道有两种类型的方法参数：<code>基本数据类型（数字、布尔值）</code>，<code>对象引用</code>，其中<code>对象引用</code>实际上是一个内存地址，也就是说我们传入函数中的 <code>int[] nums</code> 是<strong>实际nums</strong>的一个副本，在函数中操作这个地址不会改变该地址，所以我们只能改变这个地址所对应的真实数组。综上，被注释掉的写法是完全错误的！！！只能通过重新赋值改变数组的内容。</p>
+<p>这个解法的时间复杂度和空间复杂度显然为O(n)和O(1)</p>
+<h3 id="解法三：环装替代"><a href="#解法三：环装替代" class="headerlink" title="解法三：环装替代"></a>解法三：环装替代</h3><p>把元素看做同学，把下标看做座位，这道题可以理解成大家换座位。第一个同学离开座位去第k+1个座位，第k+1个座位的同学被挤到角落 <code>temp</code> 去了，然后他就找他后k个座位做，如此反复。但是会出现一种情况，就是其中一个同学被挤开之后，坐到了第一个同学的位置（空位置，没人被挤出来），这种情况就是对应于在 <code>n%k==0</code>  时会发生，但是此时还有人没有调换位置，这样就顺着让第二个同学换位置。 那么什么时候就可以保证每个同学都换完了呢？n个同学，换n次，所以用一个count来计数即可。</p>
+<p><img src="/2020/05/12/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-189-%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84/1.png" alt></p>
+<p>其中左图对应了普通情况下同学逐一换座位，也就是整个换座位过程中只出现了<strong>一个环</strong>，而右图对应了当 <code>n%k==0</code>时，换座位过程中会出现<strong>多个环</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 环装替换法</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>; <span class="comment">//记录已经交换位置的元素个数，当count==nums.length时代表交换结束</span></span><br><span class="line">        <span class="comment">//start为最开始交换的位置，整个循环当count达到数组长度时结束</span></span><br><span class="line">        <span class="comment">//start++对应于经过一环交换最后一个元素来到了第一个元素的位置，即n%k==0</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> start = <span class="number">0</span>; count &lt; nums.length; start++) &#123;</span><br><span class="line">            <span class="keyword">int</span> current = start; <span class="comment">//从0位置开始交换</span></span><br><span class="line">            <span class="keyword">int</span> pre = nums[current];</span><br><span class="line">            <span class="keyword">do</span> &#123;</span><br><span class="line">                <span class="keyword">int</span> next = (current + k) % nums.length;</span><br><span class="line">                <span class="keyword">int</span> temp = nums[next];</span><br><span class="line">                nums[next] = pre;</span><br><span class="line">                current = next;</span><br><span class="line">                pre = temp;</span><br><span class="line">                count ++;</span><br><span class="line">            &#125; <span class="keyword">while</span> (start != current);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
 
       
 
@@ -233,29 +231,6 @@
     <div class="article-info article-info-index">
       
       
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">力扣</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">数组</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
       
 
       
@@ -306,7 +281,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/03/20/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-283-%E7%A7%BB%E5%8A%A8%E9%9B%B6/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/05/12/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-189-%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -320,18 +295,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/03/20/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-011-%E7%9B%9B%E6%9C%80%E5%A4%9A%E6%B0%B4%E7%9A%84%E5%AE%B9%E5%99%A8/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          算法--力扣[11]盛最多水的容器
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/03/19/Java-%E5%B8%B8%E7%94%A8API/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Java-常用API</div>
+    <a href="/2020/05/11/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-024-%E4%B8%A4%E4%B8%A4%E4%BA%A4%E6%8D%A2%E9%93%BE%E8%A1%A8/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">算法-力扣-024-两两交换链表</div>
       <i class="icon-circle-right"></i>
     </a>
   

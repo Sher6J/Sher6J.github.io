@@ -22,8 +22,9 @@
 <meta property="og:image" content="http://yoursite.com/2020/05/19/SpringCloud-01Eureka%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%8E%E5%8F%91%E7%8E%B0/Eureka%E5%8D%95%E7%82%B9%E6%9E%B6%E6%9E%84.jpg">
 <meta property="og:image" content="http://yoursite.com/2020/05/19/SpringCloud-01Eureka%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%8E%E5%8F%91%E7%8E%B0/Eureka%E9%9B%86%E7%BE%A4%E5%8E%9F%E7%90%86.jpg">
 <meta property="og:image" content="http://yoursite.com/2020/05/19/SpringCloud-01Eureka%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%8E%E5%8F%91%E7%8E%B0/%E4%BA%92%E7%9B%B8%E6%B3%A8%E5%86%8C.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/05/19/SpringCloud-01Eureka%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%8E%E5%8F%91%E7%8E%B0/%E6%9C%8D%E5%8A%A1%E5%85%A5%E9%A9%BB%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83%E9%9B%86%E7%BE%A4.jpg">
 <meta property="article:published_time" content="2020-05-19T12:09:47.000Z">
-<meta property="article:modified_time" content="2020-05-19T14:54:41.826Z">
+<meta property="article:modified_time" content="2020-05-19T16:01:21.781Z">
 <meta property="article:author" content="Sher6J">
 <meta property="article:tag" content="微服务">
 <meta property="article:tag" content="SpringCloud">
@@ -313,9 +314,32 @@
 </ul>
 <ul>
 <li><p>测试</p>
-<p>如图：两个服务中心已经完成了互相注册</p>
+<p>如图：两个服务中心已经完成了互相注册。<strong>DS Replicas</strong>这个下面的信息就表示是这个Eureka Server相邻节点，且这些节点加上自己互为一个集群。</p>
 <p><img src="/2020/05/19/SpringCloud-01Eureka%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%8E%E5%8F%91%E7%8E%B0/%E4%BA%92%E7%9B%B8%E6%B3%A8%E5%86%8C.jpg" alt></p>
 </li>
+</ul>
+<h4 id="3-将服务提供方服务8001发布到上面2台Eureka集群配置中"><a href="#3-将服务提供方服务8001发布到上面2台Eureka集群配置中" class="headerlink" title="3. 将服务提供方服务8001发布到上面2台Eureka集群配置中"></a>3. 将服务提供方服务8001发布到上面2台Eureka集群配置中</h4><p>修改其配置文件即可</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8001</span></span><br><span class="line"></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">cloud-payment-service</span>  <span class="comment"># 入驻Eureka服务注册中心的服务名称</span></span><br><span class="line">  <span class="attr">datasource:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">com.alibaba.druid.pool.DruidDataSource</span>  <span class="comment"># 当前数据源操作类型</span></span><br><span class="line">    <span class="attr">driver-class-name:</span> <span class="string">org.gjt.mm.mysql.Driver</span>    <span class="comment"># mysql驱动包</span></span><br><span class="line">    <span class="attr">url:</span> <span class="string">jdbc:mysql://localhost:3306/cloud20?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false</span></span><br><span class="line">    <span class="attr">username:</span> <span class="string">root</span></span><br><span class="line">    <span class="attr">password:</span> <span class="string">root</span></span><br><span class="line"></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line">  <span class="attr">client:</span></span><br><span class="line">    <span class="comment">#表示是否将自己注册进EurekaServer默认为true。</span></span><br><span class="line">    <span class="attr">register-with-eureka:</span> <span class="literal">true</span></span><br><span class="line">    <span class="comment">#是否从EurekaServer抓取已有的注册信息，默认为true。单节点无所谓，集群必须设置为true才能配合ribbon使用负载均衡</span></span><br><span class="line">    <span class="attr">fetchRegistry:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">service-url:</span></span><br><span class="line">      <span class="attr">defaultZone:</span> <span class="string">http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka</span> <span class="comment"># 入驻的服务注册中心地址</span></span><br><span class="line"></span><br><span class="line"><span class="attr">mybatis:</span></span><br><span class="line">  <span class="attr">mapperLocations:</span> <span class="string">classpath:mapper/*.xml</span></span><br><span class="line">  <span class="attr">type-aliases-package:</span> <span class="string">cn.sher6j.springcloud.entities</span>  <span class="comment"># 所有Entity别名类所在包</span></span><br></pre></td></tr></table></figure>
+
+<p>也就是将自己的微服务注册到每一个服务注册中心里去，见配置文件中的<font color="red"><strong>defaultZone</strong></font>。</p>
+<h4 id="4-将服务消费方服务80发布到上面2台Eureka集群配置中"><a href="#4-将服务消费方服务80发布到上面2台Eureka集群配置中" class="headerlink" title="4. 将服务消费方服务80发布到上面2台Eureka集群配置中"></a>4. 将服务消费方服务80发布到上面2台Eureka集群配置中</h4><p>和上面的是一样的，只需要修改其配置文件，将自己注册进两个服务注册中心中。</p>
+<p>下面进行测试：<strong>首先</strong> 要启动EurekaServer服务，即7001和7002服务，这样就有了服务注册中心，<strong>然后</strong> 再启动服务提供方即8001， <strong>最后</strong> 启动服务消费方即80。如图：7001和7002已经构成集群，且都可以拉取到80和8001两个服务：</p>
+<p><img src="/2020/05/19/SpringCloud-01Eureka%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%8E%E5%8F%91%E7%8E%B0/%E6%9C%8D%E5%8A%A1%E5%85%A5%E9%A9%BB%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83%E9%9B%86%E7%BE%A4.jpg" alt></p>
+<h4 id="5-服务提供方8001服务的集群环境构建"><a href="#5-服务提供方8001服务的集群环境构建" class="headerlink" title="5. 服务提供方8001服务的集群环境构建"></a>5. 服务提供方8001服务的集群环境构建</h4><ul>
+<li><p>参考8001服务新建8002服务</p>
+</li>
+<li><p>改POM：和8001的POM文件一样</p>
+</li>
+<li><p>写配置文件：将端口改为8002，其他和8001相同，两个微服务 <strong>对外暴露的服务名相同</strong> 均为cloud-payment-service <strong>从而构成集群</strong>。</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8002</span></span><br><span class="line"></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">cloud-payment-service</span>  <span class="comment"># 入驻Eureka服务注册中心的服务名称</span></span><br><span class="line">  <span class="attr">datasource:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">com.alibaba.druid.pool.DruidDataSource</span>  <span class="comment"># 当前数据源操作类型</span></span><br><span class="line">    <span class="attr">driver-class-name:</span> <span class="string">org.gjt.mm.mysql.Driver</span>    <span class="comment"># mysql驱动包</span></span><br><span class="line">    <span class="attr">url:</span> <span class="string">jdbc:mysql://localhost:3306/cloud20?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false</span></span><br><span class="line">    <span class="attr">username:</span> <span class="string">root</span></span><br><span class="line">    <span class="attr">password:</span> <span class="string">root</span></span><br><span class="line"></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line">  <span class="attr">client:</span></span><br><span class="line">    <span class="comment">#表示是否将自己注册进EurekaServer默认为true。</span></span><br><span class="line">    <span class="attr">register-with-eureka:</span> <span class="literal">true</span></span><br><span class="line">    <span class="comment">#是否从EurekaServer抓取已有的注册信息，默认为true。单节点无所谓，集群必须设置为true才能配合ribbon使用负载均衡</span></span><br><span class="line">    <span class="attr">fetchRegistry:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">service-url:</span></span><br><span class="line">      <span class="comment"># 单机版</span></span><br><span class="line">      <span class="comment">#      defaultZone: http://localhost:7001/eureka # 入驻的服务注册中心地址</span></span><br><span class="line">      <span class="comment"># 集群版</span></span><br><span class="line">      <span class="attr">defaultZone:</span> <span class="string">http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka</span> <span class="comment"># 入驻的服务注册中心地址</span></span><br><span class="line"></span><br><span class="line"><span class="attr">mybatis:</span></span><br><span class="line">  <span class="attr">mapperLocations:</span> <span class="string">classpath:mapper/*.xml</span></span><br><span class="line">  <span class="attr">type-aliases-package:</span> <span class="string">cn.sher6j.springcloud.entities</span>  <span class="comment"># 所有Entity别名类所在包</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>主启动类、业务类：直接从8001里copy即可</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> springcloud;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.netflix.eureka.EnableEurekaClient;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 主启动类</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sher6j</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableEurekaClient</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PaymentMain8002</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(PaymentMain8002<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改controller添加端口号已区分这两个具体的微服务：读取配置文件中设置的端口号。8002的修改同8001。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.sher6j.springcloud.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> cn.sher6j.springcloud.entities.CommonResult;</span><br><span class="line"><span class="keyword">import</span> cn.sher6j.springcloud.entities.Payment;</span><br><span class="line"><span class="keyword">import</span> cn.sher6j.springcloud.service.PaymentService;</span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Value;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sher6j</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PaymentController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> PaymentService paymentService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;server.port&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String serverPort;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 插入payment</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> payment</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@PostMapping</span>(<span class="string">"/payment/create"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> CommonResult <span class="title">create</span><span class="params">(@RequestBody Payment payment)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> result = paymentService.create(payment);</span><br><span class="line">        log.info(<span class="string">"=======插入结果："</span> + result);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (result &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> CommonResult(<span class="number">200</span>, <span class="string">"插入数据库成功, 端口号："</span> + serverPort, result);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> CommonResult(<span class="number">444</span>, <span class="string">"插入数据库失败"</span>, <span class="keyword">null</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 根据id查询订单</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> id</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/payment/get/&#123;id&#125;"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> CommonResult <span class="title">getPaymentById</span><span class="params">(@PathVariable(<span class="string">"id"</span>)</span> Long id) </span>&#123;</span><br><span class="line">        Payment payment = paymentService.getPaymentById(id);</span><br><span class="line">        log.info(<span class="string">"=======查询结果："</span> + payment);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (payment != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> CommonResult(<span class="number">200</span>, <span class="string">"查询数据库成功, 端口号："</span> + serverPort, payment);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> CommonResult(<span class="number">444</span>, <span class="string">"没有对应记录，查询ID："</span> + id, <span class="keyword">null</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li></li>
 </ul>
 
       
@@ -575,19 +599,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">读书笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">JavaSE</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">读书笔记</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -599,19 +619,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">数据库</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">非关系型数据库</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">MyBatis</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">框架</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">数据库</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -627,6 +647,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">非关系型数据库</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">FastDSF</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">异常处理</a>
               </li>
              
@@ -639,11 +667,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数组</a>
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">FastDSF</a>
+                <a href="javascript:void(0)" class="js-tag color3">链表</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -655,11 +683,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">递归</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">链表</a>
+                <a href="javascript:void(0)" class="js-tag color3">数组</a>
               </li>
              
               <li class="article-tag-list-item">

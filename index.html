@@ -223,18 +223,67 @@
 <p><img src="/2020/05/20/SpringCloud-03Consul%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%8E%E5%8F%91%E7%8E%B0/%E6%B6%88%E8%B4%B9%E8%80%85%E5%92%8C%E6%8F%90%E4%BE%9B%E8%80%85.jpg" alt></p>
 <p>服务提供方自测是没有问题的，下面我们通过服务消费方来访问提供方服务，发现也可以正常访问：</p>
 <p><img src="/2020/05/20/SpringCloud-03Consul%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%8E%E5%8F%91%E7%8E%B0/%E6%B6%88%E8%B4%B9%E6%96%B9%E8%AE%BF%E9%97%AE%E6%9C%8D%E5%8A%A1%E6%96%B9%E6%9C%8D%E5%8A%A1%E6%B5%8B%E8%AF%95.gif" alt></p>
-<h3 id="5-Eureka-Zookeeper-Consul三个注册中心异同"><a href="#5-Eureka-Zookeeper-Consul三个注册中心异同" class="headerlink" title="5. Eureka/Zookeeper/Consul三个注册中心异同"></a><font color="blue">5. Eureka/Zookeeper/Consul三个注册中心异同</font></h3><p>| 组件名 | 编写语言 | CAP | 服务健康检查 | 对外暴露接口 | SpringCloud集成</p>
-<p>| :—- | :—- | :—- | :—- | :—- | :—- </p>
-<p>| <font color="red"><strong>Eureka</strong></font> | Java | AP | 可配支持 | HTTP | 已集成</p>
-<p>| <font color="red"><strong>Consul</strong></font> | Go | CP | 支持 | HTTP/DNS | 已集成</p>
-<p>| <font color="red"><strong>Zookeaper</strong></font> | Java | CP | 支持 | 客户端 | 已集成</p>
+<h3 id="5-Eureka-Zookeeper-Consul三个注册中心异同"><a href="#5-Eureka-Zookeeper-Consul三个注册中心异同" class="headerlink" title="5. Eureka/Zookeeper/Consul三个注册中心异同"></a><font color="blue">5. Eureka/Zookeeper/Consul三个注册中心异同</font></h3><table>
+<thead>
+<tr>
+<th>组件名</th>
+<th>编写语言</th>
+<th>CAP</th>
+<th>服务健康检查</th>
+<th>对外暴露接口</th>
+<th>SpringCloud集成</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><font color="red"><strong>Eureka</strong></font></td>
+<td>Java</td>
+<td>AP</td>
+<td>可配支持</td>
+<td>HTTP</td>
+<td>已集成</td>
+</tr>
+<tr>
+<td><font color="red"><strong>Consul</strong></font></td>
+<td>Go</td>
+<td>CP</td>
+<td>支持</td>
+<td>HTTP/DNS</td>
+<td>已集成</td>
+</tr>
+<tr>
+<td><font color="red"><strong>Zookeaper</strong></font></td>
+<td>Java</td>
+<td>CP</td>
+<td>支持</td>
+<td>客户端</td>
+<td>已集成</td>
+</tr>
+</tbody></table>
 <p><strong>什么是CAP</strong>？——CAP理论：首先我们要知道CAP对应的都是什么。</p>
-<p>| C | Consistency | 强一致性</p>
-<p>| A | Available | 可用性</p>
-<p>| P | Partition tolerance | 分区容错性</p>
+<table>
+<thead>
+<tr>
+<th>C</th>
+<th>A</th>
+<th>P</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Consistency</td>
+<td>Available</td>
+<td>Partition tolerance</td>
+</tr>
+<tr>
+<td>强一致性</td>
+<td>可用性</td>
+<td>分区容错性</td>
+</tr>
+</tbody></table>
 <p>所谓<font color="red"><strong>CAP原则</strong></font>又称CAP定理，指的是在一个分布式系统中，一致性、可用性、分区容错性。CAP 原则指的是，这三个要素最多只能同时实现两点，不可能三者兼顾。在分布式架构中，P永远要求被保证，所以当前的分布式架构只有AP和CP两种。因此，根据CAP原理将NoSQL数据库分成了满足CA原则、满足CP原则和满足AP原则三大类：</p>
 <ul>
-<li></li>
+<li>CA：单点集群，满足一致性、可用性的系统，通长在可扩展性上不太强大。</li>
+<li>CP：满足一致性、分许容错性的系统，通常性能不是特别高。</li>
+<li>AP：满足可用性、分区容错性的系统，通常可能对一致性要求低一些。</li>
 </ul>
 
       
@@ -1124,14 +1173,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">读书笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">redis</a>
               </li>
              
@@ -1144,19 +1185,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">JavaSE</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">MyBatis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">框架</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">数据库</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1172,6 +1205,26 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">MyBatis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">框架</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">数据库</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">读书笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">非关系型数据库</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Ubuntu</a>
               </li>
              
@@ -1184,15 +1237,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">异常处理</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">非关系型数据库</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">FastDSF</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">异常处理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1212,15 +1261,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">数组</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">递归</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">链表</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数组</a>
               </li>
              
               <li class="article-tag-list-item">

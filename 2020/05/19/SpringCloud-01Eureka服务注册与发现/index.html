@@ -30,8 +30,10 @@
 <meta property="og:image" content="http://yoursite.com/2020/05/19/SpringCloud-01Eureka%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%8E%E5%8F%91%E7%8E%B0/%E4%BF%AE%E6%94%B9%E6%9C%8D%E5%8A%A1%E5%90%8D%E7%A7%B0%E5%90%8E.jpg">
 <meta property="og:image" content="http://yoursite.com/2020/05/19/SpringCloud-01Eureka%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%8E%E5%8F%91%E7%8E%B0/%E6%97%A0IP.jpg">
 <meta property="og:image" content="http://yoursite.com/2020/05/19/SpringCloud-01Eureka%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%8E%E5%8F%91%E7%8E%B0/%E6%9C%89IP.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/05/19/SpringCloud-01Eureka%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%8E%E5%8F%91%E7%8E%B0/%E6%9C%8D%E5%8A%A1%E5%88%97%E8%A1%A8.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/05/19/SpringCloud-01Eureka%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%8E%E5%8F%91%E7%8E%B0/%E6%9C%8D%E5%8A%A1%E5%88%97%E8%A1%A8%E5%90%8E%E5%8F%B0.jpg">
 <meta property="article:published_time" content="2020-05-19T12:09:47.000Z">
-<meta property="article:modified_time" content="2020-05-20T03:12:58.451Z">
+<meta property="article:modified_time" content="2020-05-20T05:07:35.563Z">
 <meta property="article:author" content="Sher6J">
 <meta property="article:tag" content="微服务">
 <meta property="article:tag" content="SpringCloud">
@@ -382,6 +384,40 @@
 
 <p>鼠标再次移动到该服务时，可以发现，已经提示了IP地址：</p>
 <p><img src="/2020/05/19/SpringCloud-01Eureka%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%8E%E5%8F%91%E7%8E%B0/%E6%9C%89IP.jpg" alt></p>
+<h3 id="5-服务发现Discovery"><a href="#5-服务发现Discovery" class="headerlink" title="5. 服务发现Discovery"></a><font color="blue">5. 服务发现Discovery</font></h3><p>对于注册进Eureka服务注册中心的微服务，可以通过服务发现来获取该服务的信息。</p>
+<h4 id="1-修该微服务的Controller，向其中注入DiscoveryClient，并编写相应Controller方法"><a href="#1-修该微服务的Controller，向其中注入DiscoveryClient，并编写相应Controller方法" class="headerlink" title="1. 修该微服务的Controller，向其中注入DiscoveryClient，并编写相应Controller方法"></a>1. 修该微服务的Controller，向其中注入DiscoveryClient，并编写相应Controller方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.sher6j.springcloud.controller;</span><br><span class="line"></span><br><span class="line">......</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.client.ServiceInstance;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.client.discovery.DiscoveryClient;</span><br><span class="line">......</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sher6j</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PaymentController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    .......</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> DiscoveryClient discoveryClient;</span><br><span class="line">	</span><br><span class="line">    .......</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/payment/discovery"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">discovery</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; services = discoveryClient.getServices(); <span class="comment">//获取服务列表的信息</span></span><br><span class="line">        <span class="keyword">for</span> (String service : services) &#123;</span><br><span class="line">            log.info(<span class="string">"=======service:"</span> + service + <span class="string">"======="</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//根据微服务名称获取具体服务实例</span></span><br><span class="line">        List&lt;ServiceInstance&gt; instances = discoveryClient.getInstances(<span class="string">"CLOUD-PAYMENT-SERVICE"</span>);</span><br><span class="line">        <span class="keyword">for</span> (ServiceInstance instance : instances) &#123;</span><br><span class="line">            log.info(<span class="string">"======="</span> + instance.getServiceId() + <span class="string">"\t"</span> + instance.getHost() + <span class="string">"\t"</span> + instance.getPort() + <span class="string">"\t"</span> + instance.getUri() + <span class="string">"======="</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.discoveryClient;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>DiscoveryClient对象中的 <code>getServices</code> 方法用于获取服务列表的信息，也就是有哪些服务，如cloud-payment-service服务， <code>getInstances</code> 方法用于获取服务列表对应的具体服务实例，如cloud-payment-service服务对应的8001和8002服务。</p>
+<h4 id="2-修改主启动类"><a href="#2-修改主启动类" class="headerlink" title="2. 修改主启动类"></a>2. 修改主启动类</h4><p>只需要在主启动类上添加注解<code>@EnableDiscoveryClient</code>，修改后的主启动类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableEurekaClient</span></span><br><span class="line"><span class="meta">@EnableDiscoveryClient</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PaymentMain8001</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(PaymentMain8001<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-测试"><a href="#3-测试" class="headerlink" title="3. 测试"></a>3. 测试</h4><p>访问地址<a href="http://localhost:8001/payment/discovery，我们可以看到获取的服务信息，即完成了服务发现：" target="_blank" rel="noopener">http://localhost:8001/payment/discovery，我们可以看到获取的服务信息，即完成了服务发现：</a></p>
+<p><img src="/2020/05/19/SpringCloud-01Eureka%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%8E%E5%8F%91%E7%8E%B0/%E6%9C%8D%E5%8A%A1%E5%88%97%E8%A1%A8.jpg" alt></p>
+<p>后台也对服务列表进行了日志打印：</p>
+<p><img src="/2020/05/19/SpringCloud-01Eureka%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%8E%E5%8F%91%E7%8E%B0/%E6%9C%8D%E5%8A%A1%E5%88%97%E8%A1%A8%E5%90%8E%E5%8F%B0.jpg" alt></p>
+<h3 id="6-Eureka自我保护（CAP里面的AP分支）"><a href="#6-Eureka自我保护（CAP里面的AP分支）" class="headerlink" title="6. Eureka自我保护（CAP里面的AP分支）"></a><font color="blue">6. Eureka自我保护</font>（CAP里面的AP分支）</h3><h4 id="1-自我保护机制"><a href="#1-自我保护机制" class="headerlink" title="1. 自我保护机制"></a>1. 自我保护机制</h4><p>保护模式主要用于一组客户端和EurekaServer之间存在网络分区场景下的保护。一旦进入保护模式，<strong>Eureka Server将会尝试保护其服务注册表中的信息，不再删除服务注册表中的数据，也就是不会注销任何微服务</strong>。</p>
+<p>如果在Eureka Server的首页看到以下提示，说明Eureka进入了保护模式（上面<font color="blue">2. 单机Eureka构建步骤</font>中提到过）：</p>
+<p><font color="red"><strong>EMERGENCY! EUREKA MAY BE INCORRECTLY CLAIMING INSTANCES ARE UP WHEN THEY’RE NOT. RENEWALS ARE LESSER THAN THRESHOLD AND HENCE THE INSTANCES ARE NOT BEING EXPIRED JUST TO BE SAFE.</strong></font>  </p>
+<p>换句话说就是，某时刻某一个微服务不可用了，Eureka不会立刻清理，而是依旧会对该微服务的信息进行保存。</p>
+<h4 id="2-产生原因"><a href="#2-产生原因" class="headerlink" title="2. 产生原因"></a>2. 产生原因</h4><ul>
+<li><p>为什么会产生Eureka自我保护机制？？？</p>
+<p>为了防止 <strong>EurekaClient可以正常运行，但是与EurekaServer网络不通</strong> 情况下，EurekaServer<strong>不会立刻</strong>将EurekaClient服务剔除。</p>
+</li>
+<li><p>什么是自我保护模式？</p>
+<p>默认情况下，如果EurekaServer在一定时间内没有接收到某个微服务实例的心跳，EurekaServer将会注销该实例（默认90秒）。但是当网络分区故障发生（延时、卡顿、拥挤）时，微服务与EurekaServer之前无法正常通信，以上行为可能变得非常危险——因为<strong>微服务本身是健康的，只是由于网络问题链接不到EurekaServer，此时本不应该注销这个微服务</strong>。Eureka通过“自我保护模式”来解决这个问题——当EurekaServer节点在短时间内丢失过多客户端时（可能发生了网络分区故障，网络延时），那么这个节点就会进入自我保护模式。</p>
+<p>在自我保护模式中，EurekaServer会保护服务注册表中的信息，不再注销任何服务实例，宁可保留错误的服务注册信息，也不盲目注销任何可能健康的服务实例。使用自我保护模式，可以让Eureka集群更加的健壮、稳定。</p>
+</li>
+</ul>
+<h4 id="3-怎么禁止自我保护"><a href="#3-怎么禁止自我保护" class="headerlink" title="3. 怎么禁止自我保护"></a>3. 怎么禁止自我保护</h4><ul>
+<li><p>在EurekaServer端修改配置文件即可设置关闭自我保护机制</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">eureka：</span></span><br><span class="line">  <span class="attr">server:</span></span><br><span class="line">  	<span class="comment"># 关闭自我保护机制，保证不可用服务被及时剔除</span></span><br><span class="line">    <span class="attr">enable-self-preservation:</span> <span class="literal">false</span></span><br><span class="line">    <span class="comment"># 时间间隔</span></span><br><span class="line">    <span class="attr">eviction-interval-time-in-ms:</span> <span class="number">2000</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在EurekaClient端修改配置文件</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">eureka:</span></span><br><span class="line">  <span class="attr">instance:</span></span><br><span class="line">    <span class="attr">instance-id:</span> <span class="string">payment8001</span></span><br><span class="line">    <span class="comment"># Eureka客户单向服务端发送心跳的时间间隔，默然是30秒</span></span><br><span class="line">    <span class="attr">lease-renewal-interval-in-seconds:</span> <span class="number">1</span></span><br><span class="line">    <span class="comment"># Eureka服务端在收到最后一次心跳后等待时间上限，默然为90秒，超时将剔除服务</span></span><br><span class="line">    <span class="attr">lease-expiration-duration-in-seconds:</span> <span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<p>这样就会使EurekaClient客户端的微服务很快死亡。</p>
+</li>
+</ul>
 
       
 
@@ -656,23 +692,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">微服务</a>
+                <a href="javascript:void(0)" class="js-tag color3">MyBatis</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">SpringCloud</a>
+                <a href="javascript:void(0)" class="js-tag color3">框架</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">数据库</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">非关系型数据库</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">FastDSF</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -688,11 +716,31 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">非关系型数据库</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">FastDSF</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">微服务</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">SpringCloud</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">消息队列</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">RabbitMQ</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">异常处理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -713,18 +761,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">链表</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">MyBatis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">框架</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">异常处理</a>
               </li>
              
               <li class="article-tag-list-item">

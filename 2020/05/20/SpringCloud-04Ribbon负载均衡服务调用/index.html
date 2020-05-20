@@ -6,17 +6,29 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: 算法 | 菜菜六甲的博客</title>
+  <title>SpringCloud-04Ribbon负载均衡服务调用 | 菜菜六甲的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="想努力成为大厂程序猿的辣鸡在读研究生">
-<meta property="og:type" content="website">
-<meta property="og:title" content="菜菜六甲的博客">
-<meta property="og:url" content="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/index.html">
+  <meta name="description" content="Ribbon负载均衡服务调用1. 概述1. Ribbon是什么SpringCloud Ribbon是基于Netflix Ribbon实现的一套客户端，是负载均衡的工具。 简单的说，Ribbon是Netflix发布的开源项目，主要功能是提供客户端的软件复杂均衡算法和服务调用。Ribbon客户端组件提供一系列完事的配置项如连接超时、重试等。简单的说，就是在配置文件中列出Load Balancer（负载">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringCloud-04Ribbon负载均衡服务调用">
+<meta property="og:url" content="http://yoursite.com/2020/05/20/SpringCloud-04Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E6%9C%8D%E5%8A%A1%E8%B0%83%E7%94%A8/index.html">
 <meta property="og:site_name" content="菜菜六甲的博客">
-<meta property="og:description" content="想努力成为大厂程序猿的辣鸡在读研究生">
+<meta property="og:description" content="Ribbon负载均衡服务调用1. 概述1. Ribbon是什么SpringCloud Ribbon是基于Netflix Ribbon实现的一套客户端，是负载均衡的工具。 简单的说，Ribbon是Netflix发布的开源项目，主要功能是提供客户端的软件复杂均衡算法和服务调用。Ribbon客户端组件提供一系列完事的配置项如连接超时、重试等。简单的说，就是在配置文件中列出Load Balancer（负载">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/2020/05/20/SpringCloud-04Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E6%9C%8D%E5%8A%A1%E8%B0%83%E7%94%A8/Ribbon%E6%9E%B6%E6%9E%84.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/05/20/SpringCloud-04Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E6%9C%8D%E5%8A%A1%E8%B0%83%E7%94%A8/Ribbon%E4%BE%9D%E8%B5%96.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/05/20/SpringCloud-04Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E6%9C%8D%E5%8A%A1%E8%B0%83%E7%94%A8/IRule%E6%8E%A5%E5%8F%A3%E7%9A%84%E4%B8%BB%E8%A6%81%E8%BD%AE%E8%AF%A2%E5%AE%9E%E7%8E%B0.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/05/20/SpringCloud-04Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E6%9C%8D%E5%8A%A1%E8%B0%83%E7%94%A8/%E5%8C%85%E7%BB%93%E6%9E%84.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/05/20/SpringCloud-04Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E6%9C%8D%E5%8A%A1%E8%B0%83%E7%94%A8/%E9%9A%8F%E6%9C%BA%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1.gif">
+<meta property="og:image" content="http://yoursite.com/2020/05/20/SpringCloud-04Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E6%9C%8D%E5%8A%A1%E8%B0%83%E7%94%A8/%E8%87%AA%E5%B7%B1%E5%AE%9E%E7%8E%B0%E8%BD%AE%E8%AF%A2.gif">
+<meta property="og:image" content="http://yoursite.com/2020/05/20/SpringCloud-04Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E6%9C%8D%E5%8A%A1%E8%B0%83%E7%94%A8/%E8%AE%BF%E9%97%AE%E6%AC%A1%E6%95%B0.jpg">
+<meta property="article:published_time" content="2020-05-20T11:03:10.000Z">
+<meta property="article:modified_time" content="2020-05-20T15:06:50.485Z">
 <meta property="article:author" content="Sher6J">
+<meta property="article:tag" content="微服务">
+<meta property="article:tag" content="SpringCloud">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/05/20/SpringCloud-04Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E6%9C%8D%E5%8A%A1%E8%B0%83%E7%94%A8/Ribbon%E6%9E%B6%E6%9E%84.jpg">
   
     <link rel="alternative" href="/atom.xml" title="菜菜六甲的博客" type="application/atom+xml">
   
@@ -148,402 +160,319 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-SpringCloud-04Ribbon负载均衡服务调用" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      SpringCloud-04Ribbon负载均衡服务调用
+    </h1>
+  
+
+        
+        <a href="/2020/05/20/SpringCloud-04Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E6%9C%8D%E5%8A%A1%E8%B0%83%E7%94%A8/" class="archive-article-date">
+  	<time datetime="2020-05-20T11:03:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-20</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Ribbon负载均衡服务调用"><a href="#Ribbon负载均衡服务调用" class="headerlink" title="Ribbon负载均衡服务调用"></a>Ribbon负载均衡服务调用</h1><h3 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a><font color="blue">1. 概述</font></h3><h4 id="1-Ribbon是什么"><a href="#1-Ribbon是什么" class="headerlink" title="1. Ribbon是什么"></a>1. Ribbon是什么</h4><p>SpringCloud Ribbon是基于Netflix Ribbon实现的一套客户端，是负载均衡的工具。</p>
+<p>简单的说，Ribbon是Netflix发布的开源项目，主要功能是<strong>提供客户端的软件复杂均衡算法和服务调用</strong>。Ribbon客户端组件提供一系列完事的配置项如连接超时、重试等。简单的说，就是在配置文件中列出Load Balancer（负载均衡简称LB）后面所有的及其，Ribbon会自动的帮助你基于某种规则（如简单轮询，随机连接等）去连接这些机器。也可以使用Ribbon实现自定义的负载均衡算法。</p>
+<a id="more"></a>
+
+<h4 id="2-Ribbon能做什么"><a href="#2-Ribbon能做什么" class="headerlink" title="2. Ribbon能做什么"></a>2. Ribbon能做什么</h4><p>主要是负载均衡（LB）：所谓负载均衡，简单的说就是将用户的请求平摊的分配到多个服务上，从而达到系统的HA（High Available高可用），常见的负载均衡有软件Nginx、LVS，硬件F5等。</p>
+<p>Ribbon本地负载均衡客户端和Nginx服务端负载均衡的区别：</p>
+<ul>
+<li>Nginx是服务器负载均衡，客户端所有请求都会交给Nginx，然后由Nginx实现转发请求，即负载均衡是由服务端实现的。</li>
+<li>Ribbon是本地负载均衡，在调用微服务接口时候，会在注册中心上获取注册信息服务列表之后缓存到JVM本地，从而在本地实现RPC远程服务调用技术。</li>
+</ul>
+<p>负载均衡又分为两类，分别可以对应于Nginx和Ribbon：</p>
+<ul>
+<li>集中式LB：即在服务的消费方和提供方之间使用独立的LB设施（可以是硬件，如F5，也可以是软件，如Nginx），由该设施负责把访问请求通过某种策略转发至服务的提供方。</li>
+<li>进程内LB：将LB逻辑集成到消费方，消费方从服务注册中心获知有哪些地址可用，然后自己再从这些地址中选择出一个合适的服务器，Ribbon就属于进程内LB，它只是一个类库，集成于消费方进程，消费方通过它来获取到服务提供方的地址。</li>
+</ul>
+<p>Ribbon实际上就是<font color="red"><strong>负载均衡+RestTemplate调用</strong></font></p>
+<h3 id="2-Ribbon负载均衡演示"><a href="#2-Ribbon负载均衡演示" class="headerlink" title="2. Ribbon负载均衡演示"></a><font color="blue">2. Ribbon负载均衡演示</font></h3><h4 id="1-架构说明"><a href="#1-架构说明" class="headerlink" title="1. 架构说明"></a>1. 架构说明</h4><p>其架构可以用下图表示：</p>
+<p><img src="/2020/05/20/SpringCloud-04Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E6%9C%8D%E5%8A%A1%E8%B0%83%E7%94%A8/Ribbon%E6%9E%B6%E6%9E%84.jpg" alt></p>
+<p>Ribbon其实就是一个软负载均衡的客户端组件，他可以和其他所需请求的客户端结合使用，和eureka结合只是其中的一个实例。Ribbon在工作的时候分两步：</p>
+<ol>
+<li>先选择EurekaServer，优选选择同一个区域内负载较少的Server；</li>
+<li>根据用户指定的策略，从Server取到的服务注册列表中选择一个地址。</li>
+</ol>
+<p>其中Ribbon提供了多种的负载均衡策略，如轮询、随机和根据响应时间加强等。</p>
+<h4 id="2-Ribbon的POM依赖"><a href="#2-Ribbon的POM依赖" class="headerlink" title="2. Ribbon的POM依赖"></a>2. Ribbon的POM依赖</h4><p>在POM文件中我们引入了如下依赖：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--eureka-client--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-eureka-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>点开该依赖的源码，我们发现，事实上改依赖内部已经引入了Ribbon，其引入Ribbon的源码如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-ribbon<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2.1.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>compile<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>我们在Maven的依赖中也可以看到，在引入 <strong>spring-cloud-starter-netflix-eureka-client</strong> 的同时我们就已经引入了 *<em>spring-cloud-starter-netflix-ribbon *</em>，所以我们<font color="red">没必要单独添加Ribbon的依赖</font>。</p>
+<p><img src="/2020/05/20/SpringCloud-04Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E6%9C%8D%E5%8A%A1%E8%B0%83%E7%94%A8/Ribbon%E4%BE%9D%E8%B5%96.jpg" alt></p>
+<h4 id="3-RestTemplate的使用"><a href="#3-RestTemplate的使用" class="headerlink" title="3. RestTemplate的使用"></a>3. RestTemplate的使用</h4><p>其官方说明可以在<a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/client/RestTemplate.html" target="_blank" rel="noopener">RestTemplate官方API</a>查看，下面简要说明其主要方法</p>
+<ul>
+<li><p>getForObject方法/getForEntity方法</p>
+<p>getForObject：返回对象为响应体数据转化成的对象，基本上可以理解为Json对象。</p>
+<p>getForEntity：返回对象为ResponseEntity对象，包含了响应中的一些重要信息，比如响应头、响应状态码、响应体等。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping</span>(<span class="string">"/consumer/payment/get/&#123;id&#125;"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> CommonResult&lt;Payment&gt; <span class="title">getPayment</span><span class="params">(@PathVariable(<span class="string">"id"</span>)</span> Long id) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> restTemplate.getForObject(PAYMENT_URL + <span class="string">"/payment/get/"</span> + id, CommonResult<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line"><span class="meta">@GetMapping</span>(<span class="string">"/consumer/payment/getForEntity/&#123;id&#125;"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> CommonResult&lt;Payment&gt; <span class="title">getPayment2</span><span class="params">(@PathVariable(<span class="string">"id"</span>)</span> Long id) </span>&#123;</span><br><span class="line">    ResponseEntity&lt;CommonResult&gt; entity = restTemplate.getForEntity(PAYMENT_URL + <span class="string">"/payment/get/"</span> + id, CommonResult<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">    <span class="keyword">if</span> (entity.getStatusCode().is2xxSuccessful()) &#123;</span><br><span class="line">        log.info(<span class="string">"======"</span> + entity.getStatusCode() + <span class="string">"\t"</span> + entity.getHeaders());</span><br><span class="line">        <span class="keyword">return</span> entity.getBody(); <span class="comment">//返回请求体</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> CommonResult&lt;&gt;(<span class="number">444</span>, <span class="string">"操作失败"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在后台控制台也输出了状态码和请求头的如下日志：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2020-05-20 20:54:02.961  INFO 19552 --- [p-nio-80-exec-3] c.s.s.controller.OrderController         : &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;200 OK	[Content-Type:&quot;application&#x2F;json&quot;, Transfer-Encoding:&quot;chunked&quot;, Date:&quot;Wed, 20 May 2020 12:54:02 GMT&quot;, Keep-Alive:&quot;timeout&#x3D;60&quot;, Connection:&quot;keep-alive&quot;]</span><br></pre></td></tr></table></figure>
+
+<p>推荐使用getForObject，因为现在Json是大势所趋啊。</p>
+</li>
+</ul>
+<h3 id="3-Ribbon核心组件IRule"><a href="#3-Ribbon核心组件IRule" class="headerlink" title="3. Ribbon核心组件IRule"></a><font color="blue">3. Ribbon核心组件IRule</font></h3><h4 id="1-IRule：根据特定算法从服务列表中选取一个要访问的服务"><a href="#1-IRule：根据特定算法从服务列表中选取一个要访问的服务" class="headerlink" title="1. IRule：根据特定算法从服务列表中选取一个要访问的服务"></a>1. IRule：根据特定算法从服务列表中选取一个要访问的服务</h4><p>IRule是一个接口，其源码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.netflix.loadbalancer;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Interface that defines a "Rule" for a LoadBalancer. A Rule can be thought of</span></span><br><span class="line"><span class="comment"> * as a Strategy for loadbalacing. Well known loadbalancing strategies include</span></span><br><span class="line"><span class="comment"> * Round Robin, Response Time based etc.</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> stonse</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IRule</span></span>&#123;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * choose one alive server from lb.allServers or</span></span><br><span class="line"><span class="comment">     * lb.upServers according to key</span></span><br><span class="line"><span class="comment">     * </span></span><br><span class="line"><span class="comment">     * @return choosen Server object. NULL is returned if none</span></span><br><span class="line"><span class="comment">     *  server is available </span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Server <span class="title">choose</span><span class="params">(Object key)</span></span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setLoadBalancer</span><span class="params">(ILoadBalancer lb)</span></span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> ILoadBalancer <span class="title">getLoadBalancer</span><span class="params">()</span></span>;    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以下是IRule接口的部分实现，这些实现分别对应了若干负载均衡算法</p>
+<p><img src="/2020/05/20/SpringCloud-04Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E6%9C%8D%E5%8A%A1%E8%B0%83%E7%94%A8/IRule%E6%8E%A5%E5%8F%A3%E7%9A%84%E4%B8%BB%E8%A6%81%E8%BD%AE%E8%AF%A2%E5%AE%9E%E7%8E%B0.jpg" alt></p>
+<p>以下简要说明7种主要的负载均衡算法，这些负载均衡算法均是抽象类com.netflix.loadbalancer.<font color="blue">AbstractLoadBalancerRule</font>的实现，而给抽象类实现了IRule接口：</p>
+<ul>
+<li>com.netflix.loadbalancer.<font color="red">RoundRobinRule</font>：轮询，为<strong>默认的负载均衡算法</strong>。</li>
+<li>com.netflix.loadbalancer.<font color="red">RandomRule</font>：随机。</li>
+<li>com.netflix.loadbalancer.<font color="red">RetryRule</font>：先按照RoundRobinRule（轮询）的策略获取服务，如果获取服务失败则在指定时间内进行重试，获取可用的服务。</li>
+<li>com.netflix.loadbalancer.<font color="red">WeightedResponseTimeRule</font>：对RoundRobinRule的扩展，响应速度越快的实例选择权重越大，越容易被选择。</li>
+<li>com.netflix.loadbalancer.<font color="red">BestAvailableRule</font>：先过滤掉由于多次访问故障而处于断路器跳闸状态的服务，然后选择一个并发量最小的服务。</li>
+<li>com.netflix.loadbalancer.<font color="red">AvailabilityFilteringRule</font>：先过滤掉故障实例，再选择并发较小的实例。</li>
+<li>com.netflix.loadbalancer.<font color="red">ZoneAvoidanceRule</font>：复合判断Server所在区域的性能和Server的可用性选择服务器。</li>
+</ul>
+<h4 id="2-如何替换负载均衡算法"><a href="#2-如何替换负载均衡算法" class="headerlink" title="2. 如何替换负载均衡算法"></a>2. 如何替换负载均衡算法</h4><ul>
+<li><p>首先我们应该明确是服务消费方采用轮询算法来访问同一服务提供方的不同微服务实例，所以我们应该在服务消费方80方的微服务中添加轮询算法配置类，在添加配置类时，有必须要注意的点，就是官方文档明确给出了警告：<font color="red">这个自定义的轮询算法配置类不能放在<code>@ComponentScan</code>注解所扫描的当前包下以及子包下，否则自定义的这个配置类就会被所有Ribbon客户端所共享，就打不到特殊化定制的目的了</font>，换句话说，如果这个配置类我们能够被<code>@ComponentScan</code>注解扫描到，那么访问所有的微服务提供方的具体实例时，我们都会采取配置类中的算法，如果要特殊化定制——即指定访问某些微服务提供方时采用配置的轮询算法，那么我们就应该使这个配置类让<code>@ComponentScan</code>注解扫描不到，我们知道，在主启动类的<code>@SpringBootApplication</code>注解中，其实这个注解包含了<code>@SpringBootConfiguration</code> 、<code>@EnableAutoConfiguration</code>、<code>@ComponentScan</code>这三个注解，所以我们写的轮询算法配置类不能和主启动类在同一个包下，所以我们需要建新的包，实现定制轮询算法的配置类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.sher6j.myrule;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.netflix.loadbalancer.IRule;</span><br><span class="line"><span class="keyword">import</span> com.netflix.loadbalancer.RandomRule;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sher6j</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MySelfRule</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> IRule <span class="title">myRule</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> RandomRule(); <span class="comment">//定义随机负载均衡算法</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>包结构的内容如下，我们可以看到，轮询算法配置类在主启动类的<code>@ComponentScan</code>扫描不到的包下：</p>
+<p><img src="/2020/05/20/SpringCloud-04Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E6%9C%8D%E5%8A%A1%E8%B0%83%E7%94%A8/%E5%8C%85%E7%BB%93%E6%9E%84.jpg" alt></p>
+</li>
+<li><p>然后在主启动类中添加<code>@RibbonClient</code>注解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.sher6j.springcloud;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> cn.sher6j.myrule.MySelfRule;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.netflix.eureka.EnableEurekaClient;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.netflix.ribbon.RibbonClient;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sher6j</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableEurekaClient</span></span><br><span class="line"><span class="comment">//访问的微服务为CLOUD-PAYMENT-SERVICE，采用配置文件中的轮询算法</span></span><br><span class="line"><span class="meta">@RibbonClient</span>(name = <span class="string">"CLOUD-PAYMENT-SERVICE"</span>, configuration = MySelfRule<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">class</span> <span class="title">OrderMain80</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(OrderMain80<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>测试</p>
+<p>如图我们用服务消费方访问服务提供方的微服务时，8001和8002不再交替轮询访问，而是随机访问。</p>
+<p><img src="/2020/05/20/SpringCloud-04Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E6%9C%8D%E5%8A%A1%E8%B0%83%E7%94%A8/%E9%9A%8F%E6%9C%BA%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1.gif" alt></p>
+</li>
+</ul>
+<h3 id="4-Ribbon负载均衡算法"><a href="#4-Ribbon负载均衡算法" class="headerlink" title="4. Ribbon负载均衡算法"></a><font color="blue">4. Ribbon负载均衡算法</font></h3><h3 id="1-默认负载均衡算法（轮询）原理"><a href="#1-默认负载均衡算法（轮询）原理" class="headerlink" title="1. 默认负载均衡算法（轮询）原理"></a>1. 默认负载均衡算法（轮询）原理</h3><p>轮询负载均衡算法原理：<font color="red">Rest接口第几次请求数 % 服务器集群总数量 = 实际调用服务器位置下标</font>， 每次服务重启后Rest接口技术从1开始。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;ServiceInstance&gt; instances = discoveryClient.getInstances(<span class="string">"CLOUD-PAYMENT-SERVICE"</span>)</span><br></pre></td></tr></table></figure>
+
+<p>根据服务方的服务名，获取其所有实例，如有以下实例：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>List[0]</th>
+<th>List[1]</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>服务名</strong></td>
+<td>payment8001</td>
+<td>payment8002</td>
+</tr>
+<tr>
+<td><strong>服务地址</strong></td>
+<td>127.0.0.1:8001</td>
+<td>127.0.0.1:8002</td>
+</tr>
+</tbody></table>
+<p>这两个实例组合成一个集群，共2台机器，集群总数为2，按照轮询负载均衡算法原理：</p>
+<ol>
+<li><p>请求总数为1时，1 % 2 = 1，对应下标位置是1，获得服务地址127.0.0.1:8001</p>
+</li>
+<li><p>请求总数为2时，2 % 2 = 0，对应下标位置是0，获得服务地址127.0.0.1:8002</p>
+</li>
+<li><p>请求总数为3时，3 % 2 = 1，对应下标位置是1，获得服务地址127.0.0.1:8001</p>
+<p>………………………………</p>
+</li>
+</ol>
+<h3 id="2-源码分析"><a href="#2-源码分析" class="headerlink" title="2. 源码分析"></a>2. 源码分析</h3><p>将com.netflix.loadbalancer.<font color="red">RoundRobinRule</font>源码的负载均衡算法部分分析如下（代码中标注了中文注释）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.netflix.loadbalancer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.netflix.client.config.IClientConfig;</span><br><span class="line">………………………………</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.atomic.AtomicInteger;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * The most well known and basic load balancing strategy, i.e. Round Robin Rule.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RoundRobinRule</span> <span class="keyword">extends</span> <span class="title">AbstractLoadBalancerRule</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">   	………………………………</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Server <span class="title">choose</span><span class="params">(ILoadBalancer lb, Object key)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (lb == <span class="keyword">null</span>) &#123;</span><br><span class="line">            log.warn(<span class="string">"no load balancer"</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Server server = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (server == <span class="keyword">null</span> &amp;&amp; count++ &lt; <span class="number">10</span>) &#123;</span><br><span class="line">            <span class="comment">//获得还活着的健康的服务实例（机器）即可达的，也就是Status为up的实例</span></span><br><span class="line">            List&lt;Server&gt; reachableServers = lb.getReachableServers();</span><br><span class="line">            <span class="comment">//获取所有服务实例，无论是死是活，只要注册进服务中心即可</span></span><br><span class="line">            List&lt;Server&gt; allServers = lb.getAllServers();</span><br><span class="line">            <span class="comment">//Status为up的服务实例数量</span></span><br><span class="line">            <span class="keyword">int</span> upCount = reachableServers.size();</span><br><span class="line">            <span class="comment">//所有服务实例的数量，对应上述原理分析中的服务器集群总数量</span></span><br><span class="line">            <span class="keyword">int</span> serverCount = allServers.size();</span><br><span class="line"></span><br><span class="line">            <span class="comment">//如果没有可达的服务实例的话，直接报警告</span></span><br><span class="line">            <span class="keyword">if</span> ((upCount == <span class="number">0</span>) || (serverCount == <span class="number">0</span>)) &#123;</span><br><span class="line">                log.warn(<span class="string">"No up servers available from load balancer: "</span> + lb);</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//调用服务器位置下标 = incrementAndGetModulo(服务器集群总数)</span></span><br><span class="line">            <span class="keyword">int</span> nextServerIndex = incrementAndGetModulo(serverCount);</span><br><span class="line">            server = allServers.get(nextServerIndex);<span class="comment">//根据下标获取服务实例</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (server == <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="comment">/* Transient. */</span></span><br><span class="line">                Thread.yield();</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (server.isAlive() &amp;&amp; (server.isReadyToServe())) &#123;</span><br><span class="line">                <span class="keyword">return</span> (server);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Next.</span></span><br><span class="line">            server = <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (count &gt;= <span class="number">10</span>) &#123;</span><br><span class="line">            log.warn(<span class="string">"No available alive servers after 10 tries from load balancer: "</span></span><br><span class="line">                    + lb);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> server;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Inspired by the implementation of &#123;<span class="doctag">@link</span> AtomicInteger#incrementAndGet()&#125;.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> modulo The modulo to bound the value of the counter.</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> The next value.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">incrementAndGetModulo</span><span class="params">(<span class="keyword">int</span> modulo)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (;;) &#123;</span><br><span class="line">            <span class="keyword">int</span> current = nextServerCyclicCounter.get();</span><br><span class="line">            <span class="keyword">int</span> next = (current + <span class="number">1</span>) % modulo;</span><br><span class="line">            <span class="keyword">if</span> (nextServerCyclicCounter.compareAndSet(current, next))</span><br><span class="line">                <span class="keyword">return</span> next;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-自己实现轮询负载均衡算法"><a href="#3-自己实现轮询负载均衡算法" class="headerlink" title="3. 自己实现轮询负载均衡算法"></a>3. 自己实现轮询负载均衡算法</h3><p>首先我们将服务注册中心（7001/7002构成集群）启动，然后在<strong>服务提供方8001/8002中的Controller中添加功能</strong>，用来一会儿测试服务消费方80来轮询访问<strong>CLOUD-PAYMENT-SERVICE</strong>服务：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping</span>(<span class="string">"/payment/lb"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getPaymentLB</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> serverPort;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>服务提供方的这个方法就是简单的在页面输出自己的端口号，也就是我们可以在页面区分访问的<strong>CLOUD-PAYMENT-SERVICE</strong>服务到底对应的是8001实例还是8002实例。</p>
+<p>启动8001/8002，将两个服务实例注册进服务注册中心后，我们再改造服务消费方80服务，分为以下四步：</p>
+<ul>
+<li><p>首先我们先让RestTemplate失去Ribbon中的负载均衡能力，取消掉<code>@LoadBalanced</code>注解即可：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.sher6j.springcloud.config;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.client.loadbalancer.LoadBalanced;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.client.RestTemplate;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sher6j</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span> 2020-05-19-18:54</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ApplicationContextConfig</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line"><span class="comment">//    @LoadBalanced//使用该注解赋予RestTemplate负载均衡的能力</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> RestTemplate <span class="title">getRestTemplate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> RestTemplate();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//applicationContext.xml &lt;bean id="" class=""&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>然后编写自己的负载均衡接口：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.sher6j.springcloud.lb;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.client.ServiceInstance;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 负载均衡算法发接口</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sher6j</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span> 2020-05-20-22:23</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">LoadBalancer</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 从服务列表中用负载均衡算法选择出具体的实例</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> serviceInstances 服务列表</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function">ServiceInstance <span class="title">instances</span><span class="params">(List&lt;ServiceInstance&gt; serviceInstances)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>给接口定义了方法<code>instances</code>用于在服务提供方服务的所有服务实例中选择一个具体实例。</p>
+</li>
+<li><p>用轮询负载均衡算法实现负载均衡接口：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.sher6j.springcloud.lb.impl;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> cn.sher6j.springcloud.lb.LoadBalancer;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.client.ServiceInstance;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.atomic.AtomicInteger;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sher6j</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span> 2020-05-20-22:26</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyLB</span> <span class="keyword">implements</span> <span class="title">LoadBalancer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> AtomicInteger atomicInteger = <span class="keyword">new</span> AtomicInteger(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">getAndIncrement</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> current;</span><br><span class="line">        <span class="keyword">int</span> next;</span><br><span class="line">        <span class="comment">//自旋锁</span></span><br><span class="line">        <span class="keyword">do</span> &#123;</span><br><span class="line">            current = <span class="keyword">this</span>.atomicInteger.get(); <span class="comment">//初始值为0</span></span><br><span class="line">            next = current &gt;= <span class="number">2147483647</span> ? <span class="number">0</span> : current + <span class="number">1</span>;</span><br><span class="line">        &#125;<span class="keyword">while</span> (!<span class="keyword">this</span>.atomicInteger.compareAndSet(current, next));</span><br><span class="line">        System.out.println(<span class="string">"========访问次数next:"</span> + next);</span><br><span class="line">        <span class="keyword">return</span> next;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 从服务列表中用轮询负载均衡算法选择出具体的实例</span></span><br><span class="line"><span class="comment">     * Rest接口第几次请求数 % 服务器集群总数量 = 实际调用服务器位置下标</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> serviceInstances 服务列表</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ServiceInstance <span class="title">instances</span><span class="params">(List&lt;ServiceInstance&gt; serviceInstances)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> index = getAndIncrement() % serviceInstances.size();</span><br><span class="line">        <span class="keyword">return</span> serviceInstances.get(index);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>RoundRobinRule源码中用<code>for(;;)</code>实现的自旋锁，这里我们用<code>do{} while();</code>实现自旋锁。</p>
+</li>
+<li><p>最后我们在80服务的Controller中添加方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping</span>(<span class="string">"/consumer/payment/lb"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getPaymentLB</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//获取服务提供方所有的服务实例</span></span><br><span class="line">        List&lt;ServiceInstance&gt; instances = discoveryClient.getInstances(<span class="string">"CLOUD-PAYMENT-SERVICE"</span>);</span><br><span class="line">        <span class="keyword">if</span> (instances == <span class="keyword">null</span> || instances.size() &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//采用自己实现的轮询负载均衡算法选择具体实例</span></span><br><span class="line">        ServiceInstance serviceInstance = loadBalancer.instances(instances);</span><br><span class="line">        URI uri = serviceInstance.getUri();</span><br><span class="line">        <span class="keyword">return</span> restTemplate.getForObject(uri + <span class="string">"/payment/lb"</span>, String<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>在浏览器中输入<a href="http://localhost/consumer/payment/lb，也就是80端口的服务消费方采用我们自己编写的轮询负载均衡算法访问**CLOUD-PAYMENT-SERVICE**服务的具体实例，测试结果如下：" target="_blank" rel="noopener">http://localhost/consumer/payment/lb，也就是80端口的服务消费方采用我们自己编写的轮询负载均衡算法访问**CLOUD-PAYMENT-SERVICE**服务的具体实例，测试结果如下：</a></p>
+<p><img src="/2020/05/20/SpringCloud-04Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E6%9C%8D%E5%8A%A1%E8%B0%83%E7%94%A8/%E8%87%AA%E5%B7%B1%E5%AE%9E%E7%8E%B0%E8%BD%AE%E8%AF%A2.gif" alt></p>
+<p>在服务消费方80服务的后端控制台也输出了入下的日志：</p>
+<p><img src="/2020/05/20/SpringCloud-04Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E6%9C%8D%E5%8A%A1%E8%B0%83%E7%94%A8/%E8%AE%BF%E9%97%AE%E6%AC%A1%E6%95%B0.jpg" alt></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/zfb.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/wx.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/11/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-024-%E4%B8%A4%E4%B8%A4%E4%BA%A4%E6%8D%A2%E9%93%BE%E8%A1%A8/" class="archive-article-date">
-  	<time datetime="2020-05-11T12:26:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-11</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/11/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-024-%E4%B8%A4%E4%B8%A4%E4%BA%A4%E6%8D%A2%E9%93%BE%E8%A1%A8/">算法-力扣-024-两两交换链表</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">微服务</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">力扣</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">链表</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">递归</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">SpringCloud</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/05/20/SpringCloud-04Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E6%9C%8D%E5%8A%A1%E8%B0%83%E7%94%A8/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/11/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A82/" class="archive-article-date">
-  	<time datetime="2020-05-11T02:18:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-11</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2020/05/20/SpringCloud-03Consul%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%8E%E5%8F%91%E7%8E%B0/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">SpringCloud-03Consul服务注册与发现</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/11/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A82/">算法-力扣-142-环形链表2</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">力扣</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">链表</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/11/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-141-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8/" class="archive-article-date">
-  	<time datetime="2020-05-11T01:36:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-11</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/11/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-141-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8/">算法-力扣-141-环形链表</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">力扣</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">链表</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/23/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-206-%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/" class="archive-article-date">
-  	<time datetime="2020-03-23T12:59:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-23</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/23/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-206-%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/">算法-力扣-206-反转链表</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">力扣</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">链表</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/23/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-015-%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C/" class="archive-article-date">
-  	<time datetime="2020-03-23T12:05:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-23</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/23/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-015-%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C/">算法-力扣-015-三数之和</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">力扣</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">数组</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/20/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-070-%E7%88%AC%E6%A5%BC%E6%A2%AF/" class="archive-article-date">
-  	<time datetime="2020-03-20T15:19:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/20/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-070-%E7%88%AC%E6%A5%BC%E6%A2%AF/">算法-力扣[070]爬楼梯</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">力扣</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">递归</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/20/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-011-%E7%9B%9B%E6%9C%80%E5%A4%9A%E6%B0%B4%E7%9A%84%E5%AE%B9%E5%99%A8/" class="archive-article-date">
-  	<time datetime="2020-03-20T14:35:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/20/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-011-%E7%9B%9B%E6%9C%80%E5%A4%9A%E6%B0%B4%E7%9A%84%E5%AE%B9%E5%99%A8/">算法--力扣[11]盛最多水的容器</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">力扣</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">数组</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/20/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-283-%E7%A7%BB%E5%8A%A8%E9%9B%B6/" class="archive-article-date">
-  	<time datetime="2020-03-20T09:44:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/20/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-283-%E7%A7%BB%E5%8A%A8%E9%9B%B6/">算法--力扣[283]移动零</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">力扣</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">数组</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -566,9 +495,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,

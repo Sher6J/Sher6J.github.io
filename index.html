@@ -150,6 +150,87 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-SpringCloud-04Ribbon负载均衡服务调用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/20/SpringCloud-04Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E6%9C%8D%E5%8A%A1%E8%B0%83%E7%94%A8/">SpringCloud-04Ribbon负载均衡服务调用</a>
+    </h1>
+  
+
+        
+        <a href="/2020/05/20/SpringCloud-04Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E6%9C%8D%E5%8A%A1%E8%B0%83%E7%94%A8/" class="archive-article-date">
+  	<time datetime="2020-05-20T11:03:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Ribbon负载均衡服务调用"><a href="#Ribbon负载均衡服务调用" class="headerlink" title="Ribbon负载均衡服务调用"></a>Ribbon负载均衡服务调用</h1><h3 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a><font color="blue">1. 概述</font></h3><h4 id="1-Ribbon是什么"><a href="#1-Ribbon是什么" class="headerlink" title="1. Ribbon是什么"></a>1. Ribbon是什么</h4><p>SpringCloud Ribbon是基于Netflix Ribbon实现的一套客户端，是负载均衡的工具。</p>
+<p>简单的说，Ribbon是Netflix发布的开源项目，主要功能是<strong>提供客户端的软件复杂均衡算法和服务调用</strong>。Ribbon客户端组件提供一系列完事的配置项如连接超时、重试等。简单的说，就是在配置文件中列出Load Balancer（负载均衡简称LB）后面所有的及其，Ribbon会自动的帮助你基于某种规则（如简单轮询，随机连接等）去连接这些机器。也可以使用Ribbon实现自定义的负载均衡算法。</p>
+        
+          <a class="article-more-a" href="/2020/05/20/SpringCloud-04Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E6%9C%8D%E5%8A%A1%E8%B0%83%E7%94%A8/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">微服务</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">SpringCloud</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/20/SpringCloud-04Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E6%9C%8D%E5%8A%A1%E8%B0%83%E7%94%A8/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-SpringCloud-03Consul服务注册与发现" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -171,121 +252,9 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="Consul服务注册与发现"><a href="#Consul服务注册与发现" class="headerlink" title="Consul服务注册与发现"></a>Consul服务注册与发现</h1><h3 id="1-Consul简介"><a href="#1-Consul简介" class="headerlink" title="1. Consul简介"></a><font color="blue">1. Consul简介</font></h3><h4 id="1-什么是Consul"><a href="#1-什么是Consul" class="headerlink" title="1. 什么是Consul"></a>1. 什么是Consul</h4><p>Consul是一套开源的分布式服务发现和配置管理系统，有HashiCorp公司<font color="red">用Go语言开发</font>。提供了微服务系统中的 <strong>服务治理</strong> 、<strong>配置中心</strong> 、<strong>控制总线</strong> 等功能。这些功能中的每一个都可以根据单独需要使用，也可以一起使用以构建全方位的服务网络，总之Consul提供了一种完整的服务网络解决方案。其官方介绍见<a href="https://www.consul.io/intro" target="_blank" rel="noopener">Consul官网</a>。</p>
-<p>它具有很多优点。包括：基于raft协议，比较简洁；支持健康检查，同时支持HTTP和DNS协议，支持跨数据中心的WAN集群，提供图形界面，跨平台，支持Linux/Mac/Windows。</p>
-<h4 id="2-Consul可以做什么"><a href="#2-Consul可以做什么" class="headerlink" title="2. Consul可以做什么"></a>2. Consul可以做什么</h4><ul>
-<li><strong>服务发现Service Discovery</strong>：提供HTTP和DNS两种发现方式。</li>
-<li><strong>健康监测Health Checking</strong>：支持多张方式，HTTP、TCP、Docker、Shell脚本定制化</li>
-<li><strong>KV存储</strong>：Key、Value的存储方式</li>
-<li><strong>多数据中心</strong>：Consul支持多数据中心</li>
-<li><strong>可视化Web界面</strong></li>
-</ul>
-<h3 id="2-安装并运行Consul"><a href="#2-安装并运行Consul" class="headerlink" title="2. 安装并运行Consul"></a><font color="blue">2. 安装并运行Consul</font></h3><p>在<a href="https://www.consul.io/downloads" target="_blank" rel="noopener">官网下载</a>Windows的64位版本Consul后，下载的是zip压缩包，将压缩包解压后，里面只有一个<code>consul.exe</code>文件，如图：</p>
-<p><img src="/2020/05/20/SpringCloud-03Consul%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%8E%E5%8F%91%E7%8E%B0/Consul%E8%A7%A3%E5%8E%8B.jpg" alt></p>
-<p>在该路径下双击其exe文件就可以运行Consul，进入cmd命令行运行，输入以下命令查看Consul的版本号信息，如图，此时我用的是现在官网最新的1.7.3版本：</p>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">consul --version</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2020/05/20/SpringCloud-03Consul%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%8E%E5%8F%91%E7%8E%B0/Consul%E7%89%88%E6%9C%AC.jpg" alt></p>
-<p>当然也可以不用有点low的双击令Consul启动，可以在命令行中用开发模式启动，输入以下命令：</p>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">consul agent -dev</span><br></pre></td></tr></table></figure>
-
-<p>启动后我们访问 localhost:8500 ，就可以看到Consul和Eureka一样，有一个前端可视化Web界面，如下图：</p>
-<p><img src="/2020/05/20/SpringCloud-03Consul%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%8E%E5%8F%91%E7%8E%B0/Consul%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2.jpg" alt></p>
-<p>这样的话Consul服务注册中心就已经启动了，且运行在8500端口</p>
-<h3 id="3-服务提供者入驻到Consul服务注册中心"><a href="#3-服务提供者入驻到Consul服务注册中心" class="headerlink" title="3. 服务提供者入驻到Consul服务注册中心"></a><font color="blue">3. 服务提供者入驻到Consul服务注册中心</font></h3><h4 id="1-新建Module作为服务提供方provider8006"><a href="#1-新建Module作为服务提供方provider8006" class="headerlink" title="1. 新建Module作为服务提供方provider8006"></a>1. 新建Module作为服务提供方provider8006</h4><h4 id="2-改POM"><a href="#2-改POM" class="headerlink" title="2. 改POM"></a>2. 改POM</h4><p>在Eureka的服务提供方中我们引入了如下的依赖：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--eureka-client--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-eureka-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>而我们现在服务注册中心用的不再是Eureka，而是Consul，只需要被Eureka Client的依赖更改为如下依赖：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--SpringCloud consul-server --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-consul-discovery<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>这样引入了让Consul服务注册中心发现自己微服务的相关jar包。</p>
-<h4 id="3-写配置文件YML"><a href="#3-写配置文件YML" class="headerlink" title="3. 写配置文件YML"></a>3. 写配置文件YML</h4><p>将application.yml配置文件修改如下：</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">###consul服务端口号</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8006</span></span><br><span class="line"></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">consul-provider-payment</span></span><br><span class="line">  <span class="comment">####consul注册中心地址</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">consul:</span></span><br><span class="line">      <span class="attr">host:</span> <span class="string">localhost</span></span><br><span class="line">      <span class="attr">port:</span> <span class="number">8500</span></span><br><span class="line">      <span class="attr">discovery:</span></span><br><span class="line">        <span class="comment">#hostname: 127.0.0.1</span></span><br><span class="line">        <span class="attr">service-name:</span> <span class="string">$&#123;spring.application.name&#125;</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="4-主启动类"><a href="#4-主启动类" class="headerlink" title="4. 主启动类"></a>4. 主启动类</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.sher6j.springcloud;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.client.discovery.EnableDiscoveryClient;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 注册到Consul服务注册中心的微服务</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sher6j</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span> 2020-05-20-17:32</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableDiscoveryClient</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PaymentMain8006</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(PaymentMain8006<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="5-业务层Controller"><a href="#5-业务层Controller" class="headerlink" title="5. 业务层Controller"></a>5. 业务层Controller</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.sher6j.springcloud.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Value;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.UUID;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sher6j</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span> 2020-05-20-17:33</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PaymentController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;server.port&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String serverPort;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/payment/consul"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">paymentConsul</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"springcloud with consul: "</span> + serverPort + <span class="string">"\t"</span> + UUID.randomUUID().toString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="6-验证测试"><a href="#6-验证测试" class="headerlink" title="6. 验证测试"></a>6. 验证测试</h4><p>经过以上配置，我们应该就会在Consul服务注册中心中发现入驻的 <strong>consul-provider-payment</strong> 服务，打开服务中心，我们确实看到了该服务：</p>
-<p><img src="/2020/05/20/SpringCloud-03Consul%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%8E%E5%8F%91%E7%8E%B0/%E6%9C%8D%E5%8A%A1%E6%8F%90%E4%BE%9B%E6%96%B9%E5%85%A5%E9%A9%BBConsul%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83.jpg" alt></p>
-<h3 id="4-服务消费者入驻到Consul服务注册中心"><a href="#4-服务消费者入驻到Consul服务注册中心" class="headerlink" title="4. 服务消费者入驻到Consul服务注册中心"></a><font color="blue">4. 服务消费者入驻到Consul服务注册中心</font></h3><h4 id="1-新建Module作为服务消费者consumer80"><a href="#1-新建Module作为服务消费者consumer80" class="headerlink" title="1. 新建Module作为服务消费者consumer80"></a>1. 新建Module作为服务消费者consumer80</h4><h4 id="2-改POM-1"><a href="#2-改POM-1" class="headerlink" title="2. 改POM"></a>2. 改POM</h4><p>为了可以将自己注册到Consul服务注册中心，和服务提供方一样，仍然是引入如下依赖：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--SpringCloud consul-server --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-consul-discovery<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="3-写配置文件YML-1"><a href="#3-写配置文件YML-1" class="headerlink" title="3. 写配置文件YML"></a>3. 写配置文件YML</h4><p>和服务提供方几乎完全相同，只需要修改下自己的端口号和自己的服务名称：</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">###consul服务端口号</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">80</span></span><br><span class="line"></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">cloud-consumer-order</span></span><br><span class="line">  <span class="comment">####consul注册中心地址</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">consul:</span></span><br><span class="line">      <span class="attr">host:</span> <span class="string">localhost</span></span><br><span class="line">      <span class="attr">port:</span> <span class="number">8500</span></span><br><span class="line">      <span class="attr">discovery:</span></span><br><span class="line">        <span class="comment">#hostname: 127.0.0.1</span></span><br><span class="line">        <span class="attr">service-name:</span> <span class="string">$&#123;spring.application.name&#125;</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="4-主启动类-1"><a href="#4-主启动类-1" class="headerlink" title="4. 主启动类"></a>4. 主启动类</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.sher6j.springcloud;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.client.discovery.EnableDiscoveryClient;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sher6j</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span> 2020-05-20-17:49</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableDiscoveryClient</span> <span class="comment">//用于向使用Consul或Zookeeper作为注册中心时注册服务</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OrderConsulMain80</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(OrderConsulMain80<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="5-配置Bean"><a href="#5-配置Bean" class="headerlink" title="5. 配置Bean"></a>5. 配置Bean</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.sher6j.springcloud.config;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.client.loadbalancer.LoadBalanced;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.client.RestTemplate;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sher6j</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ApplicationContextConfig</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="meta">@LoadBalanced</span><span class="comment">//使用该注解赋予RestTemplate负载均衡的能力</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> RestTemplate <span class="title">getRestTemplate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> RestTemplate();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//applicationContext.xml &lt;bean id="" class=""&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="6-业务层Controller"><a href="#6-业务层Controller" class="headerlink" title="6. 业务层Controller"></a>6. 业务层Controller</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.sher6j.springcloud.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.client.RestTemplate;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sher6j</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span> 2020-05-20-17:52</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OrderConsulController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//要访问的服务提供方的微服务名称</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String INVOKE_URL = <span class="string">"http://consul-provider-payment"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> RestTemplate restTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/consumer/payment/consul"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">paymentInfo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        String re = restTemplate.getForObject(INVOKE_URL + <span class="string">"/payment/consul"</span>, String<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">        <span class="keyword">return</span> re;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="7-验证测试"><a href="#7-验证测试" class="headerlink" title="7. 验证测试"></a>7. 验证测试</h4><p>将服务消费方微服务启动后，在Consul服务注册中心我们可以发现同时有了提供者和消费者：</p>
-<p><img src="/2020/05/20/SpringCloud-03Consul%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%8E%E5%8F%91%E7%8E%B0/%E6%B6%88%E8%B4%B9%E8%80%85%E5%92%8C%E6%8F%90%E4%BE%9B%E8%80%85.jpg" alt></p>
-<p>服务提供方自测是没有问题的，下面我们通过服务消费方来访问提供方服务，发现也可以正常访问：</p>
-<p><img src="/2020/05/20/SpringCloud-03Consul%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%8E%E5%8F%91%E7%8E%B0/%E6%B6%88%E8%B4%B9%E6%96%B9%E8%AE%BF%E9%97%AE%E6%9C%8D%E5%8A%A1%E6%96%B9%E6%9C%8D%E5%8A%A1%E6%B5%8B%E8%AF%95.gif" alt></p>
-<h3 id="5-Eureka-Zookeeper-Consul三个注册中心异同"><a href="#5-Eureka-Zookeeper-Consul三个注册中心异同" class="headerlink" title="5. Eureka/Zookeeper/Consul三个注册中心异同"></a><font color="blue">5. Eureka/Zookeeper/Consul三个注册中心异同</font></h3><table>
-<thead>
-<tr>
-<th>组件名</th>
-<th>编写语言</th>
-<th>CAP</th>
-<th>服务健康检查</th>
-<th>对外暴露接口</th>
-<th>SpringCloud集成</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><font color="red"><strong>Eureka</strong></font></td>
-<td>Java</td>
-<td>AP</td>
-<td>可配支持</td>
-<td>HTTP</td>
-<td>已集成</td>
-</tr>
-<tr>
-<td><font color="red"><strong>Consul</strong></font></td>
-<td>Go</td>
-<td>CP</td>
-<td>支持</td>
-<td>HTTP/DNS</td>
-<td>已集成</td>
-</tr>
-<tr>
-<td><font color="red"><strong>Zookeaper</strong></font></td>
-<td>Java</td>
-<td>CP</td>
-<td>支持</td>
-<td>客户端</td>
-<td>已集成</td>
-</tr>
-</tbody></table>
-<p><strong>什么是CAP</strong>？——CAP理论：首先我们要知道CAP对应的都是什么。</p>
-<table>
-<thead>
-<tr>
-<th>C</th>
-<th>A</th>
-<th>P</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Consistency</td>
-<td>Available</td>
-<td>Partition tolerance</td>
-</tr>
-<tr>
-<td>强一致性</td>
-<td>可用性</td>
-<td>分区容错性</td>
-</tr>
-</tbody></table>
-<p>所谓<font color="red"><strong>CAP原则</strong></font>又称CAP定理，指的是在一个分布式系统中，一致性、可用性、分区容错性。CAP 原则指的是，这三个要素最多只能同时实现两点，不可能三者兼顾。在分布式架构中，P永远要求被保证，所以当前的分布式架构只有AP和CP两种。因此，根据CAP原理将NoSQL数据库分成了满足CA原则、满足CP原则和满足AP原则三大类：</p>
-<ul>
-<li>CA：单点集群，满足一致性、可用性的系统，通长在可扩展性上不太强大。</li>
-<li>CP：满足一致性、分许容错性的系统，通常性能不是特别高。</li>
-<li>AP：满足可用性、分区容错性的系统，通常可能对一致性要求低一些。</li>
-</ul>
-
+        
+          <a class="article-more-a" href="/2020/05/20/SpringCloud-03Consul%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%8E%E5%8F%91%E7%8E%B0/#more">more >></a>
+        
       
 
       
@@ -378,15 +347,15 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">微服务</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">SpringCloud</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
         		</li>
       		
 		</ul>
@@ -696,11 +665,11 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">递归</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">链表</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">链表</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">递归</a>
         		</li>
       		
 		</ul>
@@ -996,86 +965,6 @@
 
 
   
-    <article id="post-安装RabbitMQ" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/28/%E5%AE%89%E8%A3%85RabbitMQ/">安装RabbitMQ</a>
-    </h1>
-  
-
-        
-        <a href="/2020/04/28/%E5%AE%89%E8%A3%85RabbitMQ/" class="archive-article-date">
-  	<time datetime="2020-04-28T12:27:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="1-下载"><a href="#1-下载" class="headerlink" title="1. 下载"></a>1. 下载</h1><p>下载地址：<a href="http://www.rabbitmq.com/download.html" target="_blank" rel="noopener">http://www.rabbitmq.com/download.html</a></p>
-        
-          <a class="article-more-a" href="/2020/04/28/%E5%AE%89%E8%A3%85RabbitMQ/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">消息队列</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">RabbitMQ</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/04/28/%E5%AE%89%E8%A3%85RabbitMQ/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
@@ -1193,15 +1082,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">微服务</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">SpringCloud</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">读书笔记</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1217,11 +1102,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">读书笔记</a>
+                <a href="javascript:void(0)" class="js-tag color4">微服务</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">SpringCloud</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">非关系型数据库</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">FastDSF</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1234,10 +1127,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">FastDSF</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1265,11 +1154,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+                <a href="javascript:void(0)" class="js-tag color3">链表</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">链表</a>
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
               </li>
              
               <li class="article-tag-list-item">

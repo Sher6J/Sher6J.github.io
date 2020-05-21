@@ -150,6 +150,156 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-SpringCloud-06Hystrix断路器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/21/SpringCloud-06Hystrix%E6%96%AD%E8%B7%AF%E5%99%A8/">SpringCloud-06Hystrix断路器</a>
+    </h1>
+  
+
+        
+        <a href="/2020/05/21/SpringCloud-06Hystrix%E6%96%AD%E8%B7%AF%E5%99%A8/" class="archive-article-date">
+  	<time datetime="2020-05-21T07:35:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Hystrix断路器"><a href="#Hystrix断路器" class="headerlink" title="Hystrix断路器"></a>Hystrix断路器</h1><h3 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a><font color="blue">1. 概述</font></h3><h4 id="1-分布式系统面临的问题"><a href="#1-分布式系统面临的问题" class="headerlink" title="1. 分布式系统面临的问题"></a>1. 分布式系统面临的问题</h4><p>复杂分布式体系结构中的应用程序有数十个依赖关系，每个依赖关系在某些时候将不可避免地失败。这就造成有可能会发生<font color="red"><strong>服务雪崩</strong></font>。那么什么是服务雪崩呢？</p>
+<p>多个微服务之间调用的时候，假设微服务A调用微服务B和微服务C，微服务B和微服务C又调用其他的微服务，这就是所谓的“<font color="red"><strong>扇出</strong></font>”（向一把打开的折扇）。如果扇出的链路上某个微服务的调用响应时间过长或者不可用，对微服务A的调用就会占用越来越多的系统资源，进而引起系统崩溃，这就是所谓的”<strong>雪崩效应</strong>“。也就是系统的 <strong>高可用</strong> 受到了破坏。</p>
+<p>对于高流量的应用来说，单一的后端依赖可能会导致所有服务器上的所有资源在几秒内饱和。比失败更糟的是，这些应用程序还可能导致<strong>服务之间的延迟增加，备份队列，线程和其他系统资源紧张</strong>，导致整个系统发送更过的级联故障。这些都表示需要对故障和延迟进行隔离和管理，以便 <strong>单个依赖关系的失败，不能取消整个应用程序或系统</strong>。</p>
+<p>所以，通常当发现一个模块下的某个实例失败后，这时候这个模块依然还会接受流量，然后这个有问题的模块还调用了其他的模块，这样就会发生级联故障，或者叫做雪崩。而面对这种糟糕的问题，我们就应该采取 <font color="red"><strong>服务降级、服务熔断</strong></font> 等方式来解决。</p>
+<h4 id="2-Hystrix是什么"><a href="#2-Hystrix是什么" class="headerlink" title="2. Hystrix是什么"></a>2. Hystrix是什么</h4><p>Hystrix是一个用于处理分布式系统的<font color="red"><strong>延迟</strong></font>和<font color="red"><strong>容错</strong></font>的开源库，在分布式系统里，许多依赖不可避免的会调用失败，比如超时、异常等，Hystrix能够保证在一个依赖出问题的情况下，<font color="red"><strong>不会导致整个服务失败，避免级联故障，以提高分布式系统的弹性</strong></font>。</p>
+<p>“断路器”本身是一种开关装置，当某个服务单元发生故障之后，通过断路器的故障监控（类似于物理的熔断保险丝），<font color="red"><strong>向调用方返回一个符合预期的、可处理的备选响应（FallBack），而不是长时间的等待或者抛出调用方无法处理的异常</strong></font>，这样就保证了服务调用方的线程不会被长时间、不必要的占用，从而避免了故障在分布式系统中的蔓延，乃至雪崩。</p>
+<h4 id="3-Hystrix能做什么？"><a href="#3-Hystrix能做什么？" class="headerlink" title="3. Hystrix能做什么？"></a>3. Hystrix能做什么？</h4><p>主要有服务降级、服务熔断、接近实时的监控、限流、隔离等等，其<a href="https://github.com/Netflix/Hystrix/wiki/How-To-Use" target="_blank" rel="noopener">官方文档</a>参考。当然Hystrix现在已经停更了，虽然有一些替代品，但是学习Hystrix及其里面的思想还是非常重要的！</p>
+<h3 id="2-Hystrix重要概念"><a href="#2-Hystrix重要概念" class="headerlink" title="2. Hystrix重要概念"></a><font color="blue">2. Hystrix重要概念</font></h3><h4 id="1-服务降级——Fall-Back"><a href="#1-服务降级——Fall-Back" class="headerlink" title="1. 服务降级——Fall Back"></a>1. 服务降级——Fall Back</h4><p><strong>假设微服务A要调用的服务B不可用了，需要服务B提供一个兜底的解决方法，而不是让服务A在那里傻等，耗死</strong>。不让客户端等待并立刻返回一个友好图示，比如像客户端提示服务器忙，请稍后再试等。哪些情况会触发服务降级呢？</p>
+<p>比如程序运行异常、超时、服务熔断触发服务降级、线程池/信号量打满也会导致服务降级。</p>
+<h4 id="2-服务熔断——Break"><a href="#2-服务熔断——Break" class="headerlink" title="2. 服务熔断——Break"></a>2. 服务熔断——Break</h4><p>服务熔断就相当于物理上的<strong>熔断保险丝</strong>。类比保险丝达到最大服务访问后，直接拒绝访问，拉闸断点，然后调用服务降级的方法并返回友好提示。</p>
+<h4 id="3-服务限流——Flow-Limit"><a href="#3-服务限流——Flow-Limit" class="headerlink" title="3. 服务限流——Flow Limit"></a>3. 服务限流——Flow Limit</h4><p>秒杀高并发等操作，严禁一窝蜂的过来拥挤，大家排队，一秒钟N个，有序进行。</p>
+<h3 id="3-Hystrix案例实操"><a href="#3-Hystrix案例实操" class="headerlink" title="3. Hystrix案例实操"></a><font color="blue">3. Hystrix案例实操</font></h3><h4 id="1-构建"><a href="#1-构建" class="headerlink" title="1. 构建"></a>1. 构建</h4><p>新建一个Module：cloud-provider-hystrix-payment8001作为服务提供方的微服务，和之前的服务消费方同样选择8001端口，但是在POM文件中需要引入Hystrix的依赖：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--hystrix--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-hystrix<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后编写其配置文件，端口号为8001，服务名为<strong>cloud-provider-hystrix-payment</strong>，以使其入驻服务注册中心。然后编写其主启动类，在<a href>SpringCloud-01Eureka服务注册与发现</a>都有详细介绍过，之后编写其业务类，service编写入下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.sher6j.springcloud.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeUnit;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 应该要先写接口，再写实现类，这里为了节约时间，直接用实现类了</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sher6j</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span> 2020-05-21-17:29</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PaymentService</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 正常访问</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> id</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">paymentInfo_OK</span><span class="params">(Long id)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"线程池： "</span> + Thread.currentThread().getName() + <span class="string">" paymentInfo_OK, id: "</span> + id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 模拟复杂业务需要3秒钟</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> id</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">paymentInfo_TimeOut</span><span class="params">(Long id)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> time = <span class="number">3</span>;</span><br><span class="line">        <span class="comment">//暂停几秒钟线程，程序本身没有错误，就是模拟超时</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            TimeUnit.SECONDS.sleep(time);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"线程池： "</span> + Thread.currentThread().getName() + <span class="string">" paymentInfo_TimeOut, id: "</span> + id;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Controller编写入下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.sher6j.springcloud.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> cn.sher6j.springcloud.service.PaymentService;</span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Value;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.PathVariable;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sher6j</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span> 2020-05-21-17:34</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PaymentController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> PaymentService paymentService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;server.port&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String serverPort;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/payment/hystrix/ok/&#123;id&#125;"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">paymentInfo_OK</span><span class="params">(@PathVariable(<span class="string">"id"</span>)</span> Long id) </span>&#123;</span><br><span class="line">        String result = paymentService.paymentInfo_OK(id);</span><br><span class="line">        log.info(<span class="string">"========result:"</span> + result);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/payment/hystrix/timeout/&#123;id&#125;"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">paymentInfo_TimeOut</span><span class="params">(@PathVariable(<span class="string">"id"</span>)</span> Long id) </span>&#123;</span><br><span class="line">        String result = paymentService.paymentInfo_TimeOut(id);</span><br><span class="line">        log.info(<span class="string">"========result:"</span> + result);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>也就是说<strong>cloud-provider-hystrix-payment</strong>服务提供了两个方法，<strong>paymentInfo_OK</strong> 方法可以很快访问，<strong>paymentInfo_TimeOut</strong> 方法我们模拟了一个复杂的业物逻辑，通过线程休眠的方式使其模拟一个需要执行3秒的服务方法。</p>
+<p>在启动了注册中心和8001服务后，我们对服务的 <strong>paymentInfo_OK</strong>（下面用<strong>OK</strong>代替） 和 <strong>paymentInfo_TimeOut **（下面用</strong>TO**代替）分别进行访问，我们发现，<a href="http://localhost:8001/payment/hystrix/ok/1可以很快的访问，而http://localhost:8001/payment/hystrix/timeout/1每次访问大约需要3秒的时间。" target="_blank" rel="noopener">http://localhost:8001/payment/hystrix/ok/1可以很快的访问，而http://localhost:8001/payment/hystrix/timeout/1每次访问大约需要3秒的时间。</a></p>
+<p><img src="/2020/05/21/SpringCloud-06Hystrix%E6%96%AD%E8%B7%AF%E5%99%A8/%E6%AD%A3%E5%B8%B8%E8%AE%BF%E9%97%AEOK.gif" alt> <img src="/2020/05/21/SpringCloud-06Hystrix%E6%96%AD%E8%B7%AF%E5%99%A8/%E6%AD%A3%E5%B8%B8%E8%AE%BF%E9%97%AE%E8%B6%85%E6%97%B6.gif" alt></p>
+<h4 id="2-高并发测试"><a href="#2-高并发测试" class="headerlink" title="2. 高并发测试"></a>2. 高并发测试</h4><h5 id="1-服务提供方自测压力测试："><a href="#1-服务提供方自测压力测试：" class="headerlink" title="1. 服务提供方自测压力测试："></a>1. 服务提供方自测压力测试：</h5><p>需要3秒的复杂业务逻辑 <strong>TO</strong> 访问时，需要时间很少的 <strong>OK</strong> 是完全可以正常访问的，但是在高并发的情况下，也就是说 <strong>TO</strong> 有很多访问量的时候，<strong>OK</strong> 还能够这么正常的访问吗？下面我们用 Jmeter 进行高并发压力测试，用20000个请求都去访问 <strong>TO</strong> 服务，在 Jmeter 中新建一个<strong>线程组：测试Hystrix</strong>用来模拟高并发访问 <strong>TO</strong> 服务，线程组配置参数如下：</p>
+<p><img src="/2020/05/21/SpringCloud-06Hystrix%E6%96%AD%E8%B7%AF%E5%99%A8/%E6%B5%8B%E8%AF%95Hystrix.jpg" alt></p>
+<p>然后我们用该线程组发送HTTP请求给 <strong>TO</strong> 服务，创建如下的HTTP请求进行压力测试：</p>
+<p><img src="/2020/05/21/SpringCloud-06Hystrix%E6%96%AD%E8%B7%AF%E5%99%A8/%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95.jpg" alt></p>
+<p>我们观察8001服务的后端控制台，可以看到对 <strong>TO</strong> 服务进行了大量的访问：</p>
+<p><img src="/2020/05/21/SpringCloud-06Hystrix%E6%96%AD%E8%B7%AF%E5%99%A8/%E5%90%8E%E5%8F%B0%E4%B8%80%E7%9B%B4%E8%AE%BF%E9%97%AE.jpg" alt></p>
+<p>而此时我们再去访问 <strong>OK</strong> 服务时什么样的呢？？</p>
+<p><img src="/2020/05/21/SpringCloud-06Hystrix%E6%96%AD%E8%B7%AF%E5%99%A8/%E5%86%8D%E8%AE%BF%E9%97%AEOK.gif" alt></p>
+<p>可以看到，<strong>OK</strong> 服务无妨像之前一样很快能够得到访问，这里我们模拟的是20000的访问量（没敢模拟数字太大的访问量，怕把系统直接搞死哈哈哈哈），实际中可能会有远大于20000的访问量，当访问量更多的时候，甚至可能卡死服务，原因就是<font color="red"><strong>Tomcat的默认的工作线程数被打满了，没有多余的线程来分解压力和处理</strong></font>。</p>
+<p>而刚才做的压力测试还只是服务提供方8001自己实现的测试，如果此时是外部的服务消费方80来访问该服务，那么服务消费方只能够进行干等，消费方显然会对这样的等待时间不满意，服务提供方很有可能直接被拖死。我们发现8001自测都会出现问题，那如果我们再用服务消费方测试呢？</p>
+<h5 id="2-服务消费方进行压力测试："><a href="#2-服务消费方进行压力测试：" class="headerlink" title="2.服务消费方进行压力测试："></a>2.服务消费方进行压力测试：</h5><p>新建一个Module：cloud-consumer-feign-hystrix-order80作为服务消费方，服务消费方利用feign访问提供方的服务，编写对应的service接口如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.sher6j.springcloud.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.openfeign.FeignClient;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.PathVariable;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sher6j</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span> 2020-05-21-20:00</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@FeignClient</span>(<span class="string">"CLOUD-PROVIDER-HYSTRIX-PAYMENT"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">PaymentHystrixService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/payment/hystrix/ok/&#123;id&#125;"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">paymentInfo_OK</span><span class="params">(@PathVariable(<span class="string">"id"</span>)</span> Long id)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/payment/hystrix/timeout/&#123;id&#125;"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">paymentInfo_TimeOut</span><span class="params">(@PathVariable(<span class="string">"id"</span>)</span> Long id)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后编写其Controller：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.sher6j.springcloud.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> cn.sher6j.springcloud.service.PaymentHystrixService;</span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.PathVariable;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sher6j</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span> 2020-05-21-20:02</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OrderHystrixController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> PaymentHystrixService paymentHystrixService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/consumer/payment/hystrix/ok/&#123;id&#125;"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">paymentInfo_OK</span><span class="params">(@PathVariable(<span class="string">"id"</span>)</span> Long id) </span>&#123;</span><br><span class="line">        String result = paymentHystrixService.paymentInfo_OK(id);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/consumer/payment/hystrix/timeout/&#123;id&#125;"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">paymentInfo_TimeOut</span><span class="params">(@PathVariable(<span class="string">"id"</span>)</span> Long id) </span>&#123;</span><br><span class="line">        String result = paymentHystrixService.paymentInfo_TimeOut(id);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>将80服务启动，用<a href="http://localhost/consumer/payment/hystrix/ok/1对服务提供方的" target="_blank" rel="noopener">http://localhost/consumer/payment/hystrix/ok/1对服务提供方的</a> <strong>OK</strong> 服务进行访问，再进行压力测试，和之前一样，无法迅速访问该服务，如果压力测试中的线程数更多的时候，很可能会造成超时错误，出现以下错误提示：</p>
+<p><img src="/2020/05/21/SpringCloud-06Hystrix%E6%96%AD%E8%B7%AF%E5%99%A8/%E8%B6%85%E6%97%B6.jpg" alt></p>
+<p>故障原因：8001同一层次的其他接口服务被困死，因为Tomcat线程池里面的工作线程已经被挤占完毕，80此时再调用8001，必然导致客户端访问响应缓慢。正是因为出现了这种现象，所以我们才需要<font color="red"><strong>服务降级</strong></font>、<font color="red"><strong>容错</strong></font>、<font color="red"><strong>服务限流</strong></font>等技术。</p>
+<h4 id="3-服务降级Fall-Back"><a href="#3-服务降级Fall-Back" class="headerlink" title="3. 服务降级Fall Back"></a>3. 服务降级Fall Back</h4><h5 id="1-服务端服务提供方的服务降级"><a href="#1-服务端服务提供方的服务降级" class="headerlink" title="1. 服务端服务提供方的服务降级"></a>1. 服务端服务提供方的服务降级</h5><p>降级的配置用 <strong><code>@HystrixCommand</code></strong> 注解，在服务提供方自身找问题，设置自身调用超时时间的峰值，在峰值内可以正常运行，超过了峰值需要有兜底的方法处理，用作服务降级。</p>
+<p>首先在服务提供方的业务类上启用 <strong><code>@HystrixCommand</code></strong> 实现报异常后如何处理，也就是一旦调用服务方法失败并抛出了错误信息后，会自动调用 <strong><code>@HystrixCommand</code></strong> 标注好的fallbackMethod服务降级方法。在服务提供方的service中我们修改 <strong>TO</strong> 服务：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 模拟复杂业务需要3秒钟</span></span><br><span class="line"><span class="comment">    * HystrixCommand配置2秒以内走正常的逻辑，超过2秒走服务降级逻辑</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> id</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line"><span class="comment">//设置服务降级方法为paymentInfo_TimeOutHandler，超时峰值为2秒</span></span><br><span class="line">   <span class="meta">@HystrixCommand</span>(fallbackMethod = <span class="string">"paymentInfo_TimeOutHandler"</span>, commandProperties = &#123;</span><br><span class="line">           <span class="meta">@HystrixProperty</span>(name = <span class="string">"execution.isolation.thread.timeoutInMilliseconds"</span>, value = <span class="string">"2000"</span>)</span><br><span class="line">   &#125;)</span><br><span class="line">   <span class="function"><span class="keyword">public</span> String <span class="title">paymentInfo_TimeOut</span><span class="params">(Long id)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">int</span> time = <span class="number">3</span>;</span><br><span class="line">       <span class="comment">//暂停几秒钟线程，程序本身没有错误，就是模拟超时</span></span><br><span class="line">       <span class="keyword">try</span> &#123;</span><br><span class="line">           TimeUnit.SECONDS.sleep(time);</span><br><span class="line">       &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">           e.printStackTrace();</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> <span class="string">"线程池： "</span> + Thread.currentThread().getName() + <span class="string">" paymentInfo_TimeOut, id: "</span> + id;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 兜底方法</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> id</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> String <span class="title">paymentInfo_TimeOutHandler</span><span class="params">(Long id)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">return</span> <span class="string">"系统忙，请稍后再试"</span>;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后在主启动类上添加 <strong><code>@EnableCircuitBreaker</code></strong> 注解对熔断器进行激活，<strong>TO</strong>服务的访问时间3秒，而我们用Hystrix配置的时间峰值为2秒，也就是当<strong>服务超时或服务出错</strong>时，会访问我们设置的fallbackMethod服务降级方法，再次访问<strong>TO</strong>服务，我们发现其执行的方法确实为服务降级方法：</p>
+<p><img src="/2020/05/21/SpringCloud-06Hystrix%E6%96%AD%E8%B7%AF%E5%99%A8/%E6%9C%8D%E5%8A%A1%E9%99%8D%E7%BA%A7.jpg" alt></p>
+<h5 id="2-客户端服务消费方的服务降级"><a href="#2-客户端服务消费方的服务降级" class="headerlink" title="2. 客户端服务消费方的服务降级"></a>2. 客户端服务消费方的服务降级</h5><p>既然服务的提供方可以进行降级保护，那么服务的消费方，也可以更好的保护自己，也可以对自己进行降级保护，也就是说Hystrix服务降级既可以放在服务端（服务提供方），也可以放在客户端（服务消费方），但是！！！<font color="red"><strong>通常是用客户端做服务降级</strong></font>，下面在服务消费方即客户端配置自己的服务降级保护，修改80消费方的配置文件，添加如下配置已使其支持Hystrix：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">feign:</span></span><br><span class="line">  <span class="attr">hystrix:</span></span><br><span class="line">    <span class="attr">enabled:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>在80消费方的主启动类上添加 <strong><code>@EnableHystrix</code></strong> 激活Hystrix服务。然后在80的Controller中同样加入<strong><code>@HystrixCommand</code></strong>注解已实现服务降级：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping</span>(<span class="string">"/consumer/payment/hystrix/timeout/&#123;id&#125;"</span>)</span><br><span class="line"><span class="meta">@HystrixCommand</span>(fallbackMethod = <span class="string">"paymentInfo_TimeOutHandler"</span>, commandProperties = &#123;</span><br><span class="line">        <span class="meta">@HystrixProperty</span>(name = <span class="string">"execution.isolation.thread.timeoutInMilliseconds"</span>, value = <span class="string">"1500"</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">paymentInfo_TimeOut</span><span class="params">(@PathVariable(<span class="string">"id"</span>)</span> Long id) </span>&#123;</span><br><span class="line">    String result = paymentHystrixService.paymentInfo_TimeOut(id);</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 兜底方法</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> id</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">paymentInfo_TimeOutHandler</span><span class="params">(Long id)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"系统忙，请稍后再试"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>也就是说如果消费方访问服务提供方的时间超过了1.5秒，那么就会访问自己的降级服务方法。</p>
+<p><img src="/2020/05/21/SpringCloud-06Hystrix%E6%96%AD%E8%B7%AF%E5%99%A8/80%E6%9C%8D%E5%8A%A1%E9%99%8D%E7%BA%A7.jpg" alt></p>
+<h5 id="3-统一全局服务降级方法"><a href="#3-统一全局服务降级方法" class="headerlink" title="3. 统一全局服务降级方法"></a>3. 统一全局服务降级方法</h5><p>而当前的这种处理方式是有问题的，也就是<strong>每个业务方法都对应了一个服务降级犯法，这会导致代码膨胀</strong>，所以我们应该定义一个统一的服务降级方法，统一的方法和自定义的方法分开。而且我们<strong>将服务降级方法和业务逻辑混合在了一起，这会导致代码混乱，业务逻辑不清晰</strong>。</p>
+<p>对于<font color="red"><strong>第一个问题</strong></font>，我们可以用feign接口中的 <strong><code>@DefaultProperties(defaultFallback = &quot;&quot;)</code></strong> 注解来配置全局的服务降级方法，也就是说<font color="red">自己配置过<strong><code>@HystrixCommand(fallbackMethod = “”）</code></strong> fallbackMethod方法的采用自己配置的服务降级方法，而没有配置过的就采用<strong><code>@DefaultProperties(defaultFallback = &quot;&quot;)</code></strong> 配置的全局的服务降级方法</font>。这样的话通用的服务降级方法和独享的服务降级方法分开，避免了代码膨胀，合理减少了代码量，修改服务消费方80的Controller入下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.sher6j.springcloud.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> cn.sher6j.springcloud.service.PaymentHystrixService;</span><br><span class="line"><span class="keyword">import</span> com.netflix.hystrix.contrib.javanica.annotation.DefaultProperties;</span><br><span class="line"><span class="keyword">import</span> com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;</span><br><span class="line"><span class="keyword">import</span> com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;</span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.PathVariable;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sher6j</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span> 2020-05-21-20:02</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="meta">@DefaultProperties</span>(defaultFallback = <span class="string">"payment_Global_FallbackMethod"</span>) <span class="comment">//全局服务降级</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OrderHystrixController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> PaymentHystrixService paymentHystrixService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/consumer/payment/hystrix/ok/&#123;id&#125;"</span>)</span><br><span class="line">    <span class="meta">@HystrixCommand</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">paymentInfo_OK</span><span class="params">(@PathVariable(<span class="string">"id"</span>)</span> Long id) </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">1</span>/<span class="number">0</span>; <span class="comment">//手动模拟错误</span></span><br><span class="line">        String result = paymentHystrixService.paymentInfo_OK(id);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/consumer/payment/hystrix/timeout/&#123;id&#125;"</span>)</span><br><span class="line">    <span class="comment">//定制服务降级</span></span><br><span class="line">    <span class="meta">@HystrixCommand</span>(fallbackMethod = <span class="string">"paymentInfo_TimeOutHandler"</span>, commandProperties = &#123;</span><br><span class="line">            <span class="meta">@HystrixProperty</span>(name = <span class="string">"execution.isolation.thread.timeoutInMilliseconds"</span>, value = <span class="string">"1500"</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">paymentInfo_TimeOut</span><span class="params">(@PathVariable(<span class="string">"id"</span>)</span> Long id) </span>&#123;</span><br><span class="line">        String result = paymentHystrixService.paymentInfo_TimeOut(id);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 定制服务降级方法</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> id</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">paymentInfo_TimeOutHandler</span><span class="params">(Long id)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"定制异常处理信息"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 全局服务降级方法</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">payment_Global_FallbackMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"全局异常处理信息"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>paymentInfo_TimeOut由于定制了降级服务，所以访问服务提供方会出现超时（服务提供方提供的服务执行时间超过1.5秒），而paymentInfo_OK我们用 <code>int i = 1/0;</code> 这行代码模拟了错误，分别访问<a href="http://localhost/consumer/payment/hystrix/timeout/1和http://localhost/consumer/payment/hystrix/ok/1，我们得到如下结果：" target="_blank" rel="noopener">http://localhost/consumer/payment/hystrix/timeout/1和http://localhost/consumer/payment/hystrix/ok/1，我们得到如下结果：</a></p>
+<p><img src="/2020/05/21/SpringCloud-06Hystrix%E6%96%AD%E8%B7%AF%E5%99%A8/%E5%85%A8%E5%B1%80%E4%B8%8E%E5%AE%9A%E5%88%B6%E6%9C%8D%E5%8A%A1%E9%99%8D%E7%BA%A7.jpg" alt></p>
+<p>可以看到由于paymentInfo_OK没有进行定制的服务降级方法，所以其访问的是全局服务降级方法，而paymentInfo_TimeOut访问的是定制服务降级方法，这里需要注意的是，<strong>无论是否配置了定制服务降级方法，都要在其服务上加入注解 <code>@HystrixCommand</code></strong>， 否则服务降级和该服务没关系，比如paymentInfo_OK如果没有加入该注解，就直接会报除数为0错误。</p>
+<p>而对于<font color="red"><strong>第二个问题</strong></font>， 我们可以为Feign客户端定义的接口添加一个服务降级处理的实现类即可实现解耦，我们的80客户端已经有了PaymentHystrixService接口，我们新建一个类PaymentFallbackService实现该接口，并重写接口中的方法，为接口里的方法进行异常处理，并且我们在PaymentHystrixService声明其服务降级方法所在的类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.sher6j.springcloud.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.openfeign.FeignClient;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.PathVariable;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sher6j</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span> 2020-05-21-20:00</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="comment">//当出现错误是到PaymentFallbackService类中找服务降级方法</span></span><br><span class="line"><span class="meta">@FeignClient</span>(value = <span class="string">"CLOUD-PROVIDER-HYSTRIX-PAYMENT"</span>, fallback = PaymentFallbackService<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">interface</span> <span class="title">PaymentHystrixService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/payment/hystrix/ok/&#123;id&#125;"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">paymentInfo_OK</span><span class="params">(@PathVariable(<span class="string">"id"</span>)</span> Long id)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/payment/hystrix/timeout/&#123;id&#125;"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">paymentInfo_TimeOut</span><span class="params">(@PathVariable(<span class="string">"id"</span>)</span> Long id)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.sher6j.springcloud.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sher6j</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span> 2020-05-21-21:27</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PaymentFallbackService</span> <span class="keyword">implements</span> <span class="title">PaymentHystrixService</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">paymentInfo_OK</span><span class="params">(Long id)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"paymentInfo_OK出现异常"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">paymentInfo_TimeOut</span><span class="params">(Long id)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"paymentInfo_TimeOut出现异常"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后我们将Controller中耦合的代码都取消：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.sher6j.springcloud.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> cn.sher6j.springcloud.service.PaymentHystrixService;</span><br><span class="line"><span class="keyword">import</span> com.netflix.hystrix.contrib.javanica.annotation.DefaultProperties;</span><br><span class="line"><span class="keyword">import</span> com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;</span><br><span class="line"><span class="keyword">import</span> com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;</span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.PathVariable;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sher6j</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span> 2020-05-21-20:02</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OrderHystrixController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> PaymentHystrixService paymentHystrixService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/consumer/payment/hystrix/ok/&#123;id&#125;"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">paymentInfo_OK</span><span class="params">(@PathVariable(<span class="string">"id"</span>)</span> Long id) </span>&#123;</span><br><span class="line">        String result = paymentHystrixService.paymentInfo_OK(id);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/consumer/payment/hystrix/timeout/&#123;id&#125;"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">paymentInfo_TimeOut</span><span class="params">(@PathVariable(<span class="string">"id"</span>)</span> Long id) </span>&#123;</span><br><span class="line">        String result = paymentHystrixService.paymentInfo_TimeOut(id);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后我们关闭8001服务提供方服务，模拟服务器宕机，如图，在服务访问出现错误时，访问了我们配置的PaymentFallbackService类中的服务降级方法，这样就实现了代码的解耦，使业务逻辑不再混乱。</p>
+<p><img src="/2020/05/21/SpringCloud-06Hystrix%E6%96%AD%E8%B7%AF%E5%99%A8/%E6%9C%8D%E5%8A%A1%E9%99%8D%E7%BA%A7%E6%96%B9%E6%B3%95%E8%A7%A3%E8%80%A6.jpg" alt></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">微服务</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">SpringCloud</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/21/SpringCloud-06Hystrix%E6%96%AD%E8%B7%AF%E5%99%A8/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-SpringCloud-05OpenFeign服务接口调用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -427,15 +577,15 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">微服务</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">SpringCloud</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
         		</li>
       		
 		</ul>
@@ -875,91 +1025,6 @@
 
 
   
-    <article id="post-算法-力扣-141-环形链表" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/11/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-141-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8/">算法-力扣-141-环形链表</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/11/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-141-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8/" class="archive-article-date">
-  	<time datetime="2020-05-11T01:36:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="力扣-141-环形链表"><a href="#力扣-141-环形链表" class="headerlink" title="力扣[141]环形链表"></a>力扣[141]环形链表</h2><h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><p>给定一个链表，判断链表中是否有环。</p>
-<p>为了表示给定链表中的环，我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。 如果 pos 是 -1，则在该链表中没有环。</p>
-        
-          <a class="article-more-a" href="/2020/05/11/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-141-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">力扣</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">链表</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/11/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-141-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
@@ -1057,6 +1122,30 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">读书笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">JavaSE</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">微服务</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">SpringCloud</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">redis</a>
               </li>
              
@@ -1066,14 +1155,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">CentOS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">读书笔记</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1089,23 +1170,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">JavaSE</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">微服务</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">SpringCloud</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">非关系型数据库</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">FastDSF</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1121,19 +1190,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">异常处理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">消息队列</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">RabbitMQ</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">FastDSF</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">异常处理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1145,15 +1210,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数组</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">递归</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">数组</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -150,6 +150,184 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-RabbitMQ环境配置" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/24/RabbitMQ%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">RabbitMQ环境配置</a>
+    </h1>
+  
+
+        
+        <a href="/2020/05/24/RabbitMQ%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" class="archive-article-date">
+  	<time datetime="2020-05-24T12:32:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="RabbitMQ环境配置"><a href="#RabbitMQ环境配置" class="headerlink" title="RabbitMQ环境配置"></a>RabbitMQ环境配置</h1><h2 id="1-Windows上安装RabbitMQ及环境配置"><a href="#1-Windows上安装RabbitMQ及环境配置" class="headerlink" title="1. Windows上安装RabbitMQ及环境配置"></a><font color="blue">1. Windows上安装RabbitMQ及环境配置</font></h2><h4 id="1-安装Erlang语言环境"><a href="#1-安装Erlang语言环境" class="headerlink" title="1. 安装Erlang语言环境"></a>1. 安装Erlang语言环境</h4><p><a href="http://erlang.org/download/otp_win64_21.3.exe" target="_blank" rel="noopener">Erlang语言官网下载地址</a>，下载其exe可执行文件后对其语言包进行安装：</p>
+<p><img src="/2020/05/24/RabbitMQ%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/ErlangWindows%E5%AE%89%E8%A3%8501.jpg" alt></p>
+<p><img src="/2020/05/24/RabbitMQ%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/ErlangWindows%E5%AE%89%E8%A3%8502.jpg" alt></p>
+<p><img src="/2020/05/24/RabbitMQ%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/ErlangWindows%E5%AE%89%E8%A3%8503.jpg" alt></p>
+<p><img src="/2020/05/24/RabbitMQ%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/ErlangWindows%E5%AE%89%E8%A3%8504.jpg" alt></p>
+<p>打开Erlang语言的安装目录中的bin目录，然后将其路径添加到系统环境变量中：</p>
+<p><img src="/2020/05/24/RabbitMQ%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/ErlangWindows%E5%AE%89%E8%A3%8505.jpg" alt></p>
+<p>然后在命令提示符中输入<code>erl</code>命令查看Erlang是否安装成功：</p>
+<p><img src="/2020/05/24/RabbitMQ%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/ErlangWindows%E5%AE%89%E8%A3%8506.jpg" alt></p>
+<h4 id="2-安装RabbitMQ"><a href="#2-安装RabbitMQ" class="headerlink" title="2. 安装RabbitMQ"></a>2. 安装RabbitMQ</h4><p><a href="https://github-production-release-asset-2e65be.s3.amazonaws.com/924551/2acb1100-51c1-11e9-9aaf-d0364c4ee481?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20200524%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20200524T125620Z&X-Amz-Expires=300&X-Amz-Signature=3a3c2621c57570641414cc163a1701911078ac8c31bb9e7bfc67f206d9670376&X-Amz-SignedHeaders=host&actor_id=50107549&repo_id=924551&response-content-disposition=attachment%3B%20filename%3Drabbitmq-server-3.7.14.exe&response-content-type=application%2Foctet-stream" target="_blank" rel="noopener">RabbitMQ官网下载地址</a>，下载其exe可执行文件后安装RabbitMQ：</p>
+<p><img src="/2020/05/24/RabbitMQ%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/RabbitMQWindows%E5%AE%89%E8%A3%8501.jpg" alt></p>
+<p><img src="/2020/05/24/RabbitMQ%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/RabbitMQWindows%E5%AE%89%E8%A3%8502.jpg" alt></p>
+<p><img src="/2020/05/24/RabbitMQ%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/RabbitMQWindows%E5%AE%89%E8%A3%8503.jpg" alt></p>
+<p>进入到RabbitMQ安装目录下的sbin目录在命令提示符中执行如下命令以启动管理功能，这样的话就可以添加RabbitMQ的可视化插件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rabbitmq-plugins enable rabbitmq_management</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/05/24/RabbitMQ%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/RabbitMQWindows%E5%AE%89%E8%A3%8504.jpg" alt></p>
+<p>输入上面命令后就添加了RabbitMQ的界面，只要在开始菜单即可启动RabbitMQ</p>
+<p><img src="/2020/05/24/RabbitMQ%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/RabbitMQWindows%E5%AE%89%E8%A3%8505.jpg" alt></p>
+<p>点击上图中的<code>RabbitMQ Server - start</code>即可启动RabbitMQ服务，然后访问 <a href="http://localhost:15672/" target="_blank" rel="noopener">http://localhost:15672/</a> 检查RabbitMQ是否安装成功：</p>
+<p><img src="/2020/05/24/RabbitMQ%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/RabbitMQWindows%E5%AE%89%E8%A3%8506.jpg" alt></p>
+<p>RabbitMQ默认的账号为<code>guest</code>，密码也为<code>guest</code>，进行登录后就可以看见RabbitMQ的管理界面：</p>
+<p><img src="/2020/05/24/RabbitMQ%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/RabbitMQWindows%E5%AE%89%E8%A3%8507.jpg" alt></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">消息队列</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">RabbitMQ</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/24/RabbitMQ%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-SpringCloud-09SpringCloud-Bus消息总线" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/24/SpringCloud-09SpringCloud-Bus%E6%B6%88%E6%81%AF%E6%80%BB%E7%BA%BF/">SpringCloud-09SpringCloud Bus消息总线</a>
+    </h1>
+  
+
+        
+        <a href="/2020/05/24/SpringCloud-09SpringCloud-Bus%E6%B6%88%E6%81%AF%E6%80%BB%E7%BA%BF/" class="archive-article-date">
+  	<time datetime="2020-05-24T12:13:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="SpringCloud-Bus-消息总线"><a href="#SpringCloud-Bus-消息总线" class="headerlink" title="SpringCloud Bus 消息总线"></a>SpringCloud Bus 消息总线</h1><h3 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a><font color="blue">1. 概述</font></h3><p>用SpringCloud Config时，我们可以实现配置信息手动的动态刷新，也就是远端配置信息发生改变后，需要告诉服务端配置信息发生变化后，服务端才会更新配置信息，而现在我们想要实现<strong>分布式自动刷新配置信息</strong>功能，这就需要我们使用SpringCloud Bus消息总线配合SpringCloud Config实现配置信息的动态刷新。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">微服务</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">SpringCloud</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/24/SpringCloud-09SpringCloud-Bus%E6%B6%88%E6%81%AF%E6%80%BB%E7%BA%BF/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-SpringCloud-08Spring-Cloud-Config分布式配置中心" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -171,63 +349,9 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="SpringCloud-Config-分布式配置中心"><a href="#SpringCloud-Config-分布式配置中心" class="headerlink" title="SpringCloud Config 分布式配置中心"></a>SpringCloud Config 分布式配置中心</h1><h3 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a><font color="blue">1. 概述</font></h3><p>微服务意味着要将单体应用中的业务拆分成一个一个子服务，每个服务的粒度相对较小，因此系统中会出现大量的 服务。由于每个服务都需要必要的配置才能运行，所以一套集中式的、动态的配置管理设施是必不可少的。SpringCloud提供了Config Server来解决这个问题，SpringCloud Config为微服务架构中的微服务提供集中化的外部配置支持，配置服务器为各个不同微服务应用的所有环境提供了一个<font color="red"><strong>中心化的外部配置</strong></font>。SpringCloud Config分为服务端和客户端两部分，服务端也称为分布式配置中心，它是一个独立的微服务应用，用来连接配置服务器并为客户端提供获取配置信息，加密/解密信息等访问接口，<font color="red"><strong>将配置信息以REST接口的形式暴露给客户端</strong></font>（客户端可以用REST风格方式读取到该配置信息）。客户端则是通过指定的配置中心来管理应用资源，以及与业务相关的配置内容，并在启动的时候从配置中心获取和加载配置信息。配置服务器默认采用git来存储配置信息，这样就有助于对环境配置进行版本管理，并且可以通过git客户端工具来方便的管理和访问配置内容。</p>
-<p><img src="/2020/05/23/SpringCloud-08Spring-Cloud-Config%E5%88%86%E5%B8%83%E5%BC%8F%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83/%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83.jpg" alt></p>
-<p>如图，<strong>服务配置中心从远端读取配置文件，然后客户端服务再通过服务配置中心读取配置</strong>。</p>
-<h3 id="2-Config服务端配置与测试"><a href="#2-Config服务端配置与测试" class="headerlink" title="2. Config服务端配置与测试"></a><font color="blue">2. Config服务端配置与测试</font></h3><h4 id="1-在GitHub上新建一个用作配置中心的新仓库，并克隆到本地开发硬盘目录"><a href="#1-在GitHub上新建一个用作配置中心的新仓库，并克隆到本地开发硬盘目录" class="headerlink" title="1. 在GitHub上新建一个用作配置中心的新仓库，并克隆到本地开发硬盘目录"></a>1. 在GitHub上新建一个用作配置中心的新仓库，并克隆到本地开发硬盘目录</h4><p><img src="/2020/05/23/SpringCloud-08Spring-Cloud-Config%E5%88%86%E5%B8%83%E5%BC%8F%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83/GitHub.jpg" alt>，然后根据新建的Git地址，将GitHub上的仓库克隆岛本地</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;Sher6J&#x2F;springcloud-config.git</span><br></pre></td></tr></table></figure>
-
-<h4 id="2-新建Module：cloud-config-center-3344作为配置中心微服务"><a href="#2-新建Module：cloud-config-center-3344作为配置中心微服务" class="headerlink" title="2. 新建Module：cloud-config-center-3344作为配置中心微服务"></a>2. 新建Module：cloud-config-center-3344作为配置中心微服务</h4><p>在其POM文件中引入服务配置中心的依赖：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-config-server<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>修改其配置文件application.yml如下：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">3344</span></span><br><span class="line"></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span>  <span class="string">cloud-config-center</span> <span class="comment"># 注册进Eureka服务器的微服务名</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">config:</span></span><br><span class="line">      <span class="attr">server:</span></span><br><span class="line">        <span class="attr">git:</span></span><br><span class="line">          <span class="attr">uri:</span> <span class="string">https://github.com/Sher6J/springcloud-config.git</span> <span class="comment"># GitHub上面的git仓库名字</span></span><br><span class="line">          <span class="comment">#### 搜索目录</span></span><br><span class="line">          <span class="attr">search-paths:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">springcloud-config</span></span><br><span class="line">      <span class="comment">#### 读取分支</span></span><br><span class="line">      <span class="attr">label:</span> <span class="string">master</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#服务注册到eureka地址</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line">  <span class="attr">client:</span></span><br><span class="line">    <span class="attr">service-url:</span></span><br><span class="line">      <span class="attr">defaultZone:</span> <span class="string">http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka</span></span><br></pre></td></tr></table></figure>
-
-<p>然后编写主启动类，在<strong>主启动类上添加注解 <code>@EnableConfigServer</code></strong> 使3344微服务具有配置中心功能：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.sher6j.springcloud;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.config.server.EnableConfigServer;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sher6j</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span> 2020-05-23-9:56</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableConfigServer</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConfigCenterMain3344</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(ConfigCenterMain3344<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>修改hosts文件，增加映射，使本机模拟网址服务配置中心网址：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1 config-3344.com</span><br></pre></td></tr></table></figure>
-
-<p>所以现在我们hosts文件开启了三个配置，分别是之前配置的Eureka服务注册中心集群和现在配置的服务配置中心：</p>
-<p><img src="/2020/05/23/SpringCloud-08Spring-Cloud-Config%E5%88%86%E5%B8%83%E5%BC%8F%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83/%E4%BF%AE%E6%94%B9hosts%E6%96%87%E4%BB%B6.jpg" alt></p>
-<h4 id="3-在GitHub上的服务配置中心仓库中建立配置文件"><a href="#3-在GitHub上的服务配置中心仓库中建立配置文件" class="headerlink" title="3. 在GitHub上的服务配置中心仓库中建立配置文件"></a>3. 在GitHub上的服务配置中心仓库中建立配置文件</h4><p><img src="/2020/05/23/SpringCloud-08Spring-Cloud-Config%E5%88%86%E5%B8%83%E5%BC%8F%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83/Git%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.jpg" alt></p>
-<p>如图，就是创建了一个简单的配置文件，用来测试能否通过配置中心微服务获取内容。</p>
-<h4 id="4-测试通过服务配置中心微服务3344是否可以从GitHub上获取配置内容"><a href="#4-测试通过服务配置中心微服务3344是否可以从GitHub上获取配置内容" class="headerlink" title="4. 测试通过服务配置中心微服务3344是否可以从GitHub上获取配置内容"></a>4. 测试通过服务配置中心微服务3344是否可以从GitHub上获取配置内容</h4><p><strong>先启动Eureka服务注册中心</strong>，然后启动服务配置中心微服务3344，访问 <a href="http://config-3344.com:3344/master/config-dev.yml" target="_blank" rel="noopener">http://config-3344.com:3344/master/config-dev.yml</a> ，我们可以看到3344微服务可以成功的读取到远端的配置文件。</p>
-<p> <img src="/2020/05/23/SpringCloud-08Spring-Cloud-Config%E5%88%86%E5%B8%83%E5%BC%8F%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%AE%BF%E9%97%AE%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.jpg" alt></p>
-<p>所以现在，服务配置中心从远端Git仓库读取配置文件这一部分已经搭建完成：</p>
-<p><img src="/2020/05/23/SpringCloud-08Spring-Cloud-Config%E5%88%86%E5%B8%83%E5%BC%8F%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83/%E6%9C%8D%E5%8A%A1%E4%B8%AD%E5%BF%83%E4%BB%8E%E8%BF%9C%E7%AB%AF%E8%AF%BB%E5%8F%96%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.jpg" alt></p>
-<h3 id="3-Config客户端配置与测试"><a href="#3-Config客户端配置与测试" class="headerlink" title="3. Config客户端配置与测试"></a><font color="blue">3. Config客户端配置与测试</font></h3><h4 id="1-新建Module：cloud-config-client-3355作为访问配置中心的客户端"><a href="#1-新建Module：cloud-config-client-3355作为访问配置中心的客户端" class="headerlink" title="1. 新建Module：cloud-config-client-3355作为访问配置中心的客户端"></a>1. 新建Module：cloud-config-client-3355作为访问配置中心的客户端</h4><p>在其POM文件中引入Config配置中心客户端的启动类：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-config<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p><font color="red"><strong>编写配置文件bootstrap.yml</strong></font>:</p>
-<p><strong>application.yml</strong>是用户级的资源配置项，而<strong>bootstrap.yml</strong>是系统级的资源配置项，<strong>bootstrap.yml的优先级更高</strong>，SpringCloud会创建一个”Bootstrap Context”，作为Spring应用的“Application Context”的<font color="red"><strong>父上下文</strong></font>。初始化的时候，”Bootstrap Context”负责从外部源加载配置属性并解析配置，这两个上下文共享一个从外部获取的”Environment”。”Bootstrap“属性有高优先级，默认情况系，它们不会被本地配置覆盖。”Bootstrap Context”和”Application Context”这两个上下文有不同的约定，所以新增一个<strong>bootstrap.yml</strong>文件，保证这两个上下文的配置分离。编写bootstrap配置文件如下：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">3355</span></span><br><span class="line"></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">config-client</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="comment">#Config客户端配置</span></span><br><span class="line">    <span class="attr">config:</span></span><br><span class="line">      <span class="attr">label:</span> <span class="string">master</span> <span class="comment">#分支名称</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">config</span> <span class="comment">#配置文件名称</span></span><br><span class="line">      <span class="attr">profile:</span> <span class="string">dev</span> <span class="comment">#读取后缀名称   上述3个综合：master分支上config-dev.yml的配置文件被读取http://config-3344.com:3344/master/config-dev.yml</span></span><br><span class="line">      <span class="attr">uri:</span> <span class="string">http://localhost:3344</span> <span class="comment">#配置中心地址k</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#服务注册到eureka地址</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line">  <span class="attr">client:</span></span><br><span class="line">    <span class="attr">service-url:</span></span><br><span class="line">      <span class="attr">defaultZone:</span> <span class="string">http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka</span></span><br></pre></td></tr></table></figure>
-
-<p>然后老规矩，编写3355服务的主启动类，之后编写其业务类：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.sher6j.springcloud.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Value;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sher6j</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span> 2020-05-23-11:27</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConfigClientController</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;config.info&#125;"</span>) </span><br><span class="line">    <span class="keyword">private</span> String configInfo;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/configInfo"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getConfigInfo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> configInfo;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="2-测试客户端是否能够通过访问配置中心获取配置信息"><a href="#2-测试客户端是否能够通过访问配置中心获取配置信息" class="headerlink" title="2. 测试客户端是否能够通过访问配置中心获取配置信息"></a>2. 测试客户端是否能够通过访问配置中心获取配置信息</h4><p>按顺序启动Eureka服务注册中心、Config服务配置中心后，启动我们的服务配置中心客户端3355进行测试：</p>
-<p><img src="/2020/05/23/SpringCloud-08Spring-Cloud-Config%E5%88%86%E5%B8%83%E5%BC%8F%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83/%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%8A%A0%E8%BD%BD%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF.jpg" alt></p>
-<h4 id="3-存在的问题"><a href="#3-存在的问题" class="headerlink" title="3. 存在的问题"></a>3. 存在的问题</h4><p>我们在GitHub上修改配置文件内容，刷新3344配置中心服务端，发现Config Server配置中心立刻响应并刷新了配置信息，但是！！我们刷新3355客户端Config Client，发现没有任何响应，配置信息仍然是原来的配置信息。</p>
-<p><img src="/2020/05/23/SpringCloud-08Spring-Cloud-Config%E5%88%86%E5%B8%83%E5%BC%8F%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83/%E5%AD%98%E5%9C%A8%E9%97%AE%E9%A2%98.jpg" alt></p>
-<p>难道每次远端修改了配置文件后，客户端都需要重启来进行对配置信息的重新加载吗？</p>
-<h3 id="4-Config客户端的动态刷新"><a href="#4-Config客户端的动态刷新" class="headerlink" title="4. Config客户端的动态刷新"></a><font color="blue">4. Config客户端的动态刷新</font></h3><p>为了避免每次远端更新配置信息都需要重启客户端微服务3355来加载更新的配置信息，我们需要使用动态刷新：</p>
-<h4 id="1-修改3355模块，在POM中引入actuator监控："><a href="#1-修改3355模块，在POM中引入actuator监控：" class="headerlink" title="1. 修改3355模块，在POM中引入actuator监控："></a>1. 修改3355模块，在POM中引入actuator监控：</h4><p>其实actuator依赖几乎处了是网关的微服务外都得加。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-actuator<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="2-修改配置文件，暴露监控端口："><a href="#2-修改配置文件，暴露监控端口：" class="headerlink" title="2. 修改配置文件，暴露监控端口："></a>2. 修改配置文件，暴露监控端口：</h4><p>在<strong>bootstrap.yml</strong>中加入如下配置暴露监控断点：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 暴露监控端点</span></span><br><span class="line"><span class="attr">management:</span></span><br><span class="line">  <span class="attr">endpoints:</span></span><br><span class="line">    <span class="attr">web:</span></span><br><span class="line">      <span class="attr">exposure:</span></span><br><span class="line">        <span class="attr">include:</span> <span class="string">"*"</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="3-RefreshScope注解"><a href="#3-RefreshScope注解" class="headerlink" title="3. @RefreshScope注解"></a>3. <code>@RefreshScope</code>注解</h4><p>在业务类Controller上添加<code>@RefreshScope</code>注解使客户端服务具有刷新功能：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RefreshScope</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConfigClientController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;config.info&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String configInfo;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/configInfo"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getConfigInfo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> configInfo;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="4-发送POST请求刷新客户端3355"><a href="#4-发送POST请求刷新客户端3355" class="headerlink" title="4. 发送POST请求刷新客户端3355"></a>4. 发送POST请求刷新客户端3355</h4><p>该刷新请求必须发送后，客户端才能获得刷新后的信息，刷新客户端的请求必须是POST请求：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X POST &quot;http:&#x2F;&#x2F;127.0.0.1:3355&#x2F;actuator&#x2F;refresh&quot;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2020/05/23/SpringCloud-08Spring-Cloud-Config%E5%88%86%E5%B8%83%E5%BC%8F%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83/%E6%BF%80%E6%B4%BB3355%E5%88%B7%E6%96%B0.jpg" alt></p>
-<p>当出现以上信息时激活刷新客户端3355成功，再次访问客户端，发现已经可以得到刷新后的配置信息。</p>
-<p>但是假设如果我们有多个微服务客户端呢？难道每个微服务都需要执行一次POST请求进行手动刷新吗？事实上我们可以通过广播的方式进行一次通知，处处生效，这里就要学习消息总线——SpringCloud Bus。</p>
-
+        
+          <a class="article-more-a" href="/2020/05/23/SpringCloud-08Spring-Cloud-Config%E5%88%86%E5%B8%83%E5%BC%8F%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83/#more">more >></a>
+        
       
 
       
@@ -851,150 +975,9 @@
 
 
   
-    <article id="post-积累的一些错误处理和异常" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/18/%E7%A7%AF%E7%B4%AF%E7%9A%84%E4%B8%80%E4%BA%9B%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E5%92%8C%E5%BC%82%E5%B8%B8/">积累的一些错误处理和异常</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/18/%E7%A7%AF%E7%B4%AF%E7%9A%84%E4%B8%80%E4%BA%9B%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E5%92%8C%E5%BC%82%E5%B8%B8/" class="archive-article-date">
-  	<time datetime="2020-05-18T06:55:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="在平时开发时遇到的异常以及相应的处理"><a href="#在平时开发时遇到的异常以及相应的处理" class="headerlink" title="在平时开发时遇到的异常以及相应的处理"></a>在平时开发时遇到的异常以及相应的处理</h2><h3 id="No-serializer-found-for-class"><a href="#No-serializer-found-for-class" class="headerlink" title="No serializer found for class"></a>No serializer found for class</h3><h5 id="异常描述"><a href="#异常描述" class="headerlink" title="异常描述"></a>异常描述</h5><p><font color="red">No serializer found for class cn.sher6j.eduservice.entity.subject.TwoSubject and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: cn.sher6j.commonutils.R[“data”]-&gt;java.util.HashMap[“list”]-&gt;java.util.ArrayList[0]-&gt;cn.sher6j.eduservice.entity.subject.OneSubject[“children”]-&gt;java.util.ArrayList[0])<br></font></p>
-<h5 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h5><p>其中的核心就是<font color="red"><strong>No serializer found for class</strong></font>，这个问题的出现是因为如果需要将某个 <strong>实体类</strong> 转成 <strong>Json</strong> 串数据的话，那么必须要求其<strong>属性为public</strong>，或者提供<strong>public的get()</strong>方法。由于属性大部分时间为private，所以建议一定要<strong>提供get()</strong>方法。</p>
-<h5 id="我是怎么碰到的该异常"><a href="#我是怎么碰到的该异常" class="headerlink" title="我是怎么碰到的该异常"></a>我是怎么碰到的该异常</h5><p>因为很多时候写实体类没有手动的写get/set方法，利用了<code>lombok.Data;</code>中的Data注解来生成get/set方法，但是有一次我忘记在实体类上添加<code>@Data</code>注解，也就是实体类中没有相应的set方法，所以以后要注意不要忘记添加<code>@Data</code>注解</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">异常处理</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/18/%E7%A7%AF%E7%B4%AF%E7%9A%84%E4%B8%80%E4%BA%9B%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E5%92%8C%E5%BC%82%E5%B8%B8/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-算法-力扣-189-旋转数组" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/12/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-189-%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84/">算法-力扣-189-旋转数组</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/12/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-189-%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84/" class="archive-article-date">
-  	<time datetime="2020-05-12T02:12:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="力扣-189-旋转数组"><a href="#力扣-189-旋转数组" class="headerlink" title="力扣[189]旋转数组"></a>力扣[189]旋转数组</h2><h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><p>给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。</p>
-        
-          <a class="article-more-a" href="/2020/05/12/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-189-%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/12/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-189-%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
     </nav>
   
 
@@ -1105,10 +1088,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">读书笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">JavaSE</a>
               </li>
              
@@ -1117,11 +1096,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">微服务</a>
+                <a href="javascript:void(0)" class="js-tag color5">消息队列</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">SpringCloud</a>
+                <a href="javascript:void(0)" class="js-tag color4">RabbitMQ</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">读书笔记</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1137,11 +1120,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">非关系型数据库</a>
+                <a href="javascript:void(0)" class="js-tag color4">微服务</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">FastDSF</a>
+                <a href="javascript:void(0)" class="js-tag color2">SpringCloud</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">非关系型数据库</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1157,11 +1144,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">消息队列</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">RabbitMQ</a>
+                <a href="javascript:void(0)" class="js-tag color3">FastDSF</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1177,7 +1160,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+                <a href="javascript:void(0)" class="js-tag color5">异常处理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1185,7 +1168,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">异常处理</a>
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
               </li>
              
               <li class="article-tag-list-item">

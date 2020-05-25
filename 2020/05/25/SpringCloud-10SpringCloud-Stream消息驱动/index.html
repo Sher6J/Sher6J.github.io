@@ -6,29 +6,31 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>安装FastDFS | 菜菜六甲的博客</title>
+  <title>SpringCloud-10SpringCloud Stream消息驱动 | 菜菜六甲的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1.Linux下使用FastDFS操作在CentOS 6.x环境下进行。 将所需文件，上传到相应的目录下：">
+  <meta name="description" content="SpringCloud Stream消息驱动1. 消息驱动概述1. 消息驱动是什么？在实际应用中有很多消息中间件，比如现在企业里常用的有ActiveMQ、RabbitMQ、RocketMQ、Kafka等，学习所有这些消息中间件无疑需要大量时间经历成本，那有没有一种技术，使我们不再需要关注具体的消息中间件的细节，而只需要用一种适配绑定的方式，自动的在各种消息中间件内切换呢？消息驱动就是这样的技术，它">
 <meta property="og:type" content="article">
-<meta property="og:title" content="安装FastDFS">
-<meta property="og:url" content="http://yoursite.com/2020/04/28/%E5%AE%89%E8%A3%85FastDFS/index.html">
+<meta property="og:title" content="SpringCloud-10SpringCloud Stream消息驱动">
+<meta property="og:url" content="http://yoursite.com/2020/05/25/SpringCloud-10SpringCloud-Stream%E6%B6%88%E6%81%AF%E9%A9%B1%E5%8A%A8/index.html">
 <meta property="og:site_name" content="菜菜六甲的博客">
-<meta property="og:description" content="1.Linux下使用FastDFS操作在CentOS 6.x环境下进行。 将所需文件，上传到相应的目录下：">
+<meta property="og:description" content="SpringCloud Stream消息驱动1. 消息驱动概述1. 消息驱动是什么？在实际应用中有很多消息中间件，比如现在企业里常用的有ActiveMQ、RabbitMQ、RocketMQ、Kafka等，学习所有这些消息中间件无疑需要大量时间经历成本，那有没有一种技术，使我们不再需要关注具体的消息中间件的细节，而只需要用一种适配绑定的方式，自动的在各种消息中间件内切换呢？消息驱动就是这样的技术，它">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://yoursite.com/2020/04/28/%E5%AE%89%E8%A3%85FastDFS/1528196363110.png">
-<meta property="og:image" content="http://yoursite.com/2020/04/28/%E5%AE%89%E8%A3%85FastDFS/1528189386508.png">
-<meta property="og:image" content="http://yoursite.com/2020/04/28/%E5%AE%89%E8%A3%85FastDFS/1528189443696.png">
-<meta property="og:image" content="http://yoursite.com/2020/04/28/%E5%AE%89%E8%A3%85FastDFS/1532866185562.png">
-<meta property="og:image" content="http://yoursite.com/2020/04/28/%E5%AE%89%E8%A3%85FastDFS/1528192579209.png">
-<meta property="og:image" content="http://yoursite.com/2020/04/28/%E5%AE%89%E8%A3%85FastDFS/1528194235317.png">
-<meta property="article:published_time" content="2020-04-28T12:20:51.000Z">
-<meta property="article:modified_time" content="2020-04-28T12:24:10.422Z">
+<meta property="og:image" content="http://yoursite.com/2020/05/25/SpringCloud-10SpringCloud-Stream%E6%B6%88%E6%81%AF%E9%A9%B1%E5%8A%A8/%E4%BA%A4%E6%8D%A2%E6%9C%BA.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/05/25/SpringCloud-10SpringCloud-Stream%E6%B6%88%E6%81%AF%E9%A9%B1%E5%8A%A8/%E5%90%8E%E5%8F%B0%E6%89%93%E5%8D%B0%E5%8F%91%E9%80%81%E7%9A%84%E6%B6%88%E6%81%AF.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/05/25/SpringCloud-10SpringCloud-Stream%E6%B6%88%E6%81%AF%E9%A9%B1%E5%8A%A8/%E5%8F%91%E9%80%81%E6%B6%88%E6%81%AFRabbitMQ%E6%8E%A7%E5%88%B6%E7%95%8C%E9%9D%A2.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/05/25/SpringCloud-10SpringCloud-Stream%E6%B6%88%E6%81%AF%E9%A9%B1%E5%8A%A8/%E6%B6%88%E6%81%AF%E6%8E%A5%E6%94%B6.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/05/25/SpringCloud-10SpringCloud-Stream%E6%B6%88%E6%81%AF%E9%A9%B1%E5%8A%A8/%E9%87%8D%E5%A4%8D%E6%B6%88%E8%B4%B9.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/05/25/SpringCloud-10SpringCloud-Stream%E6%B6%88%E6%81%AF%E9%A9%B1%E5%8A%A8/%E7%BB%84%E6%B5%81%E6%B0%B4%E5%8F%B7%E4%B8%8D%E5%90%8C.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/05/25/SpringCloud-10SpringCloud-Stream%E6%B6%88%E6%81%AF%E9%A9%B1%E5%8A%A8/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%88%86%E7%BB%84.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/05/25/SpringCloud-10SpringCloud-Stream%E6%B6%88%E6%81%AF%E9%A9%B1%E5%8A%A8/%E7%9B%B8%E5%90%8C%E5%88%86%E7%BB%84.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/05/25/SpringCloud-10SpringCloud-Stream%E6%B6%88%E6%81%AF%E9%A9%B1%E5%8A%A8/%E5%90%8C%E7%BB%84%E7%AB%9E%E4%BA%89.jpg">
+<meta property="article:published_time" content="2020-05-25T03:34:12.000Z">
+<meta property="article:modified_time" content="2020-05-25T10:41:07.506Z">
 <meta property="article:author" content="Sher6J">
-<meta property="article:tag" content="linux">
-<meta property="article:tag" content="CentOS">
-<meta property="article:tag" content="FastDSF">
+<meta property="article:tag" content="微服务">
+<meta property="article:tag" content="SpringCloud">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/2020/04/28/%E5%AE%89%E8%A3%85FastDFS/1528196363110.png">
+<meta name="twitter:image" content="http://yoursite.com/2020/05/25/SpringCloud-10SpringCloud-Stream%E6%B6%88%E6%81%AF%E9%A9%B1%E5%8A%A8/%E4%BA%A4%E6%8D%A2%E6%9C%BA.jpg">
   
     <link rel="alternative" href="/atom.xml" title="菜菜六甲的博客" type="application/atom+xml">
   
@@ -160,260 +162,129 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-安装FastDFS" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-SpringCloud-10SpringCloud-Stream消息驱动" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      安装FastDFS
+      SpringCloud-10SpringCloud Stream消息驱动
     </h1>
   
 
         
-        <a href="/2020/04/28/%E5%AE%89%E8%A3%85FastDFS/" class="archive-article-date">
-  	<time datetime="2020-04-28T12:20:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-28</time>
+        <a href="/2020/05/25/SpringCloud-10SpringCloud-Stream%E6%B6%88%E6%81%AF%E9%A9%B1%E5%8A%A8/" class="archive-article-date">
+  	<time datetime="2020-05-25T03:34:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-25</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="1-Linux下使用FastDFS"><a href="#1-Linux下使用FastDFS" class="headerlink" title="1.Linux下使用FastDFS"></a>1.Linux下使用FastDFS</h1><p><strong>操作在CentOS 6.x环境下进行。</strong></p>
-<p>将所需文件，上传到相应的目录下：</p>
+        <h1 id="SpringCloud-Stream消息驱动"><a href="#SpringCloud-Stream消息驱动" class="headerlink" title="SpringCloud Stream消息驱动"></a>SpringCloud Stream消息驱动</h1><h3 id="1-消息驱动概述"><a href="#1-消息驱动概述" class="headerlink" title="1. 消息驱动概述"></a><font color="blue">1. 消息驱动概述</font></h3><h4 id="1-消息驱动是什么？"><a href="#1-消息驱动是什么？" class="headerlink" title="1. 消息驱动是什么？"></a>1. 消息驱动是什么？</h4><p>在实际应用中有很多消息中间件，比如现在企业里常用的有ActiveMQ、RabbitMQ、RocketMQ、Kafka等，学习所有这些消息中间件无疑需要大量时间经历成本，那有没有一种技术，使我们不再需要关注具体的消息中间件的细节，而只需要用一种适配绑定的方式，自动的在各种消息中间件内切换呢？消息驱动就是这样的技术，它能<strong>屏蔽底层消息中间件的差异，降低切换成本，统一消息的编程模型</strong>。</p>
 <a id="more"></a>
-<p><img src="/2020/04/28/%E5%AE%89%E8%A3%85FastDFS/1528196363110.png" alt="1528196363110"></p>
-<h2 id="1-1-单节点FastDFS"><a href="#1-1-单节点FastDFS" class="headerlink" title="1.1.单节点FastDFS"></a>1.1.单节点FastDFS</h2><p>整个安装过程非常复杂，很容易出错，建议进行多次备份。</p>
-<p>我们这里不打算安装多台虚拟机，因此会把tracker和storage都安装在一起。</p>
-<h3 id="1-1-1-安装gcc"><a href="#1-1-1-安装gcc" class="headerlink" title="1.1.1.安装gcc"></a>1.1.1.安装gcc</h3><p>GCC用来对C语言代码进行编译运行，使用yum命令安装：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install gcc</span><br></pre></td></tr></table></figure>
 
-<p>后面会用到解压命令（unzip），所以这里可以用yum把unzip 也装一下</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y unzip zip</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="1-1-2-安装libevent"><a href="#1-1-2-安装libevent" class="headerlink" title="1.1.2.安装libevent"></a>1.1.2.安装libevent</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install libevent</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="1-1-3-安装libfastcommon-master"><a href="#1-1-3-安装libfastcommon-master" class="headerlink" title="1.1.3.安装libfastcommon-master"></a>1.1.3.安装libfastcommon-master</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">解压刚刚上传的libfastcommon-master.zip</span><br><span class="line">unzip libfastcommon-master.zip</span><br><span class="line"></span><br><span class="line">进入解压完成的目录</span><br><span class="line">cd libfastcommon-master</span><br><span class="line"></span><br><span class="line">编译并且安装：</span><br><span class="line">./make.sh </span><br><span class="line">./make.sh install</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="1-1-4-安装fastdfs"><a href="#1-1-4-安装fastdfs" class="headerlink" title="1.1.4.安装fastdfs"></a>1.1.4.安装fastdfs</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf FastDFS_v5.08.tar.gz</span><br><span class="line"></span><br><span class="line">cd FastDFS</span><br><span class="line"></span><br><span class="line">./make.sh </span><br><span class="line"></span><br><span class="line">./make.sh install</span><br></pre></td></tr></table></figure>
-
-
-
-<p>如果安装成功，会看到/etc/init.d/下看到提供的脚本文件：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ll /etc/init.d/ | grep fdfs</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2020/04/28/%E5%AE%89%E8%A3%85FastDFS/1528189386508.png" alt="1528189386508"></p>
-<ul>
-<li><code>fdfs_trackerd</code> 是tracker启动脚本</li>
-<li><code>fdfs_storaged</code> 是storage启动脚本</li>
-</ul>
-<p>能够在 /etc/fdfs/ 目录下看到默认的配置文件模板：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ll /etc/fdfs/</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2020/04/28/%E5%AE%89%E8%A3%85FastDFS/1528189443696.png" alt="1528189443696"></p>
-<ul>
-<li><code>tarcker.conf.sample</code> 是tracker的配置文件模板</li>
-<li><code>storage.conf.sample</code> 是storage的配置文件模板</li>
-<li><code>client.conf.sample</code> 是客户端的配置文件模板</li>
-</ul>
-<h3 id="1-1-5-配置并启动tracker服务"><a href="#1-1-5-配置并启动tracker服务" class="headerlink" title="1.1.5.配置并启动tracker服务"></a>1.1.5.配置并启动tracker服务</h3><p>FastDFS的tracker和storage在刚刚的安装过程中，都已经被安装了，因此我们安装这两种角色的方式是一样的。不同的是，两种需要不同的配置文件。</p>
-<p>我们要启动tracker，就修改刚刚看到的<code>tarcker.conf</code>，并且启动<code>fdfs_trackerd</code>脚本即可。</p>
-<p>1）首先将模板文件复制</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp /etc/fdfs/tracker.conf.sample /etc/fdfs/tracker.conf</span><br></pre></td></tr></table></figure>
-
-
-
-<p>2）修改复制后的配置文件：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/fdfs/tracker.conf</span><br></pre></td></tr></table></figure>
-
-<p># 修改的内容如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">base_path=/leyou/tracker                 # 存储日志和数据的根目录</span><br></pre></td></tr></table></figure>
-
-
-
-<p>3）新建目录：     </p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /leyou/tracker</span><br></pre></td></tr></table></figure>
-
-
-
-<p>注意：关闭防火墙：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chkconfig iptables off</span><br></pre></td></tr></table></figure>
-
-
-
-<p>4）启动和停止</p>
-<p>启动tracker服务器:     <code>/etc/init.d/fdfs_trackerd start</code></p>
-<p>停止tracker服务器:     <code>/etc/init.d/fdfs_trackerd stop</code></p>
-<p>不过安装过程中，fdfs已经被设置为系统服务，我们可以采用熟悉的服务启动方式：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service fdfs_trackerd start # 启动fdfs_trackerd服务，停止用stop</span><br></pre></td></tr></table></figure>
-
-
-
-<p>检查FastDFS Tracker Server是否启动成功：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -ef | grep fdfs_trackerd</span><br></pre></td></tr></table></figure>
-
-
-
-<p>设置tracker服务开机启动:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chkconfig fdfs_trackerd on</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="1-1-6-配置并启动storage服务"><a href="#1-1-6-配置并启动storage服务" class="headerlink" title="1.1.6.配置并启动storage服务"></a>1.1.6.配置并启动storage服务</h3><p>1）首先将模板文件复制</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp /etc/fdfs/storage.conf.sample /etc/fdfs/storage.conf</span><br></pre></td></tr></table></figure>
-
-
-
-<p>2）修改复制后的配置文件：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/fdfs/storage.conf</span><br></pre></td></tr></table></figure>
-
-<p># 修改的内容如下: </p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">base_path=/leyou/storage                 # 数据和日志文件存储根目录 </span><br><span class="line"></span><br><span class="line">store_path0=/leyou/storage           # 第一个存储目录 </span><br><span class="line"></span><br><span class="line">tracker_server=192.168.56.101:22122       #  tracker服务器IP和端口</span><br></pre></td></tr></table></figure>
-
-
-
-<p>3）新建目录：     </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p &#x2F;leyou&#x2F;storage</span><br></pre></td></tr></table></figure>
-
-
-
-<p>注意关闭防火墙：   <code>chkconfig iptables off</code></p>
-<p>4）启动和停止</p>
-<p>启动storage服务器：<code>/etc/init.d/fdfs_storaged start</code></p>
-<p>停止storage服务器：<code>/etc/init.d/fdfs_storaged stop</code></p>
-<p>推荐使用：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service fdfs_storaged start  # 启动fdfs_storaged服务，停止用stop</span><br></pre></td></tr></table></figure>
-
-
-
-<p>设置storage服务开机启动：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chkconfig fdfs_storaged on</span><br></pre></td></tr></table></figure>
-
-
-
-<p>ps -ef | grep fdfs</p>
-<p><img src="/2020/04/28/%E5%AE%89%E8%A3%85FastDFS/1532866185562.png" alt="1532866185562"></p>
-<h1 id="2-使用nginx访问FastDFS"><a href="#2-使用nginx访问FastDFS" class="headerlink" title="2.使用nginx访问FastDFS"></a>2.使用nginx访问FastDFS</h1><h2 id="2-1-为什么需要用Nginx访问？"><a href="#2-1-为什么需要用Nginx访问？" class="headerlink" title="2.1.为什么需要用Nginx访问？"></a>2.1.为什么需要用Nginx访问？</h2><p>FastDFS通过Tracker服务器,将文件放在Storage服务器存储，但是同组存储服务器之间需要进入文件复制，有同步延迟的问题。</p>
-<p>假设Tracker服务器将文件上传到了192.168.4.125，上传成功后文件ID已经返回给客户端。此时FastDFS存储集群机制会将这个文件同步到同组存储192.168.4.126，在文件还没有复制完成的情况下，客户端如果用这个文件ID在192.168.4.126上取文件,就会出现文件无法访问的错误。</p>
-<p>而fastdfs-nginx-module可以重定向文件连接到文件上传时的源服务器取文件,避免客户端由于复制延迟导致的文件无法访问错误</p>
-<h2 id="2-2-安装fastdfs-nginx-module"><a href="#2-2-安装fastdfs-nginx-module" class="headerlink" title="2.2.安装fastdfs-nginx-module"></a>2.2.安装fastdfs-nginx-module</h2><h3 id="2-2-1-解压"><a href="#2-2-1-解压" class="headerlink" title="2.2.1.解压"></a>2.2.1.解压</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf fastdfs-nginx-module_v1.16.tar.gz</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="2-2-2-修改config"><a href="#2-2-2-修改config" class="headerlink" title="2.2.2.修改config"></a>2.2.2.修改config</h3><p>1）进入src目录</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd fastdfs-nginx-module/src/</span><br></pre></td></tr></table></figure>
-
-
-
-<p>2）编辑config</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim config</span><br></pre></td></tr></table></figure>
-
-
-
-<p>使用以下底行命令：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:%s+/usr/local/+/usr/+g</span><br></pre></td></tr></table></figure>
-
-<p>将所有的/usr/local替换为 /usr，这个才是正确的目录:</p>
-<p><img src="/2020/04/28/%E5%AE%89%E8%A3%85FastDFS/1528192579209.png" alt="1528192579209"></p>
-<h3 id="2-2-3-配置nginx与FastDFS关联配置文件"><a href="#2-2-3-配置nginx与FastDFS关联配置文件" class="headerlink" title="2.2.3.配置nginx与FastDFS关联配置文件"></a>2.2.3.配置nginx与FastDFS关联配置文件</h3><p>复制 fastdfs-nginx-module 源码中的配置文件到/etc/fdfs 目录， 并修改</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cp /usr/local/leyou/fastdfs-nginx-module/src/mod_fastdfs.conf /etc/fdfs/</span><br><span class="line"></span><br><span class="line">vi /etc/fdfs/mod_fastdfs.conf</span><br></pre></td></tr></table></figure>
-
-<p>修改以下配置：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">connect_timeout=10                       # 客户端访问文件连接超时时长（单位：秒）</span><br><span class="line"></span><br><span class="line">tracker_server=192.168.56.101:22122    # tracker服务IP和端口</span><br><span class="line"></span><br><span class="line">url_have_group_name=true                # 访问链接前缀加上组名</span><br><span class="line"></span><br><span class="line">store_path0=/leyou/storage            # 文件存储路径</span><br></pre></td></tr></table></figure>
-
-
-
-<p>复制 FastDFS 的部分配置文件到/etc/fdfs 目录</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/leyou/FastDFS/conf/</span><br><span class="line">cp http.conf mime.types /etc/fdfs/</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="2-3-安装Nginx的插件"><a href="#2-3-安装Nginx的插件" class="headerlink" title="2.3.安装Nginx的插件"></a>2.3.安装Nginx的插件</h2><h3 id="2-3-1-如果没有安装过nginx"><a href="#2-3-1-如果没有安装过nginx" class="headerlink" title="2.3.1.如果没有安装过nginx"></a>2.3.1.如果没有安装过nginx</h3><ul>
-<li>安装nginx的依赖库</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install gcc pcre pcre-devel zlib zlib-devel openssl openssl-devel</span><br></pre></td></tr></table></figure>
-
-
-
-<ul>
-<li>解压安装包</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf nginx-1.10.0.tar.gz</span><br></pre></td></tr></table></figure>
-
-
-
-<ul>
-<li>配置nginx安装包，并指定fastdfs-nginx-model</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd nginx-1.10.0</span><br><span class="line"></span><br><span class="line">./configure --prefix=/opt/nginx --sbin-path=/usr/bin/nginx --add-module=/usr/local/leyou/fastdfs-nginx-module/src</span><br></pre></td></tr></table></figure>
-
-<p><strong>注意</strong>：在执行./configure配置nginx参数的时候，需要将fastdfs-nginx-moudle源码作为模块编译进去。</p>
-<ul>
-<li>编译并安装</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="2-3-2-如果已经安装过nginx"><a href="#2-3-2-如果已经安装过nginx" class="headerlink" title="2.3.2.如果已经安装过nginx"></a>2.3.2.如果已经安装过nginx</h3><p>1） 进入nginx目录：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/leyou/nginx-1.10.0/</span><br></pre></td></tr></table></figure>
-
-
-
-<p>2） 配置FastDFS 模块</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./configure --prefix=/opt/nginx --sbin-path=/usr/bin/nginx --add-module=/usr/local/leyou/fastdfs-nginx-module/src</span><br></pre></td></tr></table></figure>
-
-<p>注意：这次配置时，要添加fastdfs-nginx-moudle模块</p>
-<p>3） 编译，注意，这次不要安装（install）</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make</span><br></pre></td></tr></table></figure>
-
-
-
-<p>4） 替换nginx二进制文件:</p>
-<p>备份：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv /usr/bin/nginx /usr/bin/nginx-bak</span><br></pre></td></tr></table></figure>
-
-<p>用新编译的nginx启动文件替代原来的：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp objs/nginx /usr/bin/</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h3 id="2-3-3-启动nginx"><a href="#2-3-3-启动nginx" class="headerlink" title="2.3.3.启动nginx"></a>2.3.3.启动nginx</h3><p>配置nginx整合fastdfs-module模块</p>
-<p>我们需要修改nginx配置文件，在/opt/nginx/config/nginx.conf文件中：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim  /opt/nginx/conf/nginx.conf</span><br></pre></td></tr></table></figure>
-
-<p>将文件中，原来的<code>server 80{ ...}</code> 部分代码替换为如下代码：</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span>       <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span>  image.leyou.com;</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 监听域名中带有group的，交给FastDFS模块处理</span></span><br><span class="line">    <span class="attribute">location</span> ~/group([<span class="number">0</span>-<span class="number">9</span>])/ &#123;</span><br><span class="line">        ngx_fastdfs_module;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">location</span> / &#123;</span><br><span class="line">        <span class="attribute">root</span>   html;</span><br><span class="line">        <span class="attribute">index</span>  index.html index.htm;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">error_page</span>   <span class="number">500</span> <span class="number">502</span> <span class="number">503</span> <span class="number">504</span>  /50x.html;</span><br><span class="line">    <span class="attribute">location</span> = /50x.html &#123;</span><br><span class="line">        <span class="attribute">root</span>   html;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>启动nginx：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">nginx	# 启动nginx</span><br><span class="line"></span><br><span class="line">nginx -s stop	# 停止nginx</span><br><span class="line"></span><br><span class="line">nginx -s reload	# 重新载入配置文件</span><br></pre></td></tr></table></figure>
-
-<p># 可通过ps -ef | grep nginx查看nginx是否已启动成功    </p>
-<p><img src="/2020/04/28/%E5%AE%89%E8%A3%85FastDFS/1528194235317.png" alt="1528194235317"></p>
-<h3 id="2-3-4-设置nginx开机启动"><a href="#2-3-4-设置nginx开机启动" class="headerlink" title="2.3.4.设置nginx开机启动"></a>2.3.4.设置nginx开机启动</h3><p>创建一个开机启动的脚本：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/init.d/nginx</span><br></pre></td></tr></table></figure>
-
-<p>添加以下内容：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># nginx - this script starts and stops the nginx daemon</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># chkconfig:   - 85 15</span></span><br><span class="line"><span class="comment"># description:  NGINX is an HTTP(S) server, HTTP(S) reverse \</span></span><br><span class="line"><span class="comment">#               proxy and IMAP/POP3 proxy server</span></span><br><span class="line"><span class="comment"># processname: nginx</span></span><br><span class="line"><span class="comment"># config:      /etc/nginx/nginx.conf</span></span><br><span class="line"><span class="comment"># config:      /etc/sysconfig/nginx</span></span><br><span class="line"><span class="comment"># pidfile:     /var/run/nginx.pid</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Source function library.</span></span><br><span class="line">. /etc/rc.d/init.d/<span class="built_in">functions</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Source networking configuration.</span></span><br><span class="line">. /etc/sysconfig/network</span><br><span class="line"></span><br><span class="line"><span class="comment"># Check that networking is up.</span></span><br><span class="line">[ <span class="string">"<span class="variable">$NETWORKING</span>"</span> = <span class="string">"no"</span> ] &amp;&amp; <span class="built_in">exit</span> 0</span><br><span class="line"></span><br><span class="line">nginx=<span class="string">"/usr/bin/nginx"</span></span><br><span class="line">prog=$(basename <span class="variable">$nginx</span>)</span><br><span class="line"></span><br><span class="line">NGINX_CONF_FILE=<span class="string">"/opt/nginx/conf/nginx.conf"</span></span><br><span class="line"></span><br><span class="line">[ -f /etc/sysconfig/nginx ] &amp;&amp; . /etc/sysconfig/nginx</span><br><span class="line"></span><br><span class="line">lockfile=/var/lock/subsys/nginx</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">make_dirs</span></span>() &#123;</span><br><span class="line">   <span class="comment"># make required directories</span></span><br><span class="line">   user=`<span class="variable">$nginx</span> -V 2&gt;&amp;1 | grep <span class="string">"configure arguments:.*--user="</span> | sed <span class="string">'s/[^*]*--user=\([^ ]*\).*/\1/g'</span> -`</span><br><span class="line">   <span class="keyword">if</span> [ -n <span class="string">"<span class="variable">$user</span>"</span> ]; <span class="keyword">then</span></span><br><span class="line">      <span class="keyword">if</span> [ -z <span class="string">"`grep <span class="variable">$user</span> /etc/passwd`"</span> ]; <span class="keyword">then</span></span><br><span class="line">         useradd -M -s /bin/nologin <span class="variable">$user</span></span><br><span class="line">      <span class="keyword">fi</span></span><br><span class="line">      options=`<span class="variable">$nginx</span> -V 2&gt;&amp;1 | grep <span class="string">'configure arguments:'</span>`</span><br><span class="line">      <span class="keyword">for</span> opt <span class="keyword">in</span> <span class="variable">$options</span>; <span class="keyword">do</span></span><br><span class="line">          <span class="keyword">if</span> [ `<span class="built_in">echo</span> <span class="variable">$opt</span> | grep <span class="string">'.*-temp-path'</span>` ]; <span class="keyword">then</span></span><br><span class="line">              value=`<span class="built_in">echo</span> <span class="variable">$opt</span> | cut -d <span class="string">"="</span> -f 2`</span><br><span class="line">              <span class="keyword">if</span> [ ! -d <span class="string">"<span class="variable">$value</span>"</span> ]; <span class="keyword">then</span></span><br><span class="line">                  <span class="comment"># echo "creating" $value</span></span><br><span class="line">                  mkdir -p <span class="variable">$value</span> &amp;&amp; chown -R <span class="variable">$user</span> <span class="variable">$value</span></span><br><span class="line">              <span class="keyword">fi</span></span><br><span class="line">          <span class="keyword">fi</span></span><br><span class="line">       <span class="keyword">done</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">start</span></span>() &#123;</span><br><span class="line">    [ -x <span class="variable">$nginx</span> ] || <span class="built_in">exit</span> 5</span><br><span class="line">    [ -f <span class="variable">$NGINX_CONF_FILE</span> ] || <span class="built_in">exit</span> 6</span><br><span class="line">    make_dirs</span><br><span class="line">    <span class="built_in">echo</span> -n $<span class="string">"Starting <span class="variable">$prog</span>: "</span></span><br><span class="line">    daemon <span class="variable">$nginx</span> -c <span class="variable">$NGINX_CONF_FILE</span></span><br><span class="line">    retval=$?</span><br><span class="line">    <span class="built_in">echo</span></span><br><span class="line">    [ <span class="variable">$retval</span> -eq 0 ] &amp;&amp; touch <span class="variable">$lockfile</span></span><br><span class="line">    <span class="built_in">return</span> <span class="variable">$retval</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">stop</span></span>() &#123;</span><br><span class="line">    <span class="built_in">echo</span> -n $<span class="string">"Stopping <span class="variable">$prog</span>: "</span></span><br><span class="line">    killproc <span class="variable">$prog</span> -QUIT</span><br><span class="line">    retval=$?</span><br><span class="line">    <span class="built_in">echo</span></span><br><span class="line">    [ <span class="variable">$retval</span> -eq 0 ] &amp;&amp; rm -f <span class="variable">$lockfile</span></span><br><span class="line">    <span class="built_in">return</span> <span class="variable">$retval</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">restart</span></span>() &#123;</span><br><span class="line">    configtest || <span class="built_in">return</span> $?</span><br><span class="line">    stop</span><br><span class="line">    sleep 1</span><br><span class="line">    start</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">reload</span></span>() &#123;</span><br><span class="line">    configtest || <span class="built_in">return</span> $?</span><br><span class="line">    <span class="built_in">echo</span> -n $<span class="string">"Reloading <span class="variable">$prog</span>: "</span></span><br><span class="line">    killproc <span class="variable">$nginx</span> -HUP</span><br><span class="line">    RETVAL=$?</span><br><span class="line">    <span class="built_in">echo</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">force_reload</span></span>() &#123;</span><br><span class="line">    restart</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">configtest</span></span>() &#123;</span><br><span class="line">  <span class="variable">$nginx</span> -t -c <span class="variable">$NGINX_CONF_FILE</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">rh_status</span></span>() &#123;</span><br><span class="line">    status <span class="variable">$prog</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">rh_status_q</span></span>() &#123;</span><br><span class="line">    rh_status &gt;/dev/null 2&gt;&amp;1</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> <span class="string">"<span class="variable">$1</span>"</span> <span class="keyword">in</span></span><br><span class="line">    start)</span><br><span class="line">        rh_status_q &amp;&amp; <span class="built_in">exit</span> 0</span><br><span class="line">        <span class="variable">$1</span></span><br><span class="line">        ;;</span><br><span class="line">    stop)</span><br><span class="line">        rh_status_q || <span class="built_in">exit</span> 0</span><br><span class="line">        <span class="variable">$1</span></span><br><span class="line">        ;;</span><br><span class="line">    restart|configtest)</span><br><span class="line">        <span class="variable">$1</span></span><br><span class="line">        ;;</span><br><span class="line">    reload)</span><br><span class="line">        rh_status_q || <span class="built_in">exit</span> 7</span><br><span class="line">        <span class="variable">$1</span></span><br><span class="line">        ;;</span><br><span class="line">    force-reload)</span><br><span class="line">        force_reload</span><br><span class="line">        ;;</span><br><span class="line">    status)</span><br><span class="line">        rh_status</span><br><span class="line">        ;;</span><br><span class="line">    condrestart|try-restart)</span><br><span class="line">        rh_status_q || <span class="built_in">exit</span> 0</span><br><span class="line">            ;;</span><br><span class="line">    *)</span><br><span class="line">        <span class="built_in">echo</span> $<span class="string">"Usage: <span class="variable">$0</span> &#123;start|stop|status|restart|condrestart|try-restart|reload|force-reload|configtest&#125;"</span></span><br><span class="line">        <span class="built_in">exit</span> 2</span><br><span class="line"><span class="keyword">esac</span></span><br></pre></td></tr></table></figure>
-
-<p>修改文件权限，并加入服务列表</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 修改权限</span></span><br><span class="line">chmod 777 /etc/init.d/nginx </span><br><span class="line"><span class="meta">#</span><span class="bash"> 添加到服务列表</span></span><br><span class="line">chkconfig --add /etc/init.d/nginx</span><br></pre></td></tr></table></figure>
-
-<p>设置开机启动</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chkconfig nginx on</span><br></pre></td></tr></table></figure>
-
-
+<p>SpringCloud Stream是一个构件消息驱动微服务的框架。应用程序通过inputs和outputs来与SpringCloud Stream中的绑定器（binder）对象交互，通过配置来绑定，而SpringCloud Stream的绑定器对象负责与消息中间件交互，所以，我们只需要搞清楚如何与SpringCloud Stream交互就可以方便使用消息驱动的方式。但是截至到目前时间，<strong>SpringCloud Stream目前仅支持RabbitMQ和Kafka</strong>。</p>
+<h4 id="2-设计思想"><a href="#2-设计思想" class="headerlink" title="2. 设计思想"></a>2. 设计思想</h4><p>在经典的消息队列中，生产者/消费者之间靠消息媒介传递信息内容，消息必须走特定的通道<strong>Message  Channel</strong>，消息通道里的子接口<strong>Subscribable Channel</strong>消费消息，然后<strong>MessageHandler</strong>负责收发处理。</p>
+<p>在SpringCloud Stream中，通过定义绑定器（binder）作为中间层，实现了应用程序与消息中间件细节之间的隔离。在消息绑定器中，<font color="red"><strong>INPUT对应于消费者，OUTPUT对应于生产者</strong></font>，Stream中的消息通信方式遵循了发布—订阅模式：用Topic（主题）进行广播（RabbitMQ中对应于Exchange交换机，Kafka中就是Topic）。</p>
+<h4 id="3-SpringCloud-Stream编码API和常用注解"><a href="#3-SpringCloud-Stream编码API和常用注解" class="headerlink" title="3. SpringCloud Stream编码API和常用注解"></a>3. SpringCloud Stream编码API和常用注解</h4><table>
+<thead>
+<tr>
+<th>组成</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Middleware</td>
+<td>中间件，目前只支持RabbitMQ和Kaf</td>
+</tr>
+<tr>
+<td>Binder</td>
+<td>Binder是应用与消息中间件之间的封装，目前实行了RabbitMQ和Kafka的Binder，通过Binder可以很方便的连接中间件，可以动态的改变消息类型（对应于Kafka的topic，RabbitMQ的exchange），这些都可以通过配置文件来实现</td>
+</tr>
+<tr>
+<td><code>@Input</code></td>
+<td>注解标识输入通道，通过该输入通道接收到的消息进入应用程序</td>
+</tr>
+<tr>
+<td><code>@Output</code></td>
+<td>注解标识输出通道，发布的消息将通过该通道离开应用程序</td>
+</tr>
+<tr>
+<td><code>@StreamListner</code></td>
+<td>监听队列，用于消费者的队列的消息接收</td>
+</tr>
+<tr>
+<td><code>@EnableBinding</code></td>
+<td>使信道Channel和交换机/主题（Exchange/Topic）绑定在一起</td>
+</tr>
+</tbody></table>
+<h3 id="2-SpringCloud-Stream-案例实操"><a href="#2-SpringCloud-Stream-案例实操" class="headerlink" title="2. SpringCloud Stream 案例实操"></a><font color="blue">2. SpringCloud Stream 案例实操</font></h3><p>新建三个子模块分别对应于消息的生产者和消费者：</p>
+<table>
+<thead>
+<tr>
+<th>模块名</th>
+<th>微服务功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>cloud-stream-rabbitmq-provider8801</td>
+<td>生产者，发送消息模块</td>
+</tr>
+<tr>
+<td>cloud-stream-rabbitmq-consumer8802</td>
+<td>消费者，接收消息模块</td>
+</tr>
+<tr>
+<td>cloud-stream-rabbitmq-consumer8803</td>
+<td>消费者，接收消息模块</td>
+</tr>
+</tbody></table>
+<h4 id="1-消息驱动之消息生产者"><a href="#1-消息驱动之消息生产者" class="headerlink" title="1. 消息驱动之消息生产者"></a>1. 消息驱动之消息生产者</h4><p>新建Module：cloud-stream-rabbitmq-provider8801作为消息的生产者用来发送消息，在其POM文件中除引入web、actuator、eureka-client等必要启动器外，还需要引入<strong>SpringCloud Stream对应实现RabbitMQ的启动器依赖</strong>：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-stream-rabbit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>编写其配置文件application.yml：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8801</span></span><br><span class="line"></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">cloud-stream-provider</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">stream:</span></span><br><span class="line">      <span class="attr">binders:</span> <span class="comment"># 在此处配置要绑定的rabbitmq的服务信息；</span></span><br><span class="line">        <span class="attr">defaultRabbit:</span> <span class="comment"># 表示定义的名称，用于于binding整合</span></span><br><span class="line">          <span class="attr">type:</span> <span class="string">rabbit</span> <span class="comment"># 消息组件类型</span></span><br><span class="line">          <span class="attr">environment:</span> <span class="comment"># 设置rabbitmq的相关的环境配置</span></span><br><span class="line">            <span class="attr">spring:</span></span><br><span class="line">              <span class="attr">rabbitmq:</span></span><br><span class="line">                <span class="attr">host:</span> <span class="string">localhost</span></span><br><span class="line">                <span class="attr">port:</span> <span class="number">5672</span></span><br><span class="line">                <span class="attr">username:</span> <span class="string">guest</span></span><br><span class="line">                <span class="attr">password:</span> <span class="string">guest</span></span><br><span class="line">      <span class="attr">bindings:</span> <span class="comment"># 服务的整合处理</span></span><br><span class="line">        <span class="attr">output:</span> <span class="comment"># 这个名字是一个通道的名称，OUTPUT表示这是消息的发送方</span></span><br><span class="line">          <span class="attr">destination:</span> <span class="string">testExchange</span> <span class="comment"># 表示要使用的Exchange名称定义</span></span><br><span class="line">          <span class="attr">content-type:</span> <span class="string">application/json</span> <span class="comment"># 设置消息类型，本次为json，文本则设置“text/plain”</span></span><br><span class="line">          <span class="attr">binder:</span> <span class="string">defaultRabbit</span> <span class="comment"># 设置要绑定的消息服务的具体设置</span></span><br><span class="line"></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line">  <span class="attr">client:</span> <span class="comment"># 客户端进行Eureka注册的配置</span></span><br><span class="line">    <span class="attr">service-url:</span></span><br><span class="line">      <span class="attr">defaultZone:</span> <span class="string">http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka</span></span><br><span class="line">  <span class="attr">instance:</span></span><br><span class="line">    <span class="attr">lease-renewal-interval-in-seconds:</span> <span class="number">2</span> <span class="comment"># 设置心跳的时间间隔（默认是30秒）</span></span><br><span class="line">    <span class="attr">lease-expiration-duration-in-seconds:</span> <span class="number">5</span> <span class="comment"># 如果现在超过了5秒的间隔（默认是90秒）</span></span><br><span class="line">    <span class="attr">instance-id:</span> <span class="string">send-8801.com</span>  <span class="comment"># 在信息列表时显示主机名称</span></span><br><span class="line">    <span class="attr">prefer-ip-address:</span> <span class="literal">true</span>     <span class="comment"># 访问的路径变为IP地址</span></span><br></pre></td></tr></table></figure>
+
+<p>编写其主启动类后，然后编写业务类，在业务来中分别要编写发送消息接口及其实现类，并在发送接口消息的实现类中添加<strong><code>@EnableBinding</code></strong>注解用来绑定消息的推送管道，<font color="red">消息生产者绑定的消息推送管道为<strong><code>org.springframework.cloud.stream.messaging.Source</code></strong></font>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.sher6j.sprincloud.service;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 发送消息接口</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sher6j</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span> 2020-05-25-12:20</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IMessageProvider</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">send</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line">----------------------------------------------------------------------</span><br><span class="line"><span class="keyword">package</span> cn.sher6j.sprincloud.service.impl;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> cn.sher6j.sprincloud.service.IMessageProvider;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.stream.annotation.EnableBinding;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.stream.messaging.Source;</span><br><span class="line"><span class="keyword">import</span> org.springframework.messaging.MessageChannel;</span><br><span class="line"><span class="keyword">import</span> org.springframework.messaging.support.MessageBuilder;</span><br><span class="line"><span class="keyword">import</span> java.util.UUID;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 发送消息接口实现类</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sher6j</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span> 2020-05-25-12:21</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@EnableBinding</span>(Source<span class="class">.<span class="keyword">class</span>) //定义消息的推送管道</span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">class</span> <span class="title">MessageProviderImpl</span> <span class="keyword">implements</span> <span class="title">IMessageProvider</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> MessageChannel output; <span class="comment">//消息发送管道</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">send</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        String serial = UUID.randomUUID().toString();</span><br><span class="line">        output.send(MessageBuilder.withPayload(serial).build());<span class="comment">//发送消息</span></span><br><span class="line">        System.out.println(<span class="string">"========serial:"</span> + serial);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意我们在service的实现类中不再需要<code>@Service</code>注解，因为这个service不再是传统意义上的和Controller、DAO数据等进行交互的service，而是要绑定绑定器打交道的service。</p>
+<p>然后编写其业务层的Controller：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SendMessageController</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> IMessageProvider messageProvider;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/sendMessage"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">sendMessage</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> messageProvider.send();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>启动服务注册中心后和RabbitMQ后，启动消息生产者微服务，我们在RabbitMQ的控制面板中可以看见多出了一个名为testExchange的交换机，这个交换机恰恰就是我们之前在配置文件中配置的交换机名字：</p>
+<p><img src="/2020/05/25/SpringCloud-10SpringCloud-Stream%E6%B6%88%E6%81%AF%E9%A9%B1%E5%8A%A8/%E4%BA%A4%E6%8D%A2%E6%9C%BA.jpg" alt></p>
+<p>然后我们访问 <a href="http://localhost:8801/sendMessage" target="_blank" rel="noopener">http://localhost:8801/sendMessage</a> 使用消息生产者微服务发送消息，在其微服务后台我们看到了打印的消息：</p>
+<p><img src="/2020/05/25/SpringCloud-10SpringCloud-Stream%E6%B6%88%E6%81%AF%E9%A9%B1%E5%8A%A8/%E5%90%8E%E5%8F%B0%E6%89%93%E5%8D%B0%E5%8F%91%E9%80%81%E7%9A%84%E6%B6%88%E6%81%AF.jpg" alt></p>
+<p>在RabbitMQ的控制面板中我们也看到了确实发送了消息。</p>
+<p><img src="/2020/05/25/SpringCloud-10SpringCloud-Stream%E6%B6%88%E6%81%AF%E9%A9%B1%E5%8A%A8/%E5%8F%91%E9%80%81%E6%B6%88%E6%81%AFRabbitMQ%E6%8E%A7%E5%88%B6%E7%95%8C%E9%9D%A2.jpg" alt></p>
+<h4 id="2-消息驱动之消息消费者"><a href="#2-消息驱动之消息消费者" class="headerlink" title="2. 消息驱动之消息消费者"></a>2. 消息驱动之消息消费者</h4><p>新建Module：cloud-stream-rabbitmq-consumer8802/8803作为消息的生产者用来接收消息，其POM文件中引入的启动器依赖和消息生产者微服务的依赖几乎相同，然后编写其配置文件application.yml，其配置文件的书写和消息生产者的几乎一致，特别需要注意的是，<font color="red"><strong>消息生产者微服务用到的通道为OUTPUT，而消息消费者微服务用到的通道为INPUT</strong></font>，其他的配置文件信息就只需要注意端口号、注册服务名的区别即可：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">      <span class="attr">bindings:</span> </span><br><span class="line">        <span class="attr">input:</span> <span class="comment"># 这个名字是一个通道的名称，INPUT表示消息消费者</span></span><br></pre></td></tr></table></figure>
+
+<p>编写完主启动类，编写消息消费者的业务类，由于是消费者，所以只需要编写其Controller即可，在其Controller上同样需要添加<strong><code>@EnableBinding</code></strong>注解用来绑定消息的推送管道，<font color="red">消息消费者绑定的消息推送管道为<strong><code>import org.springframework.cloud.stream.messaging.Sink</code></strong></font>，在接收消息的方法中需要使用<strong><code>@StreamListner</code></strong>注解来监听其绑定的消息推送管道：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.sher6j.springcloud.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Value;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.stream.annotation.EnableBinding;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.stream.annotation.StreamListener;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.stream.messaging.Sink;</span><br><span class="line"><span class="keyword">import</span> org.springframework.messaging.Message;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sher6j</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span> 2020-05-25-12:58</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@EnableBinding</span>(Sink<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">class</span> <span class="title">ReceiveMessageController</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;server.port&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String serverPort;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@StreamListener</span>(Sink.INPUT)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">input</span><span class="params">(Message&lt;String&gt; message)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"消费者"</span> + serverPort + <span class="string">"号，收到消息："</span> + message.getPayload());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后启动消息发送消费者服务，用生产者发送消息，我们可以发现在消费者端可以成功接收到消息：</p>
+<p><img src="/2020/05/25/SpringCloud-10SpringCloud-Stream%E6%B6%88%E6%81%AF%E9%A9%B1%E5%8A%A8/%E6%B6%88%E6%81%AF%E6%8E%A5%E6%94%B6.jpg" alt></p>
+<h3 id="3-分组消费和持久化"><a href="#3-分组消费和持久化" class="headerlink" title="3. 分组消费和持久化"></a><font color="blue">3. 分组消费和持久化</font></h3><h4 id="1-重复消费问题"><a href="#1-重复消费问题" class="headerlink" title="1. 重复消费问题"></a>1. 重复消费问题</h4><p>当生产者发送消息后，此时的我们的消费者都接受了消息并进行了消费，也就是说同一条消息被多个消息消费者所消费：</p>
+<p><img src="/2020/05/25/SpringCloud-10SpringCloud-Stream%E6%B6%88%E6%81%AF%E9%A9%B1%E5%8A%A8/%E9%87%8D%E5%A4%8D%E6%B6%88%E8%B4%B9.jpg" alt></p>
+<p>上述的问题就是消息的<font color="red"><strong>重复消费</strong></font>问题，那么这个问题为什么如此重要呢？<strong>其实重复消费这个问题本身不可怕，可怕的是没考虑到重复消费之后，怎么保证幂等性。</strong>（<font color="red"><strong>幂等性</strong></font>，通俗的说，就一个数据，或者一个请求，重复很多次，需要确保对应的数据是不会改变的，不能出错）。分布式微服务应用为了实现高可用和负载均衡，实际上同一功能的服务都会部署多个具体的服务实例。举个例子，假设有一个系统，有一条消息要求往数据库里插入一条数据，要是这个消息<strong>重复消费</strong>两次，结果就是向数据库里插入了两条数据，这样数据就错了，就违背了幂等性原则，但是要是该消息消费到第二次的时候，可以判断一下已经消费过了，然后直接将该消息丢弃，这就实现了只插入一条数据，一条消息重复出现了两次，但是只有第一次真正被消费了，数据库里也就只插入了一条数据，这就保证了系统的幂等性。</p>
+<p>上面简单的介绍了消息的<strong>重复消费</strong>问题，那如何解决这种重复消费问题呢，那就需要我们进行<font color="red"><strong>分组和持久化属性组</strong></font>操作，利用SpringCloud Stream中的消息分组来解决这个问题，需要注意的是在Stream中处于同一组中的多个消息消费者是竞争关系，也就是保证<strong>生产者所发送的同一个消息只会被其中一个消费者消费一次</strong>。在不同组的消费者是是可以对消息进行全面消费（重复消费）的，只有同一组内才会发生竞争关系。</p>
+<p>在RabbitMQ中，默认分组是不同的，组流水号不一样，被认为不同组，我们查看testExchange交换机，可以发现8802和8803两个消息消费者处于不同的组，所以8801消息生产者发送的消息可以被这两个消费者重复消费：</p>
+<p><img src="/2020/05/25/SpringCloud-10SpringCloud-Stream%E6%B6%88%E6%81%AF%E9%A9%B1%E5%8A%A8/%E7%BB%84%E6%B5%81%E6%B0%B4%E5%8F%B7%E4%B8%8D%E5%90%8C.jpg" alt></p>
+<h4 id="2-分组解决重复消费问题"><a href="#2-分组解决重复消费问题" class="headerlink" title="2. 分组解决重复消费问题"></a>2. 分组解决重复消费问题</h4><p>上面在RabbitMQ控制面板中我们看到的组流水号是系统随机分配的，这样无疑不好控制，所以我们应该自定义配置分组，将8802/8803两个消息消费者微服务分为同一个组，以此来解决消息的重复消费问题，先来演示如何自定义分组。</p>
+<p>在8802/8803微服务中的配置文件中分别添加组名属性：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">stream:</span></span><br><span class="line">      <span class="attr">bindings:</span></span><br><span class="line">        <span class="attr">input:</span></span><br><span class="line">          <span class="attr">group:</span> <span class="string">A/B</span> <span class="comment">## 分组名称</span></span><br></pre></td></tr></table></figure>
+
+<p>这里我们将8802设置为A组，8803设置为B组，然后我们将消息消费方的两个微服务重启，我们再次查看其组流水号，发现不再是长长的随机组流水号，而变成了我们自定义的分组：</p>
+<p><img src="/2020/05/25/SpringCloud-10SpringCloud-Stream%E6%B6%88%E6%81%AF%E9%A9%B1%E5%8A%A8/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%88%86%E7%BB%84.jpg" alt></p>
+<p>此时由于8802/8803位于两个不同分组下，所以没有竞争关系，消息生产者发送消息后，仍然可以重复消费。</p>
+<p>下面我们将这两个消息消费方微服务分到相同的消费组中，这样每次就只有一个消费者，消息生产者发送的消息只能被8802或8803其中一个接受到，这样就避免了重复消费，将8802和8803的分组名都改为A，再次重启两个消息消费方微服务，此时我们可以看到在分组A下已经有了两个消费者：</p>
+<p><img src="/2020/05/25/SpringCloud-10SpringCloud-Stream%E6%B6%88%E6%81%AF%E9%A9%B1%E5%8A%A8/%E7%9B%B8%E5%90%8C%E5%88%86%E7%BB%84.jpg" alt></p>
+<p>再用生产者发送5条消息，我们发现8802/8803分别消费了3条和2条不同的消息，而没有出现重复消费的问题：</p>
+<p><img src="/2020/05/25/SpringCloud-10SpringCloud-Stream%E6%B6%88%E6%81%AF%E9%A9%B1%E5%8A%A8/%E5%90%8C%E7%BB%84%E7%AB%9E%E4%BA%89.jpg" alt></p>
 
       
 
@@ -458,15 +329,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">微服务</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">CentOS</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">FastDSF</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">SpringCloud</a>
         		</li>
       		
 		</ul>
@@ -522,7 +389,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/04/28/%E5%AE%89%E8%A3%85FastDFS/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/05/25/SpringCloud-10SpringCloud-Stream%E6%B6%88%E6%81%AF%E9%A9%B1%E5%8A%A8/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -536,18 +403,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/04/28/%E5%AE%89%E8%A3%85RabbitMQ/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          安装RabbitMQ
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/04/25/Linux%E4%B8%8A%E5%AE%89%E8%A3%85JDK%E7%8E%AF%E5%A2%83/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Linux上安装JDK环境</div>
+    <a href="/2020/05/24/RabbitMQ%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">RabbitMQ环境配置</div>
       <i class="icon-circle-right"></i>
     </a>
   

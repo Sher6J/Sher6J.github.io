@@ -16,7 +16,7 @@
 <meta property="og:description" content="力扣[242]有效的字母异位体题目给定两个字符串 s 和 t ，编写一个函数来判断 t 是否是 s 的字母异位词（构成字符串的字母种类和个数均相同，只不过顺序不同）。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-05-25T14:34:31.000Z">
-<meta property="article:modified_time" content="2020-05-25T14:55:20.289Z">
+<meta property="article:modified_time" content="2020-05-26T14:45:08.408Z">
 <meta property="article:author" content="Sher6J">
 <meta property="article:tag" content="算法">
 <meta property="article:tag" content="力扣">
@@ -186,8 +186,20 @@
 <p>这个解法的时间复杂度显然为O(n)，当然如果不用增强for遍历s、t的char数组的话，而是用fori同时遍历s、t数组，一遍加一遍减的话，时间还可以更快一些“</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isAnagram</span><span class="params">(String s, String t)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (s.length() != t.length()) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span>[] counter = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">26</span>];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s.length(); i++) &#123;</span><br><span class="line">        counter[s.charAt(i) - <span class="string">'a'</span>]++;</span><br><span class="line">        counter[t.charAt(i) - <span class="string">'a'</span>]--;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> count : counter) &#123;</span><br><span class="line">        <span class="keyword">if</span> (count != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p>下面再做一道这道题目的进阶题目，就是力扣第49题字母异位词分组</p>
+<h3 id="题目-1"><a href="#题目-1" class="headerlink" title="题目"></a>题目</h3><p>给定一个字符串数组，将字母异位词组合在一起。字母异位词指字母相同，但排列不同的字符串。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">示例:</span><br><span class="line">输入: [&quot;eat&quot;, &quot;tea&quot;, &quot;tan&quot;, &quot;ate&quot;, &quot;nat&quot;, &quot;bat&quot;]</span><br><span class="line">输出:</span><br><span class="line">[</span><br><span class="line">  [&quot;ate&quot;,&quot;eat&quot;,&quot;tea&quot;],</span><br><span class="line">  [&quot;nat&quot;,&quot;tan&quot;],</span><br><span class="line">  [&quot;bat&quot;]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 
+<h3 id="题解1：暴力-1"><a href="#题解1：暴力-1" class="headerlink" title="题解1：暴力"></a>题解1：暴力</h3><p>参照242题的题解1的暴力法来判断两个字符串是否为字母异位词，<font color="red"><strong>当且仅当它们的排序字符串相等时</strong></font>，两个字符串是字母异位词。维护一个映射 <font color="blue"><strong>map : {String -&gt; List}</strong></font>，其中<strong>每个键 K 是一个排序字符串</strong>（字母异位词排序后的字符串，比如 [“ate”,”eat”,”tea”] 对应存储的key为”aet”），<strong>每个值是初始输入的字符串列表</strong>（如 [“ate”,”eat”,”tea”]），排序后等于 K。如上述示例中</p>
+<p><strong>str = [<font color="red">“eat”</font>, <font color="red">“tea”</font> ,<font color="gree">“tan”</font>, <font color="red">“ate”</font>, <font color="gree">“nat”</font>, <font color="blue">“bat”</font>]</strong>，则对应的map为：</p>
+<p><strong>map = {  <font color="red">“aet”</font> ：[<font color="red">“eat”</font>, <font color="red">“tea”</font>, <font color="red">“ate”</font>]，</strong></p>
+<p>​                <strong><font color="gree">“ant”</font> ：[<font color="gree">“tan”</font>, <font color="gree">“nat”</font>],</strong> </p>
+<p>​                <strong><font color="blue">“abt”</font> ：[<font color="blue">“bat”</font>] }</strong></p>
+<p>遍历字符串数组中的字符串，先将字符串转换为排序后的字符串，如果排序后的字符串没有出现过就加入到key中，如果出现过就将其真实未排序的字符串添加到该key对应的字符串数组中，最后维护的map的value即最终的数组即为结果，代码实现如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> List&lt;List&lt;String&gt;&gt; groupAnagrams(String[] strs) &#123;</span><br><span class="line">    <span class="keyword">if</span> (strs.length == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ArrayList();</span><br><span class="line">    &#125;</span><br><span class="line">    HashMap&lt;String, List&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">    <span class="keyword">for</span> (String s : strs)  &#123;</span><br><span class="line">        <span class="keyword">char</span>[] chars = s.toCharArray();</span><br><span class="line">        Arrays.sort(chars);</span><br><span class="line">        String key = String.valueOf(chars);</span><br><span class="line">        <span class="keyword">if</span> (!map.containsKey(key)) &#123;</span><br><span class="line">            map.put(key, <span class="keyword">new</span> ArrayList());</span><br><span class="line">        &#125;</span><br><span class="line">        map.get(key).add(s);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ArrayList(map.values());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p><strong>时间复杂度</strong>：O(NKlogK)，其中 N 是 strs 的长度，而 K 是 strs 中字符串的最大长度。当我们遍历每个字符串时，外部循环具有的复杂度为 O(N)。然后，我们在 O(KlogK) 的时间内对每个字符串排序。<strong>空间复杂度</strong>：O(NK)，排序存储在 map 中的全部信息内容。</p>
+<h3 id="解法2：哈希表"><a href="#解法2：哈希表" class="headerlink" title="解法2：哈希表"></a>解法2：哈希表</h3><p>参照242题的解法2来判断两个字符串是否是字母异位体，<font color="red"><strong>当且仅当它们的字符计数（每个字符的出现次数）相同时</strong></font>，两个字符串是字母异位词。</p>
 
       
 
@@ -309,6 +321,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2020/05/26/Spring-Cloud-Alibaba/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Spring Cloud Alibaba
+        
+      </div>
+    </a>
   
   
     <a href="/2020/05/25/SpringCloud-11SpringCloud-Sleuth%E5%88%86%E5%B8%83%E5%BC%8F%E8%AF%B7%E6%B1%82%E9%93%BE%E8%B7%AF%E8%B7%9F%E8%B8%AA/" id="article-nav-older" class="article-nav-link-wrap">
@@ -450,11 +471,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">JavaSE</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -462,7 +479,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">JavaSE</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -478,14 +499,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">微服务</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">SpringCloud</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">消息队列</a>
               </li>
              
@@ -494,19 +507,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color4">微服务</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">力扣</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数组</a>
+                <a href="javascript:void(0)" class="js-tag color2">SpringCloud</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">非关系型数据库</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">FastDSF</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -522,11 +535,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">FastDSF</a>
+                <a href="javascript:void(0)" class="js-tag color5">异常处理</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">异常处理</a>
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">力扣</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">数组</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -539,6 +560,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">哈希表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">

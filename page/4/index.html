@@ -150,6 +150,185 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Java核心技术卷1——值得注意的笔记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/22/Java%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E5%8D%B71%E2%80%94%E2%80%94%E5%80%BC%E5%BE%97%E6%B3%A8%E6%84%8F%E7%9A%84%E7%AC%94%E8%AE%B0/">Java核心技术卷1——值得注意的笔记</a>
+    </h1>
+  
+
+        
+        <a href="/2020/03/22/Java%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E5%8D%B71%E2%80%94%E2%80%94%E5%80%BC%E5%BE%97%E6%B3%A8%E6%84%8F%E7%9A%84%E7%AC%94%E8%AE%B0/" class="archive-article-date">
+  	<time datetime="2020-03-22T09:58:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="空串与Null串-不是一个概念"><a href="#空串与Null串-不是一个概念" class="headerlink" title="空串与Null串  不是一个概念"></a>空串与Null串  不是一个概念</h2><ul>
+<li>空串””是<strong>长度为0</strong>的字符串，空串是一个Java对象，有自己的串长度(0)和内容(空)。可以调用以下代码检查一个字符串是否为空：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if (str.length()) &#x3D;&#x3D; 0)  或  if (str.equals(&quot;&quot;))</span><br></pre></td></tr></table></figure></li>
+<li>null串表示目前没有任何对象与该变量关联，这时String变量存放的是特殊的值，名为null。要检查一个字符串是否为null，要使用以下条件：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if (str &#x3D;&#x3D; null)</span><br></pre></td></tr></table></figure></li>
+<li>要检查一个字符串既不是null也不为空串，首先要检查str不为null。就要用以下条件：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if (str !&#x3D; null &amp;&amp; str.length() !&#x3D; 0)</span><br></pre></td></tr></table></figure>
+<h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2></li>
+<li>在Java中，允许数组长度为0，在编写一个结果为数组的方法时，如果碰巧结果为空，则这种语法形式就显得非常有用，此时可以创建一个<strong>长度为0</strong>的数组（注意，数组长度为0和null不同！！！）：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">new elementType[0]</span><br></pre></td></tr></table></figure></li>
+<li>数组的初始化：创建一个数字数组时，所有元素初始化为0；boolean数组的元素会初始化为false；对象数组的元素则初始化为一个特殊值null，这表示这些元素（还）未存放任何对象。</li>
+<li>数组的排序：使用Arrays类中的sort方法，该方法用了优化的快速排序算法：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int[] a &#x3D; new int[10000];</span><br><span class="line">......</span><br><span class="line">Arrays.sort(a);</span><br></pre></td></tr></table></figure></li>
+<li>for each循环语句不能自动处理二维数组中的每一个元素。它是按照行，也就是一维数组处理的。要想访问二维数组a的所有元素，需要使用两个嵌套的循环，如下：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for (double[] row : a) &#123;</span><br><span class="line">    for (double value : row) &#123;</span><br><span class="line">        do something with value</span><br><span class="line">    &#125;           </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h2></li>
+<li>在接口声明中，不需要把方法声明为public，这是因为接口中所有方法都自动是public。但是，在实现接口时，必须把方法声明为public，否则，编译器得认为这个方法的访问属性是包可见性，即类的默认访问属性。</li>
+<li><ol>
+<li>接口中的方法自动地设置为public；</li>
+<li>接口中的域自动设置为public static final。</li>
+<li>在Java SE 8中，允许接口中增加静态方法。</li>
+</ol>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/03/22/Java%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E5%8D%B71%E2%80%94%E2%80%94%E5%80%BC%E5%BE%97%E6%B3%A8%E6%84%8F%E7%9A%84%E7%AC%94%E8%AE%B0/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-redis数据库" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/21/redis%E6%95%B0%E6%8D%AE%E5%BA%93/">redis数据库</a>
+    </h1>
+  
+
+        
+        <a href="/2020/03/21/redis%E6%95%B0%E6%8D%AE%E5%BA%93/" class="archive-article-date">
+  	<time datetime="2020-03-21T04:54:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Redis数据库："><a href="#Redis数据库：" class="headerlink" title="Redis数据库："></a>Redis数据库：</h2><p>1.概念： redis是一款高性能的NOSQL系列的非关系型数据库</p>
+<ul>
+<li>什么是NOSQL数据库：NoSQL(NoSQL = Not Only SQL)，意即“不仅仅是SQL”，是一项全新的数据库理念，泛指非关系型的数据库。<h2 id="Redis数据库的安装-Ubuntu"><a href="#Redis数据库的安装-Ubuntu" class="headerlink" title="Redis数据库的安装(Ubuntu)"></a>Redis数据库的安装(Ubuntu)</h2>访问Redis的官网<a href="https://redis.io即可下载该数据库，但由于防火墙原因，所以访问Redis的中文网http://www.redis.net.cn/，下载相应版本的tar.gz的压缩包即可" target="_blank" rel="noopener">https://redis.io即可下载该数据库，但由于防火墙原因，所以访问Redis的中文网http://www.redis.net.cn/，下载相应版本的tar.gz的压缩包即可</a></li>
+</ul>
+<p><img src="/2020/03/21/redis%E6%95%B0%E6%8D%AE%E5%BA%93/1.png" alt></p>
+        
+          <a class="article-more-a" href="/2020/03/21/redis%E6%95%B0%E6%8D%AE%E5%BA%93/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">数据库</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">非关系型数据库</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/03/21/redis%E6%95%B0%E6%8D%AE%E5%BA%93/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-算法-力扣-070-爬楼梯" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -802,6 +981,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">JavaSE</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">redis</a>
               </li>
              
@@ -822,11 +1009,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+                <a href="javascript:void(0)" class="js-tag color5">消息队列</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">JavaSE</a>
+                <a href="javascript:void(0)" class="js-tag color4">RabbitMQ</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -842,11 +1029,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">消息队列</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">RabbitMQ</a>
+                <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -859,10 +1042,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">非关系型数据库</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">FastDSF</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -894,6 +1073,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">FastDSF</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">递归</a>
               </li>
              
@@ -902,15 +1085,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">哈希表</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+                <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">

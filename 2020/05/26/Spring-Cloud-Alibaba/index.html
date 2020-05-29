@@ -30,8 +30,15 @@
 <meta property="og:image" content="http://yoursite.com/2020/05/26/Spring-Cloud-Alibaba/%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.jpg">
 <meta property="og:image" content="http://yoursite.com/2020/05/26/Spring-Cloud-Alibaba/%E5%87%BA%E7%8E%B0%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.jpg">
 <meta property="og:image" content="http://yoursite.com/2020/05/26/Spring-Cloud-Alibaba/%E8%AE%BF%E9%97%AE%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E6%88%90%E5%8A%9F.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/05/26/Spring-Cloud-Alibaba/%E4%B8%89%E9%83%A8%E5%88%86.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/05/26/Spring-Cloud-Alibaba/dataId%E4%B8%8D%E5%90%8C%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/05/26/Spring-Cloud-Alibaba/2%E4%B8%AA%E9%85%8D%E7%BD%AE.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/05/26/Spring-Cloud-Alibaba/%E8%AE%BF%E9%97%AE%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/05/26/Spring-Cloud-Alibaba/%E5%88%86%E7%BB%84%E9%85%8D%E7%BD%AE.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/05/26/Spring-Cloud-Alibaba/%E4%B8%8D%E5%90%8C%E5%88%86%E7%BB%84%E7%9A%84%E9%85%8D%E7%BD%AE.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/05/26/Spring-Cloud-Alibaba/%E7%94%A8%E7%BB%84%E8%BF%9B%E8%A1%8C%E4%B8%8D%E5%90%8C%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE.jgp">
 <meta property="article:published_time" content="2020-05-26T01:00:57.000Z">
-<meta property="article:modified_time" content="2020-05-28T14:39:58.550Z">
+<meta property="article:modified_time" content="2020-05-29T04:03:19.462Z">
 <meta property="article:author" content="Sher6J">
 <meta property="article:tag" content="微服务">
 <meta property="article:tag" content="SpringCloud">
@@ -478,7 +485,31 @@
 <p>然后我们启动3377微服务，访问 <a href="http://localhost:3377/config/info" target="_blank" rel="noopener">http://localhost:3377/config/info</a> 查看能否访问都Nacos配置中心的配置信息：</p>
 <p><img src="/2020/05/26/Spring-Cloud-Alibaba/%E8%AE%BF%E9%97%AE%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E6%88%90%E5%8A%9F.jpg" alt></p>
 <p>Nacos配置中心直接就<strong>支持动态刷新</strong>，再更给了Nacos配置中心的配置信息后，再通过3377微服务访问，就可以得到更新后的配置信息。目前Nacos已经实现了Eureka + Config + Bus的功能，但是Nacos之所以如此优秀是因为这些框架有的功能它有，而这些框架没有的功能它还有！下面看Nacos的一些高级功能。</p>
-<h3 id="2-Nacos作为配置中心——分类配置"><a href="#2-Nacos作为配置中心——分类配置" class="headerlink" title="2.Nacos作为配置中心——分类配置"></a>2.Nacos作为配置中心——分类配置</h3>
+<h3 id="2-Nacos作为配置中心——分类配置"><a href="#2-Nacos作为配置中心——分类配置" class="headerlink" title="2.Nacos作为配置中心——分类配置"></a>2.Nacos作为配置中心——分类配置</h3><p>在多环境多项目管理时，也就是实际开发中，通常一个系统会准备不同的开发环境，如dev开发环境、test测试环境、prod生产环境，如何保证指定环境启动时服务能正确读取到Nacos上相应环境的配置文件呢？一个大型分布式微服务系统会有很多微服务子项目，每个微服务项目又都会有相应的开发环境、测试环境、预发环境、正式环境等待，那对这些微服务配置该如何管理呢？在Nacos配置中心中就可以进行分类配置，一个配置文件的具体所属由 <code>namespace</code> + <code>Group</code> + <code>dataId</code> 所构成：</p>
+<p><img src="/2020/05/26/Spring-Cloud-Alibaba/%E4%B8%89%E9%83%A8%E5%88%86.jpg" alt></p>
+<p>这种设计就类似于Java中的包名和类名，<strong>最外层的 <code>namespace</code> 是可以用于区分部署环境的，主要用来实现隔离</strong>，比如有三个环境：开发、测试、生产，那就可以创建三个 <code>namespace</code>。<code>Group</code> 和 <code>dataId</code> 逻辑上区分两个目标对象，默认情况下 <code>namespace</code> 的值为 <code>public</code>， <code>Group</code> 的值为 <code>DEFAULT_GROUP</code>。 下面对这三个属性进行详细展开。</p>
+<h4 id="1-dataId-方案"><a href="#1-dataId-方案" class="headerlink" title="1. dataId 方案"></a>1. <code>dataId</code> 方案</h4><p>指定 <code>spring.profile.active</code> 配置属性和配置文件的 <code>dataId</code> 来使不同环境下读取不同的配置，也就是说我们现在用默认的命名空间 <code>namespace</code> （即 <code>public</code>），默认的分组 <code>Group</code> （即 <code>DEFAULT_GROUP</code>），然后在Nacos配置中心中建立两个 <code>dataId</code> 分别为 <code>dev</code> 环境和 <code>test</code> 环境：</p>
+<p><img src="/2020/05/26/Spring-Cloud-Alibaba/dataId%E4%B8%8D%E5%90%8C%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.jpg" alt></p>
+<p>此时在同一命名空间同一组中就有了两个应用于开发、测试不同环境的配置文件：</p>
+<p><img src="/2020/05/26/Spring-Cloud-Alibaba/2%E4%B8%AA%E9%85%8D%E7%BD%AE.jpg" alt></p>
+<p>然后我们通过修改微服务自己定制配置信息 <code>application.yml</code> 配置文件中的<code>spring.profile.active</code> 属性即可进行多环境下的配置文件的读取，配置什么就加载什么，在之前我们的3377微服务获取的是配置中心中 <code>nacos-config-client-dev.yaml</code> 配置文件的配置信息，现在我们将 <code>application.yml</code> 修改为：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">profiles:</span></span><br><span class="line"><span class="comment">#    active: dev # 表示开发环境</span></span><br><span class="line">    <span class="attr">active:</span> <span class="string">test</span> <span class="comment"># 表示开发环境</span></span><br></pre></td></tr></table></figure>
+
+<p>然后重启3377微服务，再次进行测试发现访问到的配置信息为测试环境的配置信息：</p>
+<p><img src="/2020/05/26/Spring-Cloud-Alibaba/%E8%AE%BF%E9%97%AE%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE.jpg" alt></p>
+<p>这就类似于在Java中的包名相同，但是类名不同。</p>
+<h4 id="2-Group-方案"><a href="#2-Group-方案" class="headerlink" title="2. Group 方案"></a>2. <code>Group</code> 方案</h4><p>不仅通过 <code>dataId</code> 可以实现环境分区，应用 <code>Group</code> 也可以实现环境分区，首先我们在Nacos配置中心新建两个相同 <code>dataId</code>，不同 <code>Group</code> 的配置文件，一个用于开发环境，一个用于测试环境：</p>
+<p><img src="/2020/05/26/Spring-Cloud-Alibaba/%E5%88%86%E7%BB%84%E9%85%8D%E7%BD%AE.jpg" alt></p>
+<p><img src="/2020/05/26/Spring-Cloud-Alibaba/%E4%B8%8D%E5%90%8C%E5%88%86%E7%BB%84%E7%9A%84%E9%85%8D%E7%BD%AE.jpg" alt></p>
+<p>由于这两个配置文件的 <code>dataId</code> 均为 <code>nacos-config-client-info.yaml</code> ，根据之前解释的 <code>dataId</code> 的命名规则，我们应该将3377微幅的自定义配置文件 <code>application.yml</code> 中的 <code>spring.profile.active</code> 属性更改为 <code>info</code>：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">profiles:</span></span><br><span class="line">    <span class="attr">active:</span> <span class="string">info</span></span><br></pre></td></tr></table></figure>
+
+<p>在确认了读取的配置文件的 <code>dataId</code> 后，我们在其 <code>bootstrap.yml</code> 配置文件中添加 <code>spring.cloud.nacos.config.group</code> 属性，设置为响应的组名即可，比如我们现在设置为测试环境组：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">nacos:</span></span><br><span class="line">      <span class="attr">config:</span></span><br><span class="line">        <span class="attr">group:</span> <span class="string">TEST_GROUP</span></span><br></pre></td></tr></table></figure>
+
+<p>重启3377微服务，再次访问可以发现获取到的配置信息即为<code>TEST_GROUP</code>组的配置信息：</p>
+<p><img src="/2020/05/26/Spring-Cloud-Alibaba/%E7%94%A8%E7%BB%84%E8%BF%9B%E8%A1%8C%E4%B8%8D%E5%90%8C%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE.jgp" alt></p>
+<h4 id="3-namespace-方案"><a href="#3-namespace-方案" class="headerlink" title="3. namespace 方案"></a>3. <code>namespace</code> 方案</h4>
       
 
       
@@ -749,19 +780,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">容器</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">JavaSE</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">读书笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">微服务</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">SpringCloud</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -769,15 +792,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">消息队列</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">RabbitMQ</a>
+                <a href="javascript:void(0)" class="js-tag color5">读书笔记</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -793,15 +808,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Ubuntu</a>
+                <a href="javascript:void(0)" class="js-tag color4">微服务</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+                <a href="javascript:void(0)" class="js-tag color2">SpringCloud</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
+                <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">消息队列</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">RabbitMQ</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -813,7 +836,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">异常处理</a>
+                <a href="javascript:void(0)" class="js-tag color2">Ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -833,6 +864,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">异常处理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">数组</a>
               </li>
              
@@ -841,15 +876,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">哈希表</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">栈</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">哈希表</a>
               </li>
              
               <li class="article-tag-list-item">

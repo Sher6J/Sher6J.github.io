@@ -20,8 +20,11 @@
 <meta property="og:image" content="http://yoursite.com/2020/05/29/Java%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%AE%B9%E5%99%A8/%E8%BF%AD%E4%BB%A3%E5%99%A8.jpg">
 <meta property="og:image" content="http://yoursite.com/2020/05/29/Java%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%AE%B9%E5%99%A8/ArrayList%E7%B1%BB%E5%9B%BE.jpg">
 <meta property="og:image" content="http://yoursite.com/2020/05/29/Java%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%AE%B9%E5%99%A8/LinkedList%E7%B1%BB%E5%9B%BE.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/05/29/Java%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%AE%B9%E5%99%A8/HashSet%E7%B1%BB%E5%9B%BE.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/05/29/Java%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%AE%B9%E5%99%A8/LinkedHashSet%E7%B1%BB%E5%9B%BE.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/05/29/Java%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%AE%B9%E5%99%A8/LinkedHashSet%E6%9E%84%E9%80%A0%E5%99%A8.jpg">
 <meta property="article:published_time" content="2020-05-29T10:50:31.000Z">
-<meta property="article:modified_time" content="2020-05-29T15:49:30.630Z">
+<meta property="article:modified_time" content="2020-05-30T04:35:36.536Z">
 <meta property="article:author" content="Sher6J">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="容器">
@@ -233,9 +236,27 @@
 <li><code>LinkedList</code>：since 1.2，对于频繁的插入、删除操作，使用效率比 <code>ArrayList</code> 高，底层使用双向链表存储，也实现了<code>Deque</code> 接口（<code>Deque</code>接口继承了<code>Queue</code>接口）；</li>
 <li><code>Vector</code>：since 1.0，作为 <code>List</code> 接口的古老实现类（出现的比 <code>List</code> 接口还早），线程安全的，效率低，共有方法都由 <code>synchronized</code> 关键字进行了修饰，底层使用<code>Object[]</code>数组存储。</li>
 </ul>
-<p>在<code>List</code>接口中除了具有<code>Collection</code>接口中具有的抽象方法外，还具有其特有的抽象方法：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
+<p>在<code>List</code>接口中除了具有<code>Collection</code>接口中具有的抽象方法外，还具有其特有的抽象方法，可以在指定位置插入<code>add</code>或删除<code>remove</code>元素，也可以查询<code>get</code>指定位置的元素，还可以修改<code>set</code>指定位置的元素，且其可以返回一个相反方向的迭代器。</p>
+<h2 id="1-5-Set-接口"><a href="#1-5-Set-接口" class="headerlink" title="1.5. Set 接口"></a>1.5. <code>Set</code> 接口</h2><p><code>Set</code> 接口时 <code>Collection</code> 的子接口，其<font color="red"><strong>无序性不等于随机性</strong></font>，其无序性指的是存储数据时并非向底层结构中按索引顺序添加元素，而是根据元素的哈希值进行添加。其<font color="red"><strong>不可重复性</strong></font>指的是两个对象是否相同，其判断两个对象是否相同不是使用 <code>==</code> 运算符，而是根据 <code>equals()</code> 方法（会先比较其哈希值）。<code>Set</code>接口没有提供额外的抽象方法，其主要的实现类有<code>HashSet</code> 、<code>LinkedHashSet</code>、<code>TreeSet</code>。</p>
+<p><code>HashSet</code>、<code>LinkedHashSet</code>、<code>TreeSet</code>的异同：</p>
+<ul>
+<li><code>HashSet</code>：作为 <code>Set</code> 接口的主要实现类，线程不安全的，可以存储<code>null</code>值；</li>
+<li><code>LinkedHashSet</code>：是 <code>HshSet</code> 子类，增加了链表结构，使的遍历其内部数据时，可以按照添加的顺序遍历；</li>
+<li><code>TreeSet</code>：可以按照添加对象的指定属性进行排序。</li>
+</ul>
+<p>向<code>Set</code>添加元素的过程（以<code>HashSet</code>为例）：向<code>HashSet</code>中添加新元素，先调用该元素的<code>hashCode()</code>方法，计算其哈希值，此哈希值通过某种算法计算出在<code>HashSet</code>底层数组中的存放位置，判断数组在此位置上是否已经有元素，如果没有则直接添加成功，如果有元素，比较新元素和已经存在元素的哈希值，不同则添加成功，相同再调用<code>equals()</code>方法进行比较。</p>
+<h2 id="1-6-Map-接口"><a href="#1-6-Map-接口" class="headerlink" title="1.6. Map 接口"></a>1.6. <code>Map</code> 接口</h2><p>存储<code>key-value</code>键值对，其主要的实现类有：</p>
+<ul>
+<li><code>HashMap</code>：作为<code>Map</code>的主要实现类，线程不安全的，效率高，可以存储<code>null</code>的键值对（<code>key</code>、<code>value</code>都可以是<code>null</code>），其底层在jdk7及之前为<strong>数组+链表</strong>，在jdk8中为<strong>数组+链表+红黑树</strong>；<ul>
+<li><code>LinkedHashMap</code>：继承了<code>HashMap</code>，保证在遍历映射元素时，可以按照添加的顺序实现遍历，对于频繁的 遍历操作，此类执行效率高于<code>HashMap</code>；</li>
+</ul>
+</li>
+<li><code>TreeMap</code>：可以按照添加的键值对（主要是对键<code>key</code>进行排序）进行排序，实现排序遍历；</li>
+<li><code>Hashtable</code>：作为<code>Map</code>的古老实现类，线程安全的，效率低，不能存储<code>null</code>的键值对，属于历史遗留的实现类;<ul>
+<li><code>Properties</code>：继承了<code>Hashtable</code>吗，<code>key-value</code>都是<code>String</code>类型，常用来处理配置文件。</li>
+</ul>
+</li>
+</ul>
 <h1 id="2-主要的具体集合及其源码分析"><a href="#2-主要的具体集合及其源码分析" class="headerlink" title="2. 主要的具体集合及其源码分析"></a>2. 主要的具体集合及其源码分析</h1><h2 id="2-1-ArrayList"><a href="#2-1-ArrayList" class="headerlink" title="2.1. ArrayList"></a>2.1. <code>ArrayList</code></h2><p><code>ArrayList</code>的类图如下，其实现了<code>List</code>接口，且<font color="red"><strong>可以随机访问</strong></font>：</p>
 <p><img src="/2020/05/29/Java%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%AE%B9%E5%99%A8/ArrayList%E7%B1%BB%E5%9B%BE.jpg" alt></p>
 <h3 id="2-1-1-jdk-7-情况下："><a href="#2-1-1-jdk-7-情况下：" class="headerlink" title="2.1.1. jdk 7 情况下："></a>2.1.1. jdk 7 情况下：</h3><p>查看<code>ArrayList</code>源码，发现其类中有属性值：</p>
@@ -283,6 +304,22 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">add</span><span class="params">(E e)</span> </span>&#123;</span><br><span class="line">    linkLast(e); <span class="comment">//调用了在链表尾部添加元素的方法</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">linkLast</span><span class="params">(E e)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> Node&lt;E&gt; l = last; <span class="comment">//l为添加节点之前的尾结点</span></span><br><span class="line">    <span class="keyword">final</span> Node&lt;E&gt; newNode = <span class="keyword">new</span> Node&lt;&gt;(l, e, <span class="keyword">null</span>); <span class="comment">//令添加节点的前驱结点指向原来的尾结点</span></span><br><span class="line">    last = newNode; <span class="comment">//令添加节点作为新的尾结点</span></span><br><span class="line">    <span class="comment">//如果首次添加元素，即原来的尾结点为空，那么添加的节点就作为头结点（同时也是尾结点）</span></span><br><span class="line">    <span class="keyword">if</span> (l == <span class="keyword">null</span>)</span><br><span class="line">        first = newNode;</span><br><span class="line">    <span class="comment">//添加元素前若有尾结点，则尾结点的后继节点指向添加的节点</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        l.next = newNode;</span><br><span class="line">    size++;</span><br><span class="line">    modCount++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><code>LinkedList</code> 内部声明了 <code>Node</code> 类型的 <code>first</code>和<code>last</code> 属性，并且这两个属性的初始值都是<code>null</code>，当添加第一个元素时，该元素既作为头结点又作为尾结点，之后就进行正常的添加删除即可。</p>
+<h2 id="2-3-HashSet"><a href="#2-3-HashSet" class="headerlink" title="2.3. HashSet"></a>2.3. <code>HashSet</code></h2><p><code>HashSet</code> 的类图如下：</p>
+<p><img src="/2020/05/29/Java%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%AE%B9%E5%99%A8/HashSet%E7%B1%BB%E5%9B%BE.jpg" alt></p>
+<p>我们查看<code>HashSet</code>底层源码时发下其有属性值：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">   <span class="keyword">private</span> <span class="keyword">transient</span> HashMap&lt;E,Object&gt; map;</span><br><span class="line"><span class="comment">//用来向HashMap中添加元素时站位的空对象</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Object PRESENT = <span class="keyword">new</span> Object();</span><br></pre></td></tr></table></figure>
+
+<p>也就是说<code>HashSet</code>实际上是一个<code>HashMap</code>，当向<code>HashSet</code>中添加元素时，实际上是在向<code>HashMap</code>中添加元素，</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">add</span><span class="params">(E e)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> map.put(e, PRESENT)==<span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>所以对于<code>HashSet</code>的底层源码不多赘述，更多细节在<code>HashMap</code>中进行总结即可。</p>
+<h2 id="2-4-LinkedHashSet"><a href="#2-4-LinkedHashSet" class="headerlink" title="2.4. LinkedHashSet"></a>2.4. <code>LinkedHashSet</code></h2><p><code>LinkedHashSet</code>在添加数据的同时，每个数据还维护了两个引用，记录此数据的前一个数据和后一个数据，对于频繁的遍历操作，<code>LinkedHashSet</code>效率会高一些。其类图如下：</p>
+<p><img src="/2020/05/29/Java%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%AE%B9%E5%99%A8/LinkedHashSet%E7%B1%BB%E5%9B%BE.jpg" alt></p>
+<p>查看其空参构造方法，其调用了父类<code>HashSet</code>中的构造方法，而父类<code>HashSet</code>的该构造器实际上由创建了一个<code>LinkedHashMap</code>：</p>
+<p><img src="/2020/05/29/Java%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%AE%B9%E5%99%A8/LinkedHashSet%E6%9E%84%E9%80%A0%E5%99%A8.jpg" alt></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * LinkedHashSet调用的HashSet中的构造器</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">HashSet(<span class="keyword">int</span> initialCapacity, <span class="keyword">float</span> loadFactor, <span class="keyword">boolean</span> dummy) &#123;</span><br><span class="line">       map = <span class="keyword">new</span> LinkedHashMap&lt;&gt;(initialCapacity, loadFactor);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>所以对于<code>LinkedHashSet</code>的底层源码也无需赘述，重点看<code>LinkedHashMap</code>的底层源码即可。</p>
 
       
 
@@ -400,6 +437,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2020/05/31/Java%E5%AD%A6%E4%B9%A0%E4%B9%8BJUC/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Java学习之JUC
+        
+      </div>
+    </a>
   
   
     <a href="/2020/05/28/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-394-%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%A7%A3%E7%A0%81/" id="article-nav-older" class="article-nav-link-wrap">
@@ -549,11 +595,35 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">多线程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">读书笔记</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">容器</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">微服务</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">SpringCloud</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">消息队列</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">RabbitMQ</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -569,27 +639,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">消息队列</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">RabbitMQ</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">容器</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">微服务</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">SpringCloud</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -613,6 +663,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">异常处理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
@@ -625,10 +679,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">异常处理</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">递归</a>
               </li>
              
@@ -637,11 +687,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">哈希表</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">树</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -650,14 +708,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">树</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -728,7 +778,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
   	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">当觉得努力不下去的时候&lt;br&gt;就再努力一下&lt;br&gt;当觉得坚持不下去的时候&lt;br&gt;再坚持坚持！！！&lt;br&gt;每天进一寸有进一寸的欢喜&lt;br&gt;知道的越多，不知道的也就越多...&lt;br&gt;</div>
+  	  		<div class="aboutme-wrap" id="js-aboutme">每天进一寸有进一寸的欢喜&lt;br&gt;知道的越多，不知道的也就越多&lt;br&gt;发展中的问题在发展中解决&lt;br&gt;</div>
   	  	
     	</section>
     

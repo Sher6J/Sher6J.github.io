@@ -150,6 +150,123 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Java-常用API" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/19/Java-%E5%B8%B8%E7%94%A8API/">Java-常用API</a>
+    </h1>
+  
+
+        
+        <a href="/2020/03/19/Java-%E5%B8%B8%E7%94%A8API/" class="archive-article-date">
+  	<time datetime="2020-03-19T13:53:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-19</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Java常用的API"><a href="#Java常用的API" class="headerlink" title="Java常用的API"></a>Java常用的API</h2><p>首先说什么是API?</p>
+<ul>
+<li>API(Application Programming Interface)：应用程序编程接口</li>
+<li>java中的API指的就是JDK中提供的各种功能的Java类,这些类将底层的实现封装了起来,不需要关心这些类是如何实现的,只需要学习这些类如何使用即可,可以通过帮助文档来学习这些API如何使用。</li>
+<li>如查看Math类的使用，在索引框中直接查询Math即可查看Math类的构造方法，成员函数等<img src="/2020/03/19/Java-%E5%B8%B8%E7%94%A8API/1.png" alt></li>
+</ul>
+<h2 id="Math类"><a href="#Math类" class="headerlink" title="Math类"></a>Math类</h2><p>1.Math类概述：Math包含执行基本数字运算的方法</p>
+<p>2.Math中方法的调用方式：Math类中无构造方法,但内部的方法都是静态的,则可以通过类名. 进行调用</p>
+<p>3.常用方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">abs</span><span class="params">(<span class="keyword">int</span> a)</span> 返回参数的绝对值</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">double</span> <span class="title">ceil</span><span class="params">(<span class="keyword">double</span> a)</span> 返回大于或等于参数的最小<span class="keyword">double</span>值,等于一个整数</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">double</span> <span class="title">floor</span><span class="params">(<span class="keyword">double</span> a)</span> 返回小于或等于参数的最大<span class="keyword">double</span>值,等于一个整数</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">round</span><span class="params">(<span class="keyword">float</span> a)</span> 按照四舍五入返回最接近参数的<span class="keyword">int</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">max</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span> 返回两个<span class="keyword">int</span>值中的较大值</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">min</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span> 返回两个<span class="keyword">int</span>值中的较小值</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">double</span> <span class="title">pow</span> <span class="params">(<span class="keyword">double</span> a,<span class="keyword">double</span> b)</span> 返回a的b次幂的值</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">double</span> <span class="title">random</span><span class="params">()</span> 返回值为<span class="keyword">double</span>的正值,[0.0,1.0)</span></span><br></pre></td></tr></table></figure>
+<h2 id="System类"><a href="#System类" class="headerlink" title="System类"></a>System类</h2><p>1.常用方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">exit</span><span class="params">(<span class="keyword">int</span> status)</span> 终止当前运行的 Java 虚拟机,非零表示异常终止</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">long</span> <span class="title">currentTimeMillis</span><span class="params">()</span> 返回当前时间<span class="params">(以毫秒为单位)</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="Array类"><a href="#Array类" class="headerlink" title="Array类"></a>Array类</h2><p>1.Array类提供了动态创建和访问Java数组的静态方法。Array允许在获取或设置操作期间进行加宽转换，但如果发生缩小转换，则抛出IllegalArgumentException 。</p>
+<p>2.常用方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">toString</span><span class="params">(<span class="keyword">int</span>[] a)</span> 返回指定数组的内容的字符串表示形式</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sort</span><span class="params">(<span class="keyword">int</span>[] a)</span> 按照数字顺序排列指定的数组</span></span><br></pre></td></tr></table></figure>
+<h2 id="包装类"><a href="#包装类" class="headerlink" title="包装类"></a>包装类</h2><p>1.基本数据类型对应的包装类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">byte</span>        Byte</span><br><span class="line"><span class="keyword">short</span>       Short</span><br><span class="line"><span class="keyword">int</span>         Integer</span><br><span class="line"><span class="keyword">long</span>        Long</span><br><span class="line"><span class="keyword">float</span>       Float</span><br><span class="line"><span class="keyword">double</span>      Double</span><br><span class="line"><span class="keyword">char</span>        Character</span><br><span class="line"><span class="keyword">boolean</span>     Boolean</span><br></pre></td></tr></table></figure>
+<h2 id="String类"><a href="#String类" class="headerlink" title="String类"></a>String类</h2><p>1.String类代表字符串,Java程序中的所有字符串文字(例如“abc”)都被实现为此类的实例。也就是说,Java程序中所有的双引号字符串,都是 String 类的对象。String类在java.lang包下,所以使用的时候不需要导包。</p>
+<p>2.String类特点：</p>
+<ul>
+<li>字符串不可变,它们的值在创建后不能被更改</li>
+<li>虽然 String 的值是不可变的,但是它们可以被共享</li>
+<li>字符串效果上相当于字符数组 ( char[] ),但是底层原理是字节数组( byte[] )</li>
+</ul>
+<p>3.常用构造方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">String</span><span class="params">()</span> 创建一个空白字符串对象,不含有任何内容</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">String</span><span class="params">(<span class="keyword">char</span>[] chs)</span> 根据字符数组的内容,来创建字符串对象</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">String</span><span class="params">(<span class="keyword">byte</span>[] bys)</span> 根据字节数组的内容,来创建字符串对象</span></span><br><span class="line"><span class="function">String s </span>= “abc”; 直接赋值的方式创建字符串对象,内容就是abc</span><br></pre></td></tr></table></figure>
+<p>注意第3个构造方法中用字节数组创建String类对象时，字节数组对应ASCII码下的字符</p>
+<p>4.常用方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object anObject)</span> 比较字符串的内容,严格区分大小写<span class="params">(用户名和密码)</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">char</span> <span class="title">charAt</span><span class="params">(<span class="keyword">int</span> index)</span> 返回指定索引处的 <span class="keyword">char</span> 值</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">length</span><span class="params">()</span> 返回此字符串的长度</span></span><br></pre></td></tr></table></figure>
+<p>##StringBuilder类<br>1.StringBuilder是一个可变的字符串类,我们可以把它看成是一个容器,这里的可变指的是StringBuilder对象中的内容是可变的</p>
+<p>2.StringBuilder类和String类的区别：</p>
+<ul>
+<li>String类:内容是不可变的</li>
+<li>StringBuilder类:内容是可变的</li>
+</ul>
+<p>3.常用构造方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">StringBuilder</span><span class="params">()</span> 创建一个空白可变字符串对象,不含有任何内容</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">StringBuilder</span><span class="params">(String str)</span> 根据字符串的内容,来创建可变字符串对象</span></span><br></pre></td></tr></table></figure>
+
+<p>4.常用方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> StringBuilder <span class="title">append</span> <span class="params">(任意类型)</span> 添加数据,并返回对象本身</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> StringBuilder <span class="title">reverse</span><span class="params">()</span> 返回相反的字符序列</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">length</span><span class="params">()</span> 返回长度,实际存储值</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> 通过<span class="title">toString</span><span class="params">()</span>就可以实现把StringBuilder转换为String</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">5.String类和StringBuilder类的转换</span><br><span class="line">* StringBuilder转换为String —— public String toString():通过toString()就可以实现把StringBuilder转换为String</span><br><span class="line">* String 转换为StringBuilder —— public StringBuilder(String s):通过构造方法就可以实现把String转换为StringBuilder</span><br><span class="line">## ArrayList类</span><br><span class="line">1.ArrayList集合的特点：底层是数组实现的,长度可以变化</span><br><span class="line"></span><br><span class="line">2.构造方法：</span><br><span class="line">&#96;&#96;&#96;java</span><br><span class="line">public ArrayList() 创建一个空的集合对象</span><br></pre></td></tr></table></figure>
+
+<p>3.常用方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">remove</span><span class="params">(Object o)</span> 删除指定的元素,返回删除是否成功</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> E <span class="title">remove</span><span class="params">(<span class="keyword">int</span> index)</span> 删除指定索引处的元素,返回被删除的元素</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> E <span class="title">set</span><span class="params">(<span class="keyword">int</span> index,E element)</span> 修改指定索引处的元素,返回被修改的元素</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> E <span class="title">get</span><span class="params">(<span class="keyword">int</span> index)</span> 返回指定索引处的元素</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">size</span><span class="params">()</span> 返回集合中的元素的个数</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">add</span><span class="params">(E e)</span> 将指定的元素追加到此集合的末尾</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> index,E element)</span> 在此集合中的指定位置插入指定的元素</span></span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/03/19/Java-%E5%B8%B8%E7%94%A8API/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Java-基础笔记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -444,11 +561,35 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">多线程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">读书笔记</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">容器</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">微服务</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">SpringCloud</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">消息队列</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">RabbitMQ</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -464,27 +605,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">消息队列</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">RabbitMQ</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">容器</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">微服务</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">SpringCloud</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -508,6 +629,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">异常处理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
@@ -520,10 +645,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">异常处理</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">递归</a>
               </li>
              
@@ -532,11 +653,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">哈希表</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">树</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -545,14 +674,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">树</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -623,7 +744,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
   	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">当觉得努力不下去的时候&lt;br&gt;就再努力一下&lt;br&gt;当觉得坚持不下去的时候&lt;br&gt;再坚持坚持！！！&lt;br&gt;每天进一寸有进一寸的欢喜&lt;br&gt;知道的越多，不知道的也就越多...&lt;br&gt;</div>
+  	  		<div class="aboutme-wrap" id="js-aboutme">每天进一寸有进一寸的欢喜&lt;br&gt;知道的越多，不知道的也就越多&lt;br&gt;发展中的问题在发展中解决&lt;br&gt;</div>
   	  	
     	</section>
     

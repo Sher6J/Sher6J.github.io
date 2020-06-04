@@ -6,16 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: 栈 | 菜菜六甲的博客</title>
+  <title>算法-力扣-238-除自身以外数组的乘积 | 菜菜六甲的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="想努力成为大厂程序猿的辣鸡在读研究生">
-<meta property="og:type" content="website">
-<meta property="og:title" content="菜菜六甲的博客">
-<meta property="og:url" content="http://yoursite.com/tags/%E6%A0%88/index.html">
+  <meta name="description" content="题目给你一个长度为 n 的整数数组 nums，其中 n &gt; 1，返回输出数组 output ，其中 output[i] 等于 nums 中除 nums[i] 之外其余各元素的乘积。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法-力扣-238-除自身以外数组的乘积">
+<meta property="og:url" content="http://yoursite.com/2020/06/04/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-238-%E9%99%A4%E8%87%AA%E8%BA%AB%E4%BB%A5%E5%A4%96%E6%95%B0%E7%BB%84%E7%9A%84%E4%B9%98%E7%A7%AF/index.html">
 <meta property="og:site_name" content="菜菜六甲的博客">
-<meta property="og:description" content="想努力成为大厂程序猿的辣鸡在读研究生">
+<meta property="og:description" content="题目给你一个长度为 n 的整数数组 nums，其中 n &gt; 1，返回输出数组 output ，其中 output[i] 等于 nums 中除 nums[i] 之外其余各元素的乘积。">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-06-04T14:13:24.000Z">
+<meta property="article:modified_time" content="2020-06-04T14:41:38.583Z">
 <meta property="article:author" content="Sher6J">
+<meta property="article:tag" content="算法">
+<meta property="article:tag" content="力扣">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="菜菜六甲的博客" type="application/atom+xml">
@@ -148,36 +152,84 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-算法-力扣-238-除自身以外数组的乘积" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/28/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-394-%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%A7%A3%E7%A0%81/" class="archive-article-date">
-  	<time datetime="2020-05-28T02:32:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-28</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/28/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-394-%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%A7%A3%E7%A0%81/">算法-力扣-394-字符串解码</a>
+    <h1 class="article-title" itemprop="name">
+      算法-力扣-238-除自身以外数组的乘积
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2020/06/04/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-238-%E9%99%A4%E8%87%AA%E8%BA%AB%E4%BB%A5%E5%A4%96%E6%95%B0%E7%BB%84%E7%9A%84%E4%B9%98%E7%A7%AF/" class="archive-article-date">
+  	<time datetime="2020-06-04T14:13:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给你一个长度为 n 的整数数组 nums，其中 n &gt; 1，返回输出数组 output ，其中 output[i] 等于 nums 中除 nums[i] 之外其余各元素的乘积。</p>
+<a id="more"></a>
+
+<p>示例:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: [1,2,3,4]</span><br><span class="line">输出: [24,12,8,6]</span><br></pre></td></tr></table></figure>
+
+
+<p>提示：题目数据保证数组之中任意元素的全部前缀元素和后缀（甚至是整个数组）的乘积都在 32 位整数范围内。</p>
+<p>说明: 请不要使用除法，且在 O(n) 时间复杂度内完成此题。</p>
+<p>进阶：<br>你可以在常数空间复杂度内完成这个题目吗？（ 出于对空间复杂度分析的目的，输出数组不被视为额外空间。）</p>
+<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/product-of-array-except-self" target="_blank" rel="noopener">https://leetcode-cn.com/problems/product-of-array-except-self</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+<h2 id="分析及题解"><a href="#分析及题解" class="headerlink" title="分析及题解"></a>分析及题解</h2><p>此题我最开的想法就是定义一个作为所有元素乘积的变量<code>mul</code>，然后遍历一次数组，得到所有元素的乘积，而对于<code>output</code>数组中的每个元素就应给是：<br>$$<br>output[i] = mul / num[i]<br>$$<br><font color="red"><strong>但是！！！</strong></font>，题目中要求<strong>不允许使用除法</strong>，而且此种解法也会有许多复杂的情况需要分析，比如如果除数为0怎么办？如果<code>num</code>数组中有0的话，那岂不是最后<code>mul</code>值要为0？…………</p>
+<p>再看题目中的提示，我们可以发现，对于数组中的元素<code>num[i]</code>，其除<code>num[i]</code>的元素乘积应为等于<code>num[i]</code>元素前的所有元素的乘积再乘上<code>num[i]</code>元素之后的所有元素的乘积，即定义<code>num[i]</code>元素前的所有元素的乘积为<strong><code>num[i]</code>的前缀乘积</strong>，定义<code>num[i]</code>元素后的所有元素的乘积为<strong><code>num[i]</code>的后缀乘积</strong>，则有：<br>$$<br>除num[i]的元素乘积 = num[i]的前缀乘积 × num[i]的后缀乘积<br>$$<br>所以我们可以用<code>l</code>数组来存储每个元素的前缀乘积，用<code>r</code>数组来存储每个元素的后缀乘积，那么<code>output</code>数组中的元素即为<code>l</code>、<code>r</code>数组中对应元素的乘积，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] productExceptSelf(<span class="keyword">int</span>[] nums) &#123;</span><br><span class="line">        <span class="keyword">int</span>[] l = <span class="keyword">new</span> <span class="keyword">int</span>[nums.length]; <span class="comment">//前缀积</span></span><br><span class="line">        <span class="keyword">int</span>[] r = <span class="keyword">new</span> <span class="keyword">int</span>[nums.length]; <span class="comment">//后缀积</span></span><br><span class="line">        l[<span class="number">0</span>] = <span class="number">1</span>; <span class="comment">//首元素的前缀积定义为1</span></span><br><span class="line">        r[nums.length - <span class="number">1</span>] = <span class="number">1</span>; <span class="comment">//尾元素的后缀积定义为1</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">            l[i] = nums[i - <span class="number">1</span>] * l[i - <span class="number">1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = nums.length - <span class="number">2</span>; i &gt; -<span class="number">1</span>; i--) &#123;</span><br><span class="line">            r[i] = nums[i + <span class="number">1</span>] * r[i + <span class="number">1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span>[] output = <span class="keyword">new</span> <span class="keyword">int</span>[nums.length];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">            output[i] = l[i] * r[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> output;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个代码中，我们对数组遍历了3次，分别生成了前缀积数组、后缀积数组和<code>output</code>数组，所以其<strong>时间复杂度为O(n)</strong>，题目中说明<code>output</code>数组不占空间复杂度，除<code>output</code>数组外我们开辟了<strong>前缀积、后缀积</strong>两个数组，所以我们的<strong>空间复杂度为O(n)</strong>，在题目的进阶要求中<font color="red"><strong>需要空间复杂度为O(1)</strong></font>，那我们能否将程序优化呢？</p>
+<p>其实我们发现<strong>生成前缀积和后缀积的数组的目的就是为了得到<code>output</code>数组</strong>，而前缀积数组和后缀积数组其实并不是必要的，也就是说其实我们可以用<code>output</code>数组存储前缀积，然后再用临时变量表示相应位置的后缀积，再将临时变量乘上<code>output</code>数组中对应元素并将结果作为<code>output</code>数组的新值，最终的<code>output</code>数组即为结果，优化后<strong>空间复杂度为O(1)</strong>的代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] productExceptSelf(<span class="keyword">int</span>[] nums) &#123;</span><br><span class="line">        <span class="keyword">int</span>[] output = <span class="keyword">new</span> <span class="keyword">int</span>[nums.length];</span><br><span class="line">        output[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">            output[i] = output[i - <span class="number">1</span>] * nums[i - <span class="number">1</span>]; <span class="comment">//先将output数组作为前缀积数组</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> r = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = nums.length - <span class="number">1</span>; i &gt; -<span class="number">1</span>; i--) &#123;</span><br><span class="line">            output[i] = output[i] * r;</span><br><span class="line">            r = r * nums[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> output;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>感谢大哥/美女❤<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/zfb.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/wx.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -189,27 +241,110 @@
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">力扣</a>
         		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">栈</a>
-        		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/06/04/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-238-%E9%99%A4%E8%87%AA%E8%BA%AB%E4%BB%A5%E5%A4%96%E6%95%B0%E7%BB%84%E7%9A%84%E4%B9%98%E7%A7%AF/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2020/06/04/%E6%BA%90%E7%A0%81%E2%80%94%E2%80%94ArrayList/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">源码——ArrayList</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -232,9 +367,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,

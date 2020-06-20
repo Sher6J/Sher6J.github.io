@@ -19,10 +19,13 @@
 <meta property="og:image" content="http://yoursite.com/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/JVM%E7%BB%93%E6%9E%84%E8%AF%A6%E7%BB%86%E5%9B%BE.jpg">
 <meta property="og:image" content="http://yoursite.com/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA.jpg">
 <meta property="og:image" content="http://yoursite.com/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA%E8%AF%A6%E6%83%85.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/11412.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/2464.jpg">
 <meta property="og:image" content="http://yoursite.com/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8%E7%9A%84%E8%A7%92%E8%89%B2.jpg">
 <meta property="og:image" content="http://yoursite.com/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B.jpg">
 <meta property="article:published_time" content="2020-06-08T14:29:26.000Z">
-<meta property="article:modified_time" content="2020-06-11T15:17:14.877Z">
+<meta property="article:modified_time" content="2020-06-12T12:20:31.367Z">
 <meta property="article:author" content="Sher6J">
 <meta property="article:tag" content="JVM">
 <meta name="twitter:card" content="summary">
@@ -237,6 +240,41 @@
 <p>因为CPU需要不停的切换各个线程，这时候切换回来以后，就得知道接着从哪开始继续执行。JVM的字节码解释器就需要通多改变PC寄存器的值来明确下一条应该执行什么样的字节码指令。</p>
 </li>
 </ul>
+<h2 id="虚拟机栈（Java栈）"><a href="#虚拟机栈（Java栈）" class="headerlink" title="虚拟机栈（Java栈）"></a>虚拟机栈（Java栈）</h2><p>Java虚拟机栈（Java Virtual Machine Stack），每个线程在创建时都会创建一个虚拟机栈，其内部保存一个个的栈帧（Stack Frame），对应着一次次的Java方法调用，虚拟机栈是线程私有的，其生命周期与线程保持一致，虚拟机栈保存方法的局部变量、部分结果，并参与方法的调用和返回。</p>
+<h3 id="虚拟机栈中的异常"><a href="#虚拟机栈中的异常" class="headerlink" title="虚拟机栈中的异常"></a>虚拟机栈中的异常</h3><p>对于虚拟机栈，其可能出现<font color="red"><strong><code>StackOverflowError</code>异常和<code>OutOfMemoryError</code>异常</strong></font>：</p>
+<ul>
+<li>如果采用固定大小的Java虚拟机栈，那每一个线程的Java虚拟机栈容量可以在线程创建的时候独立选定。如果线程请求分配的栈容量超过Java虚拟机栈允许的最大容量，Java虚拟机将会抛出一个<code>StackOverflowError</code>异常；</li>
+<li>如果Java虚拟机栈可以动态扩容，然后在尝试扩容的时候无法申请到足够的内存，或者在创建新的线程时没有足够的内存去创建对应的虚拟机栈，那虚拟机栈就回抛出一个<code>OutOfMemoryError</code>异常。</li>
+</ul>
+<p>我们可以通过<strong>参数<code>-Xss</code>设置虚拟机栈的大小</strong>，为演示<code>StackOverflowError</code>异常，我们运行如下程序：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StackOverflowErrorTest</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> count = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        System.out.println(count);</span><br><span class="line">        count++;</span><br><span class="line">        main(args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在<code>main</code>方法中调用了自己，然后用<code>count</code>计数栈的深度，在没有设置栈的大小时（即使用虚拟机默认的栈大小），在count = 11412时发生了<code>java.lang.StackOverflowError</code>异常：</p>
+<p><img src="/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/11412.jpg" alt></p>
+<p>然后我们通过参数设置虚拟机栈的大小为，再观察栈深度到达多少时发生该异常，怎么通过参数设置虚拟机栈的大小呢，在IDEA中我们点击<code>Run</code>中的<code>Edit Configurations</code>，如下图所示：</p>
+<p><img src="/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE.jpg" alt></p>
+<p>在<code>VM Options</code>中添加要设置的参数，比如我们将虚拟机栈的大小设置为256k（实际栈大小要大于这个值），然后点击<code>OK</code>即可。再次运行我们的异常程序，发现在count = 2464时就发生了异常：</p>
+<p><img src="/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/2464.jpg" alt></p>
+<h3 id="栈的存储单位"><a href="#栈的存储单位" class="headerlink" title="栈的存储单位"></a>栈的存储单位</h3><p>每个线程都有自己的栈，栈中的数据都是以<font color="red"><strong>栈帧(Stack Frame)</strong></font>的格式存在，在这个线程上正在执行的<strong>每个方法都对应一个栈帧</strong>，当方法开始执行栈帧进栈，当方法执行结束栈帧出栈，栈帧是一个内存区域，是一个数据集，维系着方法执行过程中的各种数据信息。</p>
+<p>在一条活动线程中的一个时间点上，只会有一个活动的栈帧，即<strong>只有当前正在执行的方法的栈帧（栈顶栈帧）是有效的</strong>，这个栈帧被称为<strong>当前栈帧</strong>（Current Frame），与其对应的方法为<strong>当前方法</strong>（Current Method），定义该方法的类即为<strong>当前类</strong>（Current Class）。当在当前栈帧对应的当前方法中调用了其他方法<code>m</code>时，对应<code>m</code>的新的栈帧就会被创建出来放在栈顶，称为新的当前栈帧，<code>m</code>也相应称为新的当前方法。<strong>不同线程中所包含的栈帧是不允许存在相互引用的</strong>，即不可能在一个栈帧中引用另外一个线程的栈帧。如果方法调用了其他方法<code>m</code>，<code>m</code>对应的栈帧成为当前栈帧，<code>m</code>方法的返回值会传给前一个栈帧，然后虚拟机会丢弃当前栈帧（即<code>m</code>对应的栈帧），然后前一个栈帧重新成为当前栈帧。以下两种方式都会<strong>导致栈帧被弹出</strong>：</p>
+<ul>
+<li>正常的函数返回，使用<code>return</code>指令；</li>
+<li>函数抛出异常</li>
+</ul>
+<h3 id="栈帧的内部结构"><a href="#栈帧的内部结构" class="headerlink" title="栈帧的内部结构"></a>栈帧的内部结构</h3><p>每个栈帧都存储着：</p>
+<ul>
+<li><p>局部变量表（Local Variable）</p>
+<p>局部变量表也称为局部变量数组或本地变量表，其底层为一个<strong>数字数组</strong>，主要用于存储方法参数和定义在方法体内的局部变量，这些数据类型包括各类基本数据类型、对象引用（reference）、以及returnAddress类型。</p>
+</li>
+<li><p>操作数栈（Operand Stack）</p>
+</li>
+<li><p>动态链接（Dynamic Linking）：指向运行时常量池的方法引用</p>
+</li>
+<li><p>方法返回地址（Return Address）</p>
+</li>
+<li><p>一些附加信息</p>
+</li>
+</ul>
 <h1 id="类加载器子系统与类的加载过程"><a href="#类加载器子系统与类的加载过程" class="headerlink" title="类加载器子系统与类的加载过程"></a>类加载器子系统与类的加载过程</h1><p>类加载器子系统负载从文件系统或网络中加载<strong>class文件（字节码文件）</strong>，<strong>类加载器只负责class文件的加载，至于class文件是否可以运行，则由执行引擎所决定</strong>。加载的<strong>类信息存放于一块称为方法区的内存空间</strong>，除了类的信息外，<strong>方法区中还存放运行时常量池信息</strong>，可能还包括字符串常量和数字常量。</p>
 <h2 id="类加载器ClassLoader的角色"><a href="#类加载器ClassLoader的角色" class="headerlink" title="类加载器ClassLoader的角色"></a>类加载器ClassLoader的角色</h2><p><img src="/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8%E7%9A%84%E8%A7%92%E8%89%B2.jpg" alt></p>
 <p>以上图为例，Car的字节码文件存在于本地硬盘中，经过类加载器的加载，该字节码文件被加载到JVM中成为一个模板即<code>Car Class</code>，该模板被称为<strong>DNA元数据模板</strong>（存储在方法区），最终这个模板在执行的时候是要根据该模板实例化出多个具体的Car实例（即<code>car1</code>、<code>car2</code>等），而在<strong><code>.class</code>字节码文件→JVM→最终成为元数据模板</strong>这一过程中，类加载器就充当了一个运输工具的作用，是类加载器将字节码文件转化为DNA元数据模板。</p>
@@ -377,6 +415,15 @@
   
 <nav id="article-nav">
   
+    <a href="/2020/06/12/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-239-%E6%BB%91%E5%8A%A8%E6%9C%80%E5%A4%A7%E7%AA%97%E5%8F%A3/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          算法-力扣-239-滑动最大窗口
+        
+      </div>
+    </a>
+  
   
     <a href="/2020/06/08/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-990-%E7%AD%89%E5%BC%8F%E6%96%B9%E7%A8%8B%E7%9A%84%E5%8F%AF%E6%BB%A1%E8%B6%B3%E6%80%A7/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">算法-力扣-990-等式方程的可满足性</div>
@@ -505,7 +552,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">力扣</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">CentOS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -529,11 +592,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">CentOS</a>
+                <a href="javascript:void(0)" class="js-tag color4">多线程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -541,7 +600,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">多线程</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -549,7 +608,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color4">微服务</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">SpringCloud</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">消息队列</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">RabbitMQ</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -565,22 +636,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">消息队列</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">RabbitMQ</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">微服务</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">SpringCloud</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
               </li>
              
@@ -589,7 +644,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Ubuntu</a>
+                <a href="javascript:void(0)" class="js-tag color4">虚拟机</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -597,7 +652,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
+                <a href="javascript:void(0)" class="js-tag color3">数组</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -605,7 +660,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">源码</a>
+                <a href="javascript:void(0)" class="js-tag color2">Ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -613,15 +672,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">力扣</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数组</a>
+                <a href="javascript:void(0)" class="js-tag color3">源码</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -641,19 +692,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">栈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">树</a>
+                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
+                <a href="javascript:void(0)" class="js-tag color2">树</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -662,6 +709,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">栈</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -8,17 +8,17 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>算法-力扣-二叉树遍历 | 菜菜六甲的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="力扣[94]二叉树的中序遍历题目给定一个二叉树，返回它的中序 遍历。示例： 1234567输入: [1,null,2,3]   1    \     2    &#x2F;   3输出: [1,3,2]">
+  <meta name="description" content="深度优先遍历力扣[144]二叉树的前序遍历题目给定一个二叉树，返回它的 前序 遍历。示例： 1234567输入: [1,null,2,3]     1    \     2    &#x2F;   3 输出: [1,2,3]">
 <meta property="og:type" content="article">
 <meta property="og:title" content="算法-力扣-二叉树遍历">
 <meta property="og:url" content="http://yoursite.com/2020/05/27/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-%E4%BA%8C%E5%8F%89%E6%A0%91%E9%81%8D%E5%8E%86/index.html">
 <meta property="og:site_name" content="菜菜六甲的博客">
-<meta property="og:description" content="力扣[94]二叉树的中序遍历题目给定一个二叉树，返回它的中序 遍历。示例： 1234567输入: [1,null,2,3]   1    \     2    &#x2F;   3输出: [1,3,2]">
+<meta property="og:description" content="深度优先遍历力扣[144]二叉树的前序遍历题目给定一个二叉树，返回它的 前序 遍历。示例： 1234567输入: [1,null,2,3]     1    \     2    &#x2F;   3 输出: [1,2,3]">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://yoursite.com/2020/05/27/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-%E4%BA%8C%E5%8F%89%E6%A0%91%E9%81%8D%E5%8E%86/%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86.jpg">
 <meta property="og:image" content="http://yoursite.com/2020/05/27/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-%E4%BA%8C%E5%8F%89%E6%A0%91%E9%81%8D%E5%8E%86/%E7%94%A8%E6%A0%88%E8%BF%9B%E8%A1%8C%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86.jpg">
 <meta property="article:published_time" content="2020-05-27T09:45:20.000Z">
-<meta property="article:modified_time" content="2020-05-27T12:03:14.636Z">
+<meta property="article:modified_time" content="2020-07-02T05:43:31.933Z">
 <meta property="article:author" content="Sher6J">
 <meta property="article:tag" content="算法">
 <meta property="article:tag" content="力扣">
@@ -176,30 +176,42 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="力扣-94-二叉树的中序遍历"><a href="#力扣-94-二叉树的中序遍历" class="headerlink" title="力扣[94]二叉树的中序遍历"></a>力扣[94]二叉树的中序遍历</h2><h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><p>给定一个二叉树，返回它的<em>中序</em> 遍历。示例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">输入: [1,null,2,3]</span><br><span class="line">   1</span><br><span class="line">    \</span><br><span class="line">     2</span><br><span class="line">    &#x2F;</span><br><span class="line">   3</span><br><span class="line">输出: [1,3,2]</span><br></pre></td></tr></table></figure>
+        <h1 id="深度优先遍历"><a href="#深度优先遍历" class="headerlink" title="深度优先遍历"></a>深度优先遍历</h1><h2 id="力扣-144-二叉树的前序遍历"><a href="#力扣-144-二叉树的前序遍历" class="headerlink" title="力扣[144]二叉树的前序遍历"></a>力扣[144]二叉树的前序遍历</h2><h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><p>给定一个二叉树，返回它的 <em>前序</em> 遍历。示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">输入: [1,null,2,3]  </span><br><span class="line">   1</span><br><span class="line">    \</span><br><span class="line">     2</span><br><span class="line">    &#x2F;</span><br><span class="line">   3 </span><br><span class="line">输出: [1,2,3]</span><br></pre></td></tr></table></figure>
 
 <a id="more"></a>
 
+<h3 id="解法一：递归"><a href="#解法一：递归" class="headerlink" title="解法一：递归"></a>解法一：递归</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">preorderTraversal</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        List&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        help(root, list);</span><br><span class="line">        <span class="keyword">return</span> list;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">help</span><span class="params">(TreeNode root, List&lt;Integer&gt; list)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (root != <span class="keyword">null</span>) &#123;</span><br><span class="line">            list.add(root.val);</span><br><span class="line">            <span class="keyword">if</span> (root.left != <span class="keyword">null</span>) help(root.left, list);</span><br><span class="line">            <span class="keyword">if</span> (root.right != <span class="keyword">null</span>) help(root.right, list);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="解法二：基于栈的遍历（循环）"><a href="#解法二：基于栈的遍历（循环）" class="headerlink" title="解法二：基于栈的遍历（循环）"></a>解法二：基于栈的遍历（循环）</h3><p>从根节点开始，每次迭代弹出当前栈顶元素，并将其孩子节点压入栈中，先压右孩子再压左孩子。</p>
+<p><font color="red"><strong>出栈的同时①右孩子入栈②左孩子入栈</strong></font></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">preorderTraversal</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        List&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        Deque&lt;TreeNode&gt; stack = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        <span class="keyword">if</span> (root != <span class="keyword">null</span>) &#123;</span><br><span class="line">            stack.push(root);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (!stack.isEmpty()) &#123;</span><br><span class="line">            TreeNode curr = stack.pop();</span><br><span class="line">            list.add(curr.val);</span><br><span class="line">            <span class="keyword">if</span> (curr.right != <span class="keyword">null</span>) stack.push(curr.right);</span><br><span class="line">            <span class="keyword">if</span> (curr.left != <span class="keyword">null</span>) stack.push(curr.left);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> list;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="力扣-94-二叉树的中序遍历"><a href="#力扣-94-二叉树的中序遍历" class="headerlink" title="力扣[94]二叉树的中序遍历"></a>力扣[94]二叉树的中序遍历</h2><h3 id="题目-1"><a href="#题目-1" class="headerlink" title="题目"></a>题目</h3><p>给定一个二叉树，返回它的<em>中序</em> 遍历。示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">输入: [1,null,2,3]</span><br><span class="line">   1</span><br><span class="line">    \</span><br><span class="line">     2</span><br><span class="line">    &#x2F;</span><br><span class="line">   3</span><br><span class="line">输出: [1,3,2]</span><br></pre></td></tr></table></figure>
+
 <p>所谓中序遍历，就是先访问其左孩子，然后再访问本节点，最后访问右孩子，可以用动画演示：</p>
 <p><img src="/2020/05/27/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-%E4%BA%8C%E5%8F%89%E6%A0%91%E9%81%8D%E5%8E%86/%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86.jpg" alt></p>
-<h3 id="解法一：递归"><a href="#解法一：递归" class="headerlink" title="解法一：递归"></a>解法一：递归</h3><h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">inorderTraversal</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        List res = <span class="keyword">new</span> ArrayList();</span><br><span class="line">        help(root, res);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">help</span><span class="params">(TreeNode root, List res)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (root != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="comment">//先访问左孩子</span></span><br><span class="line">            <span class="keyword">if</span> (root.left != <span class="keyword">null</span>) &#123; </span><br><span class="line">                help(root.left, res);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//访问本节点</span></span><br><span class="line">            res.add(root.val); </span><br><span class="line">            <span class="comment">//再访问右孩子</span></span><br><span class="line">            <span class="keyword">if</span> (root.right != <span class="keyword">null</span>) &#123;</span><br><span class="line">                help(root.right, res);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="解法一：递归-1"><a href="#解法一：递归-1" class="headerlink" title="解法一：递归"></a>解法一：递归</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">inorderTraversal</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        List&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        help(root, list);</span><br><span class="line">        <span class="keyword">return</span> list;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">help</span><span class="params">(TreeNode root, List&lt;Integer&gt; list)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (root != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (root.left != <span class="keyword">null</span>) help(root.left, list);</span><br><span class="line">            list.add(root.val);</span><br><span class="line">            <span class="keyword">if</span> (root.right != <span class="keyword">null</span>) help(root.right, list);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h4 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h4><p>时间复杂度：O(n)。递归函数 T(n)=2⋅T(n/2)+1。<br>空间复杂度：最坏情况下需要空间O(n)，平均情况为O(logn)。</p>
-<h3 id="解法二：基于栈的遍历（循环）"><a href="#解法二：基于栈的遍历（循环）" class="headerlink" title="解法二：基于栈的遍历（循环）"></a>解法二：基于栈的遍历（循环）</h3><p><strong>入栈</strong>：当节点存在左孩子时就将其入栈并将其左孩子入栈，然后将左边的一条线一直到没有左孩子的节点都入栈。</p>
-<p><strong>出栈</strong>：出栈的同时将节点的右孩子入栈，右孩子入栈的时候同上面的入栈规则。</p>
+<h3 id="解法二：基于栈的遍历（循环）-1"><a href="#解法二：基于栈的遍历（循环）-1" class="headerlink" title="解法二：基于栈的遍历（循环）"></a>解法二：基于栈的遍历（循环）</h3><p><strong>入栈</strong>：当节点存在左孩子时就<strong><font color="red">将其入栈</font></strong>并<strong><font color="red">将其左孩子入栈</font></strong>，然后<strong>将左边的一条线一直到没有左孩子的节点都入栈</strong>。</p>
+<p><strong>出栈</strong>：<font color="red"><strong>出栈的同时将节点的右孩子入栈</strong></font>，右孩子入栈的时候同上面的入栈规则。</p>
 <p><img src="/2020/05/27/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-%E4%BA%8C%E5%8F%89%E6%A0%91%E9%81%8D%E5%8E%86/%E7%94%A8%E6%A0%88%E8%BF%9B%E8%A1%8C%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86.jpg" alt></p>
-<h4 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">inorderTraversal</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        List res = <span class="keyword">new</span> ArrayList();</span><br><span class="line">        Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">        TreeNode current = root;</span><br><span class="line">        <span class="keyword">while</span> (current != <span class="keyword">null</span> || !stack.isEmpty()) &#123;</span><br><span class="line">            <span class="comment">//将节点及其左孩子一条线都入栈</span></span><br><span class="line">            <span class="keyword">while</span> (current != <span class="keyword">null</span>) &#123;</span><br><span class="line">                stack.push(current);</span><br><span class="line">                current = current.left;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//将栈顶元素弹出进行访问，出栈的同时将右孩子入栈</span></span><br><span class="line">            current = stack.pop();</span><br><span class="line">            res.add(current.val);</span><br><span class="line">            current = current.right;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">inorderTraversal</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        List&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        Deque&lt;TreeNode&gt; stack = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        TreeNode curr = root;</span><br><span class="line">        <span class="keyword">while</span> (curr != <span class="keyword">null</span> || !stack.isEmpty()) &#123;</span><br><span class="line">            <span class="keyword">while</span> (curr != <span class="keyword">null</span>) &#123;</span><br><span class="line">                stack.push(curr);</span><br><span class="line">                curr = curr.left;</span><br><span class="line">            &#125;</span><br><span class="line">            curr = stack.pop();</span><br><span class="line">            list.add(curr.val);</span><br><span class="line">            curr = curr.right;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> list;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="力扣-144-二叉树的前序遍历"><a href="#力扣-144-二叉树的前序遍历" class="headerlink" title="力扣[144]二叉树的前序遍历"></a>力扣[144]二叉树的前序遍历</h2><h3 id="题目-1"><a href="#题目-1" class="headerlink" title="题目"></a>题目</h3><p>给定一个二叉树，返回它的 <em>前序</em> 遍历。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">输入: [1,null,2,3]  </span><br><span class="line">   1</span><br><span class="line">    \</span><br><span class="line">     2</span><br><span class="line">    &#x2F;</span><br><span class="line">   3 </span><br><span class="line">输出: [1,2,3]</span><br></pre></td></tr></table></figure>
+<h2 id="力扣-145-二叉树的后序遍历"><a href="#力扣-145-二叉树的后序遍历" class="headerlink" title="力扣[145]二叉树的后序遍历"></a>力扣[145]二叉树的后序遍历</h2><h3 id="题目-2"><a href="#题目-2" class="headerlink" title="题目"></a>题目</h3><p>给定一个二叉树，返回它的 后序 遍历。示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">输入: [1,null,2,3]  </span><br><span class="line">   1</span><br><span class="line">    \</span><br><span class="line">     2</span><br><span class="line">    &#x2F;</span><br><span class="line">   3 </span><br><span class="line">输出: [3,2,1]</span><br></pre></td></tr></table></figure>
 
-<h3 id="解法一：递归-1"><a href="#解法一：递归-1" class="headerlink" title="解法一：递归"></a>解法一：递归</h3><h4 id="代码：-1"><a href="#代码：-1" class="headerlink" title="代码："></a>代码：</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">preorderTraversal</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        List&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        help(root, list);</span><br><span class="line">        <span class="keyword">return</span> list;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">help</span><span class="params">(TreeNode root, List&lt;Integer&gt; list)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (root != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="comment">//先访问本节点</span></span><br><span class="line">            list.add(root.val);</span><br><span class="line">            <span class="comment">//再访问左孩子</span></span><br><span class="line">            <span class="keyword">if</span> (root.left != <span class="keyword">null</span>) &#123;</span><br><span class="line">                help(root.left, list);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//再访问右孩子</span></span><br><span class="line">            <span class="keyword">if</span> (root.right != <span class="keyword">null</span>) &#123;</span><br><span class="line">                help(root.right, list);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="解法一：递归-2"><a href="#解法一：递归-2" class="headerlink" title="解法一：递归"></a>解法一：递归</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">inorderTraversal</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        List&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        help(root, list);</span><br><span class="line">        <span class="keyword">return</span> list;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">help</span><span class="params">(TreeNode root, List&lt;Integer&gt; list)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (root != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (root.left != <span class="keyword">null</span>) help(root.left, list);</span><br><span class="line">            <span class="keyword">if</span> (root.right != <span class="keyword">null</span>) help(root.right, list);</span><br><span class="line">            list.add(root.val);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="解法二：基于栈的遍历（循环）-1"><a href="#解法二：基于栈的遍历（循环）-1" class="headerlink" title="解法二：基于栈的遍历（循环）"></a>解法二：基于栈的遍历（循环）</h3><p>从根节点开始，每次迭代弹出当前栈顶元素，并将其孩子节点压入栈中，先压右孩子再压左孩子。</p>
-<p><font color="red"><strong>出栈的同时①右孩子入栈②左孩子入栈</strong></font></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">preorderTraversal</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        List&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">        <span class="keyword">if</span> (root != <span class="keyword">null</span>) &#123;</span><br><span class="line">            stack.push(root); <span class="comment">//从根节点开始入栈</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (!stack.isEmpty()) &#123;</span><br><span class="line">            TreeNode current = stack.pop();</span><br><span class="line">            list.add(current.val);</span><br><span class="line">            <span class="comment">//节点出栈的同时先压右孩子</span></span><br><span class="line">            <span class="keyword">if</span> (current.right != <span class="keyword">null</span>) &#123;</span><br><span class="line">                stack.push(current.right);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//然后压左孩子</span></span><br><span class="line">            <span class="keyword">if</span> (current.left != <span class="keyword">null</span>) &#123;</span><br><span class="line">                stack.push(current.left);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> list;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="解法二：基于栈的遍历（循环）-2"><a href="#解法二：基于栈的遍历（循环）-2" class="headerlink" title="解法二：基于栈的遍历（循环）"></a>解法二：基于栈的遍历（循环）</h3><p>前序遍历的过程 是 <code>中-左-右</code>。将其转化成 <code>中-右-左</code>。也就是压栈的过程中<strong>优先压入左子树，再压入右子树</strong>。然后将这个结果返回来，就是 <code>左-右-中</code>， 即为后序遍历。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">postorderTraversal</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        List&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        Deque&lt;TreeNode&gt; stack = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        Deque&lt;TreeNode&gt; reverseStack = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        <span class="keyword">if</span> (root != <span class="keyword">null</span>) &#123;</span><br><span class="line">            stack.push(root);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (!stack.isEmpty()) &#123;</span><br><span class="line">            TreeNode curr = stack.pop();</span><br><span class="line">            reverseStack.push(curr);</span><br><span class="line">            <span class="keyword">if</span> (curr.left != <span class="keyword">null</span>) stack.push(curr.left);</span><br><span class="line">            <span class="keyword">if</span> (curr.right != <span class="keyword">null</span>) stack.push(curr.right);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (!reverseStack.isEmpty()) list.add(reverseStack.pop().val);</span><br><span class="line">        <span class="keyword">return</span> list;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<h2 id="三种深度优先遍历的总结："><a href="#三种深度优先遍历的总结：" class="headerlink" title="三种深度优先遍历的总结："></a>三种深度优先遍历的总结：</h2><p>首先三种遍历的递归方法无需多想，递归嘛，只需要<font color="red"><strong>考虑一个节点的情况该如何处理</strong></font>，其他的交给计算机去递归就好了，一定不要人肉递归，计算机都会溢出，在意多了细节脑子也会坏掉的。</p>
+<p>而至于三种遍历的循环方法，事实上就是在模拟递归，在递归方法中是使用了系统栈，而在循环方法中使用的是我们自己开辟的数据结构栈，所以深度遍历都是通过栈来完成的：</p>
+<p>对于<strong>前序遍历</strong>，其顺序为 <code>中-左-右</code>， 所以我们<strong>在遍历过程时，应该先打印左子树，然后打印右子树</strong>，这样很自然的就应该理解<font color="red"><strong>在栈中我们先压的是右子树，然后压左子树</strong></font>。</p>
+<p>对于<strong>中序遍历</strong>，其顺序为 <code>左-中-右</code>， 其实仔细想想其压栈的规则，是<strong>先把根节点的左孩子一趟线都压栈</strong>， 但是之后<font color="red"><strong>再压入每个右孩子的同时，都将右孩子的左孩子一趟线都压入了栈</strong></font>中，所以出栈时仍是先打印左子树，后打印右子树。</p>
+<p>对于<strong>后序遍历</strong>，其顺序为 <code>左-右-中</code>，观察其顺序和前序遍历的区别，我们可以将后序遍历反其道而行之，与后续遍历恰为相反的遍历为 <code>中-右-左</code>， 而 <code>中-右-左</code> 又该如何遍历呢，这显然<strong>在遍历过程时，应该先打印右子树，然后打印左子树</strong>，这不就<font color="red"><strong>和前序遍历的方式一模一样</strong></font>了嘛，只不过<font color="red"><strong>在栈中我们先压的是左子树，然后压右子树</strong></font>，然后我们将得到的遍历顺序取反，就是后序遍历了。</p>
 
       
 
@@ -459,14 +471,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">力扣</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">redis</a>
               </li>
              
@@ -479,11 +483,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">力扣</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">mysql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">JVM</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -495,7 +511,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JVM</a>
+                <a href="javascript:void(0)" class="js-tag color3">容器</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -503,31 +519,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">容器</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">读书笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">微服务</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">SpringCloud</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">消息队列</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">RabbitMQ</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -543,7 +535,39 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">消息队列</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">RabbitMQ</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">微服务</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">SpringCloud</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">读书笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -555,7 +579,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+                <a href="javascript:void(0)" class="js-tag color3">FastDSF</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">源码</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -563,23 +591,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">FastDSF</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Ubuntu</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">异常处理</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">源码</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -603,6 +615,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">栈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">并查集</a>
               </li>
              
@@ -612,14 +632,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">栈</a>
               </li>
              
               <li class="article-tag-list-item">

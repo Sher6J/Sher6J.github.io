@@ -150,6 +150,88 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-JVM体系结构及内存" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/">JVM体系结构及内存</a>
+    </h1>
+  
+
+        
+        <a href="/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/" class="archive-article-date">
+  	<time datetime="2020-06-08T14:29:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-08</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>[TOC]</p>
+<h1 id="JVM与Java体系结构"><a href="#JVM与Java体系结构" class="headerlink" title="JVM与Java体系结构"></a>JVM与Java体系结构</h1><p>所谓虚拟机，就是一台虚拟的计算机，虚拟机是一款软件，用来执行一系列虚拟计算机指令。大体上，虚拟机可以分为<font color="red"><strong>系统虚拟机</strong></font>和<font color="red"><strong>程序虚拟机</strong></font>：</p>
+<ul>
+<li>系统虚拟机完全是对物理计算机的仿真，提供了一个可运行完整操作系统的软件平台，比如VirtualBox、VMWare就属于系统虚拟机；</li>
+<li>程序虚拟机专门为执行单个计算机程序而设计，其典型代表就是JVM即Java虚拟机。</li>
+</ul>
+<p>无论是系统虚拟机还是程序虚拟机，在上面运行的软件/程序都<strong>被限制于虚拟机提供的资源中</strong>。Java虚拟机是一台执行Java字节码的虚拟计算机，它拥有独立的运行机制，其运行的J<strong>字节码文件</strong>也未必有Java语言编译而成（如Kotlin、Groovy等语言都可以编译出字节码），JVM平台的各种语言都可以共享Java虚拟机带来的<strong>跨平台性</strong>、优秀的<strong>垃圾回收器</strong>、可靠的<strong>即时编译器</strong>。</p>
+        
+          <a class="article-more-a" href="/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JVM</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-算法-力扣-990-等式方程的可满足性" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -903,97 +985,6 @@
 
 
   
-    <article id="post-算法-力扣-974-和可被-K-整除的子数组" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/27/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-974-%E5%92%8C%E5%8F%AF%E8%A2%AB-K-%E6%95%B4%E9%99%A4%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84/">算法-力扣-974-和可被 K 整除的子数组</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/27/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-974-%E5%92%8C%E5%8F%AF%E8%A2%AB-K-%E6%95%B4%E9%99%A4%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84/" class="archive-article-date">
-  	<time datetime="2020-05-27T14:49:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-27</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="力扣-974-和可被-K-整除的子数组"><a href="#力扣-974-和可被-K-整除的子数组" class="headerlink" title="力扣[974] 和可被 K 整除的子数组"></a>力扣[974] 和可被 K 整除的子数组</h2><h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><p>给定一个整数数组 A，返回其中元素之和可被 K 整除的（连续、非空）子数组的数目。</p>
-<p>示例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">输入：A &#x3D; [4,5,0,-2,-3,1], K &#x3D; 5</span><br><span class="line">输出：7</span><br><span class="line">解释：</span><br><span class="line">有 7 个子数组满足其元素之和可被 K &#x3D; 5 整除：</span><br><span class="line">[4, 5, 0, -2, -3, 1], [5], [5, 0], [5, 0, -2, -3], [0], [0, -2, -3], [-2, -3]</span><br></pre></td></tr></table></figure>
-
-<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><p><font color="red"><strong>通常，涉及连续子数组问题的时候，我们使用前缀和来解决。</strong></font>什么是前缀和呢？<strong>前缀和</strong>就是数组 <strong><font color="red">第 0 项</font></strong> 到 <strong><font color="red">当前项</font></strong> 的 总和。<br>如果用一个数组 preSum 表示前缀和，那么在前缀和数组中：<br>preSum[0]：数组A 第 0 项 到 第 0 项 的总和<br>preSum[1]：数组A 第 0 项 到 第 1 项 的总和<br>preSum[2]：数组A 第 0 项 到 第 2 项 的总和<br>preSum[3]：数组A 第 0 项 到 第 3 项 的总和<br>$$<br>preSum[i]=A[0]+A[1]+…+A[i]<br>$$<br>此时有了前缀和数组，那么每个<strong>连续子数组的和</strong>为<br>$$<br>sum(i，j) = A[i] + A[i + 1] + …… + A[j], 其中 0 &lt; i &lt; j<br>$$<br> 又<br>$$<br>preSum[i - 1] = A[0] + …… + A[i - 1]<br>$$</p>
-<p>$$<br>preSum[j] = A[0] + …… + + A[i-1] + + A[i] + ……A[j]<br>$$</p>
-<p>由上面的公式即可推出：<br>$$<br>sum(i, j) = preSum[j] - preSum[i - 1]<br>$$<br>此时，判断子数组的和 <em>sum(i, j)</em> 能否被 <em>K</em> 整除就等价于判断 <em>preSum[j] - preSum[i - 1]</em> 能否被 <em>K</em> 整除，也就是</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (preSum[j] - preSum[i -<span class="number">1</span>] / K == <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
-
-<p>而根据同余定理我们可以得到上述判断可以等价于</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ((preSum[j] / K) == (preSum[i - <span class="number">1</span>] / K))</span><br></pre></td></tr></table></figure>
-
-
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">力扣</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/27/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-974-%E5%92%8C%E5%8F%AF%E8%A2%AB-K-%E6%95%B4%E9%99%A4%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/">Next &amp;raquo;</a>
@@ -1091,14 +1082,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">力扣</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">redis</a>
               </li>
              
@@ -1111,11 +1094,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
+                <a href="javascript:void(0)" class="js-tag color3">力扣</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1135,23 +1118,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">读书笔记</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">容器</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">消息队列</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">RabbitMQ</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1167,11 +1146,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color5">消息队列</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">RabbitMQ</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1184,6 +1167,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1231,10 +1222,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">栈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
               </li>
              
@@ -1243,7 +1230,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">栈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">并查集</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1252,10 +1247,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
               </li>
              
               <li class="article-tag-list-item">

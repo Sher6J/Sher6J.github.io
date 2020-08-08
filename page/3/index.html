@@ -150,6 +150,97 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-算法-力扣-974-和可被-K-整除的子数组" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/27/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-974-%E5%92%8C%E5%8F%AF%E8%A2%AB-K-%E6%95%B4%E9%99%A4%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84/">算法-力扣-974-和可被 K 整除的子数组</a>
+    </h1>
+  
+
+        
+        <a href="/2020/05/27/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-974-%E5%92%8C%E5%8F%AF%E8%A2%AB-K-%E6%95%B4%E9%99%A4%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84/" class="archive-article-date">
+  	<time datetime="2020-05-27T14:49:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="力扣-974-和可被-K-整除的子数组"><a href="#力扣-974-和可被-K-整除的子数组" class="headerlink" title="力扣[974] 和可被 K 整除的子数组"></a>力扣[974] 和可被 K 整除的子数组</h2><h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><p>给定一个整数数组 A，返回其中元素之和可被 K 整除的（连续、非空）子数组的数目。</p>
+<p>示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">输入：A &#x3D; [4,5,0,-2,-3,1], K &#x3D; 5</span><br><span class="line">输出：7</span><br><span class="line">解释：</span><br><span class="line">有 7 个子数组满足其元素之和可被 K &#x3D; 5 整除：</span><br><span class="line">[4, 5, 0, -2, -3, 1], [5], [5, 0], [5, 0, -2, -3], [0], [0, -2, -3], [-2, -3]</span><br></pre></td></tr></table></figure>
+
+<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><p><font color="red"><strong>通常，涉及连续子数组问题的时候，我们使用前缀和来解决。</strong></font>什么是前缀和呢？<strong>前缀和</strong>就是数组 <strong><font color="red">第 0 项</font></strong> 到 <strong><font color="red">当前项</font></strong> 的 总和。<br>如果用一个数组 preSum 表示前缀和，那么在前缀和数组中：<br>preSum[0]：数组A 第 0 项 到 第 0 项 的总和<br>preSum[1]：数组A 第 0 项 到 第 1 项 的总和<br>preSum[2]：数组A 第 0 项 到 第 2 项 的总和<br>preSum[3]：数组A 第 0 项 到 第 3 项 的总和<br>$$<br>preSum[i]=A[0]+A[1]+…+A[i]<br>$$<br>此时有了前缀和数组，那么每个<strong>连续子数组的和</strong>为<br>$$<br>sum(i，j) = A[i] + A[i + 1] + …… + A[j], 其中 0 &lt; i &lt; j<br>$$<br> 又<br>$$<br>preSum[i - 1] = A[0] + …… + A[i - 1]<br>$$</p>
+<p>$$<br>preSum[j] = A[0] + …… + + A[i-1] + + A[i] + ……A[j]<br>$$</p>
+<p>由上面的公式即可推出：<br>$$<br>sum(i, j) = preSum[j] - preSum[i - 1]<br>$$<br>此时，判断子数组的和 <em>sum(i, j)</em> 能否被 <em>K</em> 整除就等价于判断 <em>preSum[j] - preSum[i - 1]</em> 能否被 <em>K</em> 整除，也就是</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (preSum[j] - preSum[i -<span class="number">1</span>] / K == <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<p>而根据同余定理我们可以得到上述判断可以等价于</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ((preSum[j] / K) == (preSum[i - <span class="number">1</span>] / K))</span><br></pre></td></tr></table></figure>
+
+
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">力扣</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/27/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-974-%E5%92%8C%E5%8F%AF%E8%A2%AB-K-%E6%95%B4%E9%99%A4%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-算法-力扣-N叉树遍历" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -879,86 +970,6 @@
 
 
   
-    <article id="post-SpringCloud-09SpringCloud-Bus消息总线" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/24/SpringCloud-09SpringCloud-Bus%E6%B6%88%E6%81%AF%E6%80%BB%E7%BA%BF/">SpringCloud-09SpringCloud Bus消息总线</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/24/SpringCloud-09SpringCloud-Bus%E6%B6%88%E6%81%AF%E6%80%BB%E7%BA%BF/" class="archive-article-date">
-  	<time datetime="2020-05-24T12:13:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-24</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="SpringCloud-Bus-消息总线"><a href="#SpringCloud-Bus-消息总线" class="headerlink" title="SpringCloud Bus 消息总线"></a>SpringCloud Bus 消息总线</h1><h3 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a><font color="blue">1. 概述</font></h3><p>用SpringCloud Config时，我们可以实现配置信息手动的动态刷新，也就是远端配置信息发生改变后，需要告诉服务端配置信息发生变化后，服务端才会更新配置信息，而现在我们想要实现<strong>分布式自动刷新配置信息</strong>功能，这就需要我们使用SpringCloud Bus消息总线配合SpringCloud Config实现配置信息的动态刷新。SpringCloud Bus是用来将分布式系统的节点与轻量级消息系统连接起来的框架，整合了Java的事件处理机制和消息中间件的功能，<strong>SpringCloud Bus目前支持两种消息代理：RabbitMQ和Kafka</strong>。SpringCloud Bus能管理和传播分布式系统间的消息，就像一个分布式执行器，可用于广播状态更改、事件推送等， 也可以当做微服务间的通信通道。</p>
-        
-          <a class="article-more-a" href="/2020/05/24/SpringCloud-09SpringCloud-Bus%E6%B6%88%E6%81%AF%E6%80%BB%E7%BA%BF/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">微服务</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">SpringCloud</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/24/SpringCloud-09SpringCloud-Bus%E6%B6%88%E6%81%AF%E6%80%BB%E7%BA%BF/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/2/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/">Next &amp;raquo;</a>
@@ -1056,14 +1067,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">力扣</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">redis</a>
               </li>
              
@@ -1076,11 +1079,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
+                <a href="javascript:void(0)" class="js-tag color3">力扣</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1100,23 +1103,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">读书笔记</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">容器</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">消息队列</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">RabbitMQ</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1132,11 +1131,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color5">消息队列</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">RabbitMQ</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1149,6 +1152,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1196,10 +1207,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">栈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
               </li>
              
@@ -1208,7 +1215,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">栈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">并查集</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1217,10 +1232,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
               </li>
              
               <li class="article-tag-list-item">

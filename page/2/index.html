@@ -150,6 +150,116 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-算法-力扣-239-滑动最大窗口" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/06/12/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-239-%E6%BB%91%E5%8A%A8%E6%9C%80%E5%A4%A7%E7%AA%97%E5%8F%A3/">算法-力扣-239-滑动最大窗口</a>
+    </h1>
+  
+
+        
+        <a href="/2020/06/12/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-239-%E6%BB%91%E5%8A%A8%E6%9C%80%E5%A4%A7%E7%AA%97%E5%8F%A3/" class="archive-article-date">
+  	<time datetime="2020-06-12T01:54:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给定一个数组 nums，有一个大小为 k 的滑动窗口从数组的最左侧移动到数组的最右侧。你只可以看到在滑动窗口内的 k 个数字。滑动窗口每次只向右移动一位。返回滑动窗口中的最大值。</p>
+<p>示例:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">输入: nums &#x3D; [1,3,-1,-3,5,3,6,7], 和 k &#x3D; 3</span><br><span class="line">输出: [3,3,5,5,6,7] </span><br><span class="line">解释: </span><br><span class="line"></span><br><span class="line">  滑动窗口的位置                最大值</span><br><span class="line"></span><br><span class="line">---------------               -----</span><br><span class="line"></span><br><span class="line">[1  3  -1] -3  5  3  6  7       3</span><br><span class="line"> 1 [3  -1  -3] 5  3  6  7       3</span><br><span class="line"> 1  3 [-1  -3  5] 3  6  7       5</span><br><span class="line"> 1  3  -1 [-3  5  3] 6  7       5</span><br><span class="line"> 1  3  -1  -3 [5  3  6] 7       6</span><br><span class="line"> 1  3  -1  -3  5 [3  6  7]      7</span><br></pre></td></tr></table></figure>
+
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>我们观察输入数组<code>nums</code>和输出数组<code>res</code>可以发现，若输入数组长度为n，滑动窗口的长度为k，那么输出数组的长度<code>res.length</code>满足：<br>$$<br>res.length = nums.length - k + 1<br>$$<br>所以我们可以很容易的确认输出数组的长度。</p>
+<h2 id="题解一：暴力"><a href="#题解一：暴力" class="headerlink" title="题解一：暴力"></a>题解一：暴力</h2><p>此题最容易想到的解法就是用两层循环，<strong>第一层遍历<code>nums</code>数组中的元素，而第二层在当前窗口即长度为k的子数组中取得最大值</strong>，然后将该最大值添加到输出数组中即可：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] maxSlidingWindow(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> k) &#123;</span><br><span class="line">        <span class="comment">//数组长度为0或k为0时直接返回0元素的数组</span></span><br><span class="line">        <span class="keyword">if</span> (nums == <span class="keyword">null</span> || nums.length * k == <span class="number">0</span>) <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">int</span>[] res = <span class="keyword">new</span> <span class="keyword">int</span>[nums.length - k + <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length - k + <span class="number">1</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> max = Integer.MIN_VALUE;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = i; j &lt; i + k; j++) &#123;</span><br><span class="line">                max = Math.max(max, nums[j]);</span><br><span class="line">            &#125;</span><br><span class="line">            res[i] = max;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个解法容易想到，但是<strong>时间复杂度为O(nk)</strong>，n为输入数组的长度，k为滑动窗口的长度，其速度慢的仅仅击败了5%的Java用户，所以我们需要对程序进行优化。</p>
+<h2 id="解法二：双端队列"><a href="#解法二：双端队列" class="headerlink" title="解法二：双端队列"></a>解法二：双端队列</h2><p>我们可以利用双端队列实现对窗口最大值的更新，在<font color="red"><strong>双端队列中存储索引</strong></font>要比存储元素更为方便，因为我们要确保双端队列中的元素存在于当前窗口中，所以存储索引更容易判断是否在窗口中。我们在遍历输入数组<code>nums</code>的时候，同时要向双端队列中放入元素的索引，在<strong>向双端队列放入元素索引的时候我们要注意两点</strong>：</p>
+<ul>
+<li>双端队列中只保存当前滑动窗口中有的元素的索引；</li>
+<li>如果双端队列的索引对应元素中存在比当前遍历元素还小的元素，则将这些索引去掉，因为它们对应的元素已经不可能是最大的了。</li>
+</ul>
+<p>所以在遍历<code>nums</code>数组遍历到<code>nums[i]</code>时，对于双端队列<code>deque</code>的<strong>放入规则</strong>为：</p>
+<ul>
+<li>如果<code>deque</code>为空，直接将下标<code>i</code>放进<code>deque</code>，放入过程结束；</li>
+<li>如果<code>deque</code>不为空，查看当前（peek）<code>deque</code>队尾存放的下标，设为<code>j</code>：<ul>
+<li>①若<code>arr[j] &gt; arr[i]</code>，将下标<code>i</code>放进队尾，放入过程结束；</li>
+<li>②若<code>arr[j] &lt;= arr[i]</code>，这时<strong>队列中存在比当前遍历的元素还小的元素，需要将这些元素都弹出，直到队尾索引对应的元素已经大于当前遍历元素（即满足①）时，才将下标<code>i</code>放进队尾</strong>，放入过程结束。</li>
+</ul>
+</li>
+</ul>
+<p>在遍历<code>nums</code>数组遍历到<code>nums[i]</code>时，对于双端队列<code>deque</code>的<strong>弹出规则</strong>为：</p>
+<ul>
+<li>如果对头的下标等于<code>i-k</code>，则说明<strong>当前对头的下标已经过期，由于双端队列中只保存当前滑动窗口中有的元素的所以，所以弹出当前队头的下标即可</strong></li>
+</ul>
+<p>而对于输出结果数组<code>res</code>，<strong>当前队头的索引对应元素即为当前窗口的最大值</strong>，直接将<code>deque[0]</code>放入结果数组即可。</p>
+<p>以示例<code>nums = [1,3,-1,-3,5,3,6,7], k = 3</code>来演示上述过程：</p>
+<p><img src="/2020/06/12/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-239-%E6%BB%91%E5%8A%A8%E6%9C%80%E5%A4%A7%E7%AA%97%E5%8F%A3/%E5%8F%8C%E7%AB%AF%E9%98%9F%E5%88%97%E8%A7%A3%E6%B3%95.jpg" alt></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] maxSlidingWindow(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> k) &#123;</span><br><span class="line">        <span class="keyword">if</span> (nums == <span class="keyword">null</span> || nums.length * k == <span class="number">0</span>) <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">int</span>[] res = <span class="keyword">new</span> <span class="keyword">int</span>[nums.length - k + <span class="number">1</span>];</span><br><span class="line">        Deque&lt;Integer&gt; deque = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        <span class="keyword">int</span> index = <span class="number">0</span>; <span class="comment">//存放res数组索引</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">            <span class="comment">//队尾元素小于等于要入队的，队尾元素都出队</span></span><br><span class="line">            <span class="keyword">while</span> (!deque.isEmpty() &amp;&amp; nums[deque.peekLast()] &lt;= nums[i]) deque.pollLast();</span><br><span class="line">            deque.addLast(i);</span><br><span class="line">            <span class="comment">//队头元素已经不再窗口范围内，需要出队</span></span><br><span class="line">            <span class="keyword">if</span> (deque.peekFirst() == i - k) deque.pollFirst();</span><br><span class="line">            <span class="keyword">if</span> (i &gt;= k - <span class="number">1</span>) res[index++] = nums[deque.peekFirst()];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>显然，双端队列解法将<strong>时间复杂度降为了O(n)</strong>。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">力扣</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/06/12/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-239-%E6%BB%91%E5%8A%A8%E6%9C%80%E5%A4%A7%E7%AA%97%E5%8F%A3/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-JVM体系结构及内存" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -901,93 +1011,9 @@
 
 
   
-    <article id="post-算法-力扣-394-字符串解码" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/28/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-394-%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%A7%A3%E7%A0%81/">算法-力扣-394-字符串解码</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/28/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-394-%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%A7%A3%E7%A0%81/" class="archive-article-date">
-  	<time datetime="2020-05-28T02:32:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="力扣-394-字符串解码"><a href="#力扣-394-字符串解码" class="headerlink" title="力扣[394] 字符串解码"></a>力扣[394] 字符串解码</h2><h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><p>给定一个经过编码的字符串，返回它解码后的字符串。编码规则为: k[encoded_string]，表示其中方括号内部的 encoded_string 正好重复 k 次。注意 k 保证为正整数。你可以认为输入字符串总是有效的；输入字符串中没有额外的空格，且输入的方括号总是符合格式要求的。此外，你可以认为原始数据不包含数字，所有的数字只表示重复的次数 k ，例如不会出现像 3a 或 2[4] 的输入。</p>
-        
-          <a class="article-more-a" href="/2020/05/28/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-394-%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%A7%A3%E7%A0%81/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">力扣</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">栈</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/28/%E7%AE%97%E6%B3%95-%E5%8A%9B%E6%89%A3-394-%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%A7%A3%E7%A0%81/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/">Next &amp;raquo;</a>
+      <a class="extend prev" rel="prev" href="/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/3/">Next &amp;raquo;</a>
     </nav>
   
 
@@ -1102,19 +1128,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JVM</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">JavaSE</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">多线程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1126,11 +1144,39 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">读书笔记</a>
+                <a href="javascript:void(0)" class="js-tag color4">JVM</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">容器</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">读书笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">多线程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">微服务</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">SpringCloud</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">消息队列</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">RabbitMQ</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1146,35 +1192,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">消息队列</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">RabbitMQ</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">微服务</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">SpringCloud</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1190,6 +1216,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Ubuntu</a>
               </li>
              
@@ -1198,11 +1228,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">FastDSF</a>
+                <a href="javascript:void(0)" class="js-tag color3">源码</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">源码</a>
+                <a href="javascript:void(0)" class="js-tag color3">FastDSF</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1222,11 +1252,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
+                <a href="javascript:void(0)" class="js-tag color4">哈希表</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">哈希表</a>
+                <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1234,19 +1264,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">树</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -6,17 +6,27 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: 数据库，数据库连接池 | 菜菜六甲的博客</title>
+  <title>MySQL并发控制相关问题 | 菜菜六甲的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="想努力成为大厂程序猿的辣鸡在读研究生">
-<meta property="og:type" content="website">
-<meta property="og:title" content="菜菜六甲的博客">
-<meta property="og:url" content="http://yoursite.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E6%B1%A0/index.html">
+  <meta name="description" content="MySQL的并发控制读写锁 共享锁（shared lock）：即读锁（read lock），读锁是共享的，也就是说是相互不阻塞的，多个客户在同一时刻可以同时读取同一个资源，而互不干扰； 排他锁（exclusive lock）：即写锁（write lock），写锁是排他的，也就是说一个写锁会阻塞其他的写锁和读锁。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL并发控制相关问题">
+<meta property="og:url" content="http://yoursite.com/2020/09/13/MySQL%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/index.html">
 <meta property="og:site_name" content="菜菜六甲的博客">
-<meta property="og:description" content="想努力成为大厂程序猿的辣鸡在读研究生">
+<meta property="og:description" content="MySQL的并发控制读写锁 共享锁（shared lock）：即读锁（read lock），读锁是共享的，也就是说是相互不阻塞的，多个客户在同一时刻可以同时读取同一个资源，而互不干扰； 排他锁（exclusive lock）：即写锁（write lock），写锁是排他的，也就是说一个写锁会阻塞其他的写锁和读锁。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200911204302268.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWppYTIxMTU=,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200911204329872.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWppYTIxMTU=,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200911204351461.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWppYTIxMTU=,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200911204411215.jpg#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200911204422442.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWppYTIxMTU=,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="article:published_time" content="2020-09-13T08:27:51.000Z">
+<meta property="article:modified_time" content="2020-09-13T08:31:06.586Z">
 <meta property="article:author" content="Sher6J">
+<meta property="article:tag" content="MySQL">
+<meta property="article:tag" content="数据库">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200911204302268.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWppYTIxMTU=,size_16,color_FFFFFF,t_70#pic_center">
   
     <link rel="alternative" href="/atom.xml" title="菜菜六甲的博客" type="application/atom+xml">
   
@@ -148,68 +158,270 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-MySQL并发控制相关问题" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/08/JDBC%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF/" class="archive-article-date">
-  	<time datetime="2020-04-08T04:08:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-08</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/08/JDBC%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF/">JDBC核心技术</a>
+    <h1 class="article-title" itemprop="name">
+      MySQL并发控制相关问题
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2020/09/13/MySQL%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/" class="archive-article-date">
+  	<time datetime="2020-09-13T08:27:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="MySQL的并发控制"><a href="#MySQL的并发控制" class="headerlink" title="MySQL的并发控制"></a>MySQL的并发控制</h2><h3 id="读写锁"><a href="#读写锁" class="headerlink" title="读写锁"></a>读写锁</h3><ul>
+<li>共享锁（shared lock）：即读锁（read lock），读锁是共享的，也就是说是相互不阻塞的，多个客户在同一时刻可以同时读取同一个资源，而互不干扰；</li>
+<li>排他锁（exclusive lock）：即写锁（write lock），写锁是排他的，也就是说一个写锁会阻塞其他的写锁和读锁。</li>
+</ul>
+<a id="more"></a>
+
+<h3 id="锁粒度"><a href="#锁粒度" class="headerlink" title="锁粒度"></a>锁粒度</h3><ul>
+<li>表锁（table lock）：最基本的锁策略，且开销最小，表锁会锁定整张表。在对表进行写操作（增删改）前，需要先获得写锁，写锁会阻塞其他用户对该表的所有读写操作；只有没有写锁时，其他读取的用户才能获得读锁，读锁间不互相阻塞。</li>
+<li>行级锁（row lock）：行级锁可以最大程度支持并发处理，但是会带来最大的锁开销。</li>
+</ul>
+<p>大多数商业数据库系统一般都是在表上施加行级锁。</p>
+<h2 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h2><p>事务就是一组原子性的SQL查询，事务内的语句，要么全部执行成功，要么全部执行失败。</p>
+<h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><ul>
+<li><code>START TRANSACTION</code>：开始一个事务；</li>
+<li><code>COMMIT</code>：提交事务将修改的数据持久保留；</li>
+<li><code>ROLLBACK</code>：撤销所有更改。</li>
+</ul>
+<h3 id="特性ACID"><a href="#特性ACID" class="headerlink" title="特性ACID"></a>特性ACID</h3><ul>
+<li>原子性（atomicity）：整个事务中的所有操作要么全部提交成功，要么全部失败回滚；</li>
+<li>一致性（consistency）：数据库总是从一个一致性状态转换到另一个一致性状态；</li>
+<li>隔离性（isolation）：<strong>通常</strong>一个事务所做的修改在最终提交前，对其他事务不可见；</li>
+<li>持久性（durability）：一旦事务提交，则其所做的修改会永久保存到数据库中。</li>
+</ul>
+<h3 id="并发问题"><a href="#并发问题" class="headerlink" title="并发问题"></a>并发问题</h3><ul>
+<li><p>脏读（Dirty Read）：事务可以读取未提交的数据。事务1第二次读取时，读到了事务2未提交的数据。若事务2回滚，则事务1第二次读取时，读到了脏数据。</p>
+<p><img src="https://img-blog.csdnimg.cn/20200911204302268.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWppYTIxMTU=,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+</li>
+<li><p>不可重复读（Nonrepeatable Read）：两次执行相同的查询，可能会得到不同的结果。主要在于事务2在事务1第二次读取时，提交了数据。导致事务1前后两次读取的数据不一致。不可重复读针对的是<strong>值的不同</strong>。</p>
+<p><img src="https://img-blog.csdnimg.cn/20200911204329872.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWppYTIxMTU=,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+</li>
+<li><p>幻读（Phantom Read）：当某个事务在读取某个范围内的记录时，另外一个事务又在该范围内插入了新的记录，当之前的事务再次读取该范围的记录时，会发生幻行（Phantom Row）。事务1第二次查询时，读到了事务2提交的数据。幻读针对的是<strong>数据条数的不同</strong>。</p>
+<p><img src="https://img-blog.csdnimg.cn/20200911204351461.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWppYTIxMTU=,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+</li>
+</ul>
+<h3 id="隔离级别"><a href="#隔离级别" class="headerlink" title="隔离级别"></a>隔离级别</h3><ul>
+<li><code>READ UNCOMMITTED</code>（未提交读）：事务中的修改，即使没有提交，对其他事务也是可见的。也就是说事务可以读取未提交的数据（<strong>脏读</strong>Dirty Read），实际中很少使用；</li>
+<li><code>READ COMMITTED</code>（提交读）：即<code>NONREPEATABLE READ</code>（不可重复读），<strong>Oracle数据库的默认隔离级别</strong>，也是大多数数据的默认隔离级别（MySQL不是）。一个事务开始时，只能看见已经提交的事务所做的修改，即一个事务从开始到提交之前，所做的任何修改对其他事务都是不可见的。</li>
+<li><code>REPEATABLE READ</code>（可重复读）：<strong>MySQL数据库的默认隔离级别</strong>，解决了脏读和不可重复读的问题，该级别保证了在同一个事务中多次读取同样记录的结果是一致的。</li>
+<li><code>SERIALIZABLE</code>（可串行化）：最高的隔离级别，通过强制事务串行执行，避免了幻读问题，该级别在读取的每一行数据上都加锁，会导致大量的超时和锁争用问题。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>隔离级别</th>
+<th>脏读</th>
+<th>不可重复读</th>
+<th>幻读</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>READ UNCOMMITTED</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>READ COMMITTED</td>
+<td>×</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>REPEATABLE READ</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+</tr>
+<tr>
+<td>SERIALIZABLE</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+</tr>
+</tbody></table>
+<h3 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h3><p>两个或多个事务在同一个资源上相互占用，请求锁定对方占用的资源，从而导致恶行循环的现象。<code>InnoDB</code>目前处理死锁的方法是，将持有<strong>最少行级排他锁</strong>的事务进行回滚。</p>
+<h2 id="多版本并发控制"><a href="#多版本并发控制" class="headerlink" title="多版本并发控制"></a>多版本并发控制</h2><p>MVCC（Multi-Version Concurrency Control）是行级锁的一种变种，但它在很多情况下避免了加锁操作，因此开销更低，不同存储引擎对MVCC的实现有所不同，但大都实现了非阻塞的读操作，写操作也只锁定必要的行。MVCC 是现代数据库（包括 <code>MySQL</code> 、 <code>Oracle</code> 、 <code>PostgreSQL</code> 等）引擎实现中常用的处理读写冲突的手段， 目的在于<strong>提高数据库高并发场景下的吞吐性能</strong> 。</p>
+<p>如此一来不同的事务在并发过程中， <code>SELECT</code> 操作可以不加锁而是通过 <code>MVCC</code> 机制读取指定的版本历史记录，并通过一些手段保证保证读取的记录值符合事务所处的隔离级别，从而解决并发场景下的读写冲突。</p>
+<h3 id="InnoDB中的MVCC"><a href="#InnoDB中的MVCC" class="headerlink" title="InnoDB中的MVCC"></a>InnoDB中的MVCC</h3><p>InnoDB的MVCC是通过在每行记录后面保存两个隐藏的列实现的，一个保存了行的创建时间<code>DATA_TRX_ID</code>，一个保存了行的过期时间（删除时间）<code>DATA_ROLL_PTR</code>，如果插入的行没有设定主键，则会多一个隐藏的主键列<code>DB_ROW_ID</code>：</p>
+<ul>
+<li><p><code>DATA_TRX_ID</code>：记录最近更新这条行记录的事务 ID ，大小为6个字节</p>
+</li>
+<li><p><code>DATA_ROLL_PTR</code>：表示指向该行回滚段的指针，大小为7个字节， <code>InnoDB</code> 便是通过这个指针找到之前版本的数据。该行记录上所有旧版本，在 <code>undo</code> 中都通过链表的形式组织。</p>
+</li>
+<li><p><code>DB_ROW_ID</code>：行标识（隐藏单调自增 <code>ID</code> ），大小为6字节，如果表没有主键， <code>InnoDB</code> 会自动生成一个隐藏主键，因此会出现这个列。另外，每条记录的头信息里都有一个专门的 <code>bit</code> （ <code>deleted_flag</code> ）来表示当前记录是否已经被删除。</p>
+</li>
+</ul>
+<p><img src="https://img-blog.csdnimg.cn/20200911204411215.jpg#pic_center" alt="在这里插入图片描述"></p>
+<p>保存这两个额外的系统版本号，使大多数读操作都不用加锁。MVCC只在<code>RR</code>和<code>RC</code>两个隔离级别下工作，其他两个隔离级别用不到MVCC，因为<code>RU</code>总是读取最新的数据行，<code>SERIALIZABLE</code>则会对所有读取的行都加锁。</p>
+<h4 id="组织版本链"><a href="#组织版本链" class="headerlink" title="组织版本链"></a>组织版本链</h4><p>在多个事务并行操作某行数据的情况下，不同事务对该行数据的<code>UPDATE</code>会产生多个版本，然后通过回滚指针组织成一条 <code>Undo Log</code> 链，下图是一个由ID为10的事务创建的一行<code>sher</code>数据，然后由ID为20的事务将该行数据更新为<code>sher6</code>，然后ID为30的事务将该行数据更新为<code>sher6j</code>。这样的话，就可以根据<code>DATA_ROLL_PTR</code>指针查看以前的版本，并可以进行回滚。</p>
+<p><img src="https://img-blog.csdnimg.cn/20200911204422442.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWppYTIxMTU=,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>感谢大哥/美女❤<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/zfb.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/wx.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">MySQL</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JDBC</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">数据库，数据库连接池</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">数据库</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/09/13/MySQL%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2020/08/10/Spring%E4%B9%8BSpEL/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Spring之SpEL</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -232,9 +444,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
@@ -302,6 +514,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">力扣</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">redis</a>
               </li>
              
@@ -314,11 +534,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">力扣</a>
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -326,27 +546,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">JavaSE</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">JVM</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">容器</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">读书笔记</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -358,27 +558,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">微服务</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">SpringCloud</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">消息队列</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">RabbitMQ</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">MyBatis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">框架</a>
+                <a href="javascript:void(0)" class="js-tag color5">读书笔记</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -398,7 +578,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">非关系型数据库</a>
+                <a href="javascript:void(0)" class="js-tag color3">MyBatis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">框架</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">消息队列</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">RabbitMQ</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">微服务</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">SpringCloud</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -410,6 +610,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">非关系型数据库</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
@@ -418,7 +622,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
+                <a href="javascript:void(0)" class="js-tag color3">FastDSF</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -426,15 +630,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">FastDSF</a>
+                <a href="javascript:void(0)" class="js-tag color3">数组</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">异常处理</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数组</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -446,19 +646,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">栈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">哈希表</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">栈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">树</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -470,15 +666,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">树</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JDBC</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">数据库，数据库连接池</a>
               </li>
             
             <div class="clearfix"></div>

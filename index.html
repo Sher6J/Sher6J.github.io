@@ -598,683 +598,9 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="Redis底层数据结构及基本类型的实现"><a href="#Redis底层数据结构及基本类型的实现" class="headerlink" title="Redis底层数据结构及基本类型的实现"></a>Redis底层数据结构及基本类型的实现</h1><h2 id="底层数据结构"><a href="#底层数据结构" class="headerlink" title="底层数据结构"></a>底层数据结构</h2><h3 id="简单动态字符串（SDS）"><a href="#简单动态字符串（SDS）" class="headerlink" title="简单动态字符串（SDS）"></a>简单动态字符串（SDS）</h3><h4 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h4><p>redis中用一种名为<strong>简单动态字符串</strong>（simple dynamic string）的抽象类型作为默认字符串表示，如在命令<code>set name sher</code> 中，在redis数据中创建了新的键值对 <code>name-sher</code> ，而在底层就是存储了保存着<code>name</code>的SDS和<code>sher</code>的SDS，<strong>除了保存redis数据库中的字符串值外，SDS还用作缓冲区</strong>（AOF持久化中的AOF缓冲区、客户端中的输入缓冲区都是由SDS实现），SDS底层是这样的数据结构：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sdshdr</span> &#123;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// buf 中已占用空间的长度 等于SDS所保存的字符串长度</span></span><br><span class="line">    <span class="keyword">int</span> len;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// buf 中剩余可用空间的长度</span></span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">free</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 数据空间</span></span><br><span class="line">    <span class="keyword">char</span> buf[];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>也就是说与传统的字符串相比，SDS由于在<code>len</code>属性中记录了其存储的字符串长度，所以获取字符串长度时不需要遍历整个字符串，而是直接获取其<code>len</code>属性即可，所以<strong>获取SDS存储的字符串的长度时间复杂度为O(1)</strong>（而获取C字符串的长度时间复杂度为O(n)），而在SDD中也是由<code>\0</code>作为字符串的结束：</p>
-<p><img src="/2020/07/29/Redis%E5%BA%95%E5%B1%82%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%8F%8A%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%AE%9E%E7%8E%B0/SDS%E8%8E%B7%E5%8F%96%E9%95%BF%E5%BA%A6.jpg" alt></p>
-<p>在SDS中，存储数据的<code>buf</code>数组不一定是字符的数量加一（加一为<code>\0</code>），而是还包括未使用的字节，这些字节的长度由<code>free</code>属性记录。</p>
-<h4 id="C字符串的问题以及SDS的解决方案"><a href="#C字符串的问题以及SDS的解决方案" class="headerlink" title="C字符串的问题以及SDS的解决方案"></a>C字符串的问题以及SDS的解决方案</h4><p><strong>C字符中出现的问题：</strong></p>
-<p>由于C字符串中不记录自己的长度，所以会出现内存溢出和内存泄漏：</p>
-<ul>
-<li>如果将C字符串后面进行拼接操作，如果没有提前分配好内存，很可能就会将原字符串地址后存储的数据进行覆盖，造成<strong>内存溢出</strong>；</li>
-<li>如果将C字符串进行缩短操作，原字符串后面不再使用的空间如果没有进行释放，就会造成<strong>内存泄漏</strong>。</li>
-</ul>
-<p><strong>SDS中的解决方案：</strong></p>
-<ul>
-<li><p><strong>空间预分配</strong>：该策略用于优化字符串的增长操作，其策略用伪代码表示为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if (len &lt; 0.5MB) </span><br><span class="line">	buf.length &#x3D; buf.length + len</span><br><span class="line">else </span><br><span class="line">	buf.length &#x3D; buf.length + 1MB</span><br></pre></td></tr></table></figure>
-
-<p>也就是如果对SDS进行修改之后，其长度若小于1MB，则分配给和<code>len</code>属性同样大小的未使用空间，（分配后SDS中<code>len</code>属性的值和<code>free</code>值相同）；如果对SDS进行修改后，其长度将大于1MB，则分配个1MB的空间。也就是在扩展SDS的<code>buf</code>数组前，会先检查未使用空间是否够用，够用的话就不会执行内存分配了，这样就减少了内存分配的次数。</p>
-</li>
-<li><p><strong>惰性空间释放</strong>：该策略用于优化字符串的缩短操作，当要缩短SDS字符串时，并不会立即回收缩短后多出来的字节，而是将这些空出来的字节用<code>free</code>属性记录下来，并等待以后使用。</p>
-</li>
-</ul>
-<h3 id="链表（linkedlist）"><a href="#链表（linkedlist）" class="headerlink" title="链表（linkedlist）"></a>链表（linkedlist）</h3><h4 id="数据结构-1"><a href="#数据结构-1" class="headerlink" title="数据结构"></a>数据结构</h4><p>Redis基本类型之一的链表键的实现方式之一就是链表这种数据结构，除了用来作为链表键的底层数据结构外，链表还用作<strong>”发布与订阅“、”慢查询“、”监视器“</strong>等功能的实现，在Redis中的链表是一种<strong>双向链表</strong>，首先看下链表底层实现的整体结构：</p>
-<p><img src="/2020/07/29/Redis%E5%BA%95%E5%B1%82%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%8F%8A%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%AE%9E%E7%8E%B0/%E5%88%97%E8%A1%A8%E5%BA%95%E5%B1%82.jpg" alt></p>
-<p>然后看其源码数据结构定义如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 双端链表节点</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">listNode</span> &#123;</span></span><br><span class="line">    </span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">listNode</span> *<span class="title">prev</span>;</span> <span class="comment">// 前置节点</span></span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">listNode</span> *<span class="title">next</span>;</span> <span class="comment">// 后置节点</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">void</span> *value; <span class="comment">// 节点的值</span></span><br><span class="line"></span><br><span class="line">&#125; listNode;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 双端链表结构</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">list</span> &#123;</span></span><br><span class="line">   </span><br><span class="line">    listNode *head;<span class="comment">// 表头节点</span></span><br><span class="line">    </span><br><span class="line">    listNode *tail;<span class="comment">// 表尾节点</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">void</span> *(*dup)(<span class="keyword">void</span> *ptr);<span class="comment">// 节点值复制函数</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">void</span> (*<span class="built_in">free</span>)(<span class="keyword">void</span> *ptr);<span class="comment">// 节点值释放函数</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> (*match)(<span class="keyword">void</span> *ptr, <span class="keyword">void</span> *key);<span class="comment">// 节点值对比函数</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> len;<span class="comment">// 链表所包含的节点数量</span></span><br><span class="line"></span><br><span class="line">&#125; <span class="built_in">list</span>;</span><br></pre></td></tr></table></figure>
-
-<h4 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h4><p>通过上面的图例以及数据结构的源码我们可以知道Redis中的<strong>双端链表</strong>具有以下性质：</p>
-<ul>
-<li><strong>无环</strong>，表头节点的<code>prev</code>指针和表尾节点的<code>next</code>指针都指向<code>null</code>，链表的访问以<code>null</code>为终点；</li>
-<li>带表头指针和表尾指针（<code>list</code>结构中定义），获取头结点和尾结点的时间复杂度为O(1)；</li>
-<li>带链表长度计数器（<code>list</code>结构中的<code>len</code>字段），获取链表节点数量的时间复杂度为O(1)；</li>
-<li>由于链表的节点存放<code>value</code>字段为一个指针，所以链表实际可以存储各种数据，即<strong>数据多态性</strong>。</li>
-</ul>
-<h3 id="字典（dict）"><a href="#字典（dict）" class="headerlink" title="字典（dict）"></a>字典（dict）</h3><h4 id="数据结构-2"><a href="#数据结构-2" class="headerlink" title="数据结构"></a>数据结构</h4><p>字典（映射、符号表、关联数组）就是一种保存键值对<code>key-value</code>的抽象数据结构，在Redis中其应用较为广泛，比如Redis中的<strong>数据库就是使用字典来作为底层</strong>实现的，因为Redis中的每条记录本身就是个键值对；<strong>除了用字典表示数据库外，当一个哈希键<code>key</code>包含的键值对<code>field-value</code>较多时，Redis也会使用字典作为<code>hash</code>的底层实现</strong>。首先我们看在普通状态下的字典结构如下：</p>
-<p><img src="/2020/07/29/Redis%E5%BA%95%E5%B1%82%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%8F%8A%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%AE%9E%E7%8E%B0/%E5%AD%97%E5%85%B8%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.jpg" alt></p>
-<p>我们发现在<strong>字典中存在两个哈希表</strong>，通常情况下，我们只会用<code>ht[0]</code>这个哈希表，那么<code>ht[1]</code>是用来做什么的？<strong><code>ht[1]</code>哈希表只会在对<code>ht[0]</code>哈希表进行<code>rehash</code>时使用</strong>。而在哈希表中存放了哈希表节点的数组，而哈希表节点的数组存放了每个哈希表节点，在<strong>哈希表节点中就是真正的键值对数据</strong>，这几个数据结构在Redis底层源码实现如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 字典</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">dict</span> &#123;</span></span><br><span class="line">    dictType *type;<span class="comment">// 类型特定函数，如计算哈希值，复制、对比键值的函数等</span></span><br><span class="line">    <span class="keyword">void</span> *privdata;<span class="comment">// 私有数据</span></span><br><span class="line">    </span><br><span class="line">    dictht ht[<span class="number">2</span>];<span class="comment">// 哈希表</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> rehashidx; <span class="comment">/* 当 rehash 不在进行时，值为 -1 */</span></span><br><span class="line"></span><br><span class="line">&#125; dict;</span><br></pre></td></tr></table></figure>
-
-<p>对于字典，<code>type</code>和<code>privdata</code>属性是为创建多态字典有关的，这里不详细进行介绍，而<strong><code>dictth ht[2]</code>字段恰恰就是存储了用来存储键值对数据的哈希表和用来<code>rehash</code>的哈希表</strong>，<code>rehashidx</code>字段在注释中已经说明其用途。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 哈希表</span></span><br><span class="line"><span class="comment"> * 每个字典都使用两个哈希表，从而实现渐进式 rehash 。</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">dictht</span> &#123;</span></span><br><span class="line">    </span><br><span class="line">    dictEntry **table;<span class="comment">// 哈希表数组</span></span><br><span class="line">   </span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="built_in">size</span>; <span class="comment">// 哈希表大小</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> sizemask; <span class="comment">// 哈希表大小掩码，用于计算索引值,总是等于 size - 1</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> used;<span class="comment">// 该哈希表已有节点的数量</span></span><br><span class="line"></span><br><span class="line">&#125; dictht;</span><br></pre></td></tr></table></figure>
-
-<p>对于哈希表，其<code>sizemask</code>和哈希表节点计算出的哈希值共同决定了一个键应该被放到<code>table</code>数组的哪个索引上。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 哈希表节点</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">dictEntry</span> &#123;</span></span><br><span class="line">  </span><br><span class="line">    <span class="keyword">void</span> *key;  <span class="comment">// 键</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">union</span> &#123;   <span class="comment">// 值为以下三种结构的之一</span></span><br><span class="line">        <span class="keyword">void</span> *val;</span><br><span class="line">        <span class="keyword">uint64_t</span> u64;</span><br><span class="line">        <span class="keyword">int64_t</span> s64;</span><br><span class="line">    &#125; v;</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">dictEntry</span> *<span class="title">next</span>;</span> <span class="comment">// 指向下个哈希表节点，形成链表，解决哈希冲突</span></span><br><span class="line"></span><br><span class="line">&#125; dictEntry;</span><br></pre></td></tr></table></figure>
-
-<p>阅读其源码可知，在Redis中，键值对的值可以是一个指针，也可以是一个<code>uint64_t</code>整数，也可以是一个<code>int64_t</code>整数，而在哈希表节点中有一个<strong><code>next</code>指针，只是为了将多个哈希值相同的键值对连接在一起，以此来解决哈希冲突问题</strong>。</p>
-<h4 id="Redis中采用的哈希算法"><a href="#Redis中采用的哈希算法" class="headerlink" title="Redis中采用的哈希算法"></a>Redis中采用的哈希算法</h4><p>当将一个新值添加到字典结构中时，程序<strong>根据要加入键值对的键计算出哈希值和索引值</strong>，然后再<strong>根据索引值</strong>，将新的哈希表节点（即要加入的键值对）<strong>放到哈希表数组</strong>（<code>ht[0]</code>或<code>ht[1]</code>，根据是否在rehash）<strong>指定索引上</strong>。即如下的计算哈希值和索引值的方法：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 使用字典type字段存储的计算哈希值的函数计算出哈希值</span><br><span class="line">hash = dict-&gt;type-&gt;hashFunction(key); <span class="comment">//作为hash键底层时，用MurmurHash2算法</span></span><br><span class="line"></span><br><span class="line"># 使用哈希表中的sizemask属性和哈希值，计算出索引值</span><br><span class="line">index = hash &amp; dict-&gt;ht[x].sizemask; <span class="comment">//x可能为0或1</span></span><br></pre></td></tr></table></figure>
-
-<p>而当字典被用作数据库的底层实现或者哈希键的底层实现时，Redis采用<strong><code>MurmurHash2</code>算法</strong>计算哈希值，其在Redis的源码如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">uint32_t</span> dict_hash_function_seed = <span class="number">5381</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* MurmurHash2, by Austin Appleby</span></span><br><span class="line"><span class="comment"> * 该算法假设机器如下属性成立：</span></span><br><span class="line"><span class="comment"> * 1. 可以从任何地址读取4字节的值而不会崩溃</span></span><br><span class="line"><span class="comment"> * 2. sizeof(int) == 4，即int类型的大小为4字节</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 该算法具有如下的限制：</span></span><br><span class="line"><span class="comment"> * 1. 不会以增量方式工作</span></span><br><span class="line"><span class="comment"> * 2. 不会在小端和大端机器上产生相同的结果。</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="title">dictGenHashFunction</span><span class="params">(<span class="keyword">const</span> <span class="keyword">void</span> *key, <span class="keyword">int</span> len)</span> </span>&#123;</span><br><span class="line">    <span class="comment">/* 'm' and 'r' 不是魔数，只是该算法发明者发现这两个数刚好凑效 */</span></span><br><span class="line">    <span class="keyword">uint32_t</span> seed = dict_hash_function_seed; <span class="comment">// 5381</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">uint32_t</span> m = <span class="number">0x5bd1e995</span>;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> r = <span class="number">24</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 将哈希值初始化为随机值 */</span></span><br><span class="line">    <span class="keyword">uint32_t</span> h = seed ^ len;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 一次将4个字节混合到哈希中 */</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">unsigned</span> <span class="keyword">char</span> *data = (<span class="keyword">const</span> <span class="keyword">unsigned</span> <span class="keyword">char</span> *)key;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(len &gt;= <span class="number">4</span>) &#123;</span><br><span class="line">        <span class="keyword">uint32_t</span> k = *(<span class="keyword">uint32_t</span>*)data;</span><br><span class="line"></span><br><span class="line">        k *= m;</span><br><span class="line">        k ^= k &gt;&gt; r;</span><br><span class="line">        k *= m;</span><br><span class="line"></span><br><span class="line">        h *= m;</span><br><span class="line">        h ^= k;</span><br><span class="line"></span><br><span class="line">        data += <span class="number">4</span>;</span><br><span class="line">        len -= <span class="number">4</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 处理输入数组的最后几个字节  */</span></span><br><span class="line">    <span class="keyword">switch</span>(len) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">3</span>: h ^= data[<span class="number">2</span>] &lt;&lt; <span class="number">16</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">2</span>: h ^= data[<span class="number">1</span>] &lt;&lt; <span class="number">8</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">1</span>: h ^= data[<span class="number">0</span>]; h *= m;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*对散列做一些最后的混合，以确保最后几个字节被很好地合并在一起 */</span></span><br><span class="line">    h ^= h &gt;&gt; <span class="number">13</span>;</span><br><span class="line">    h *= m;</span><br><span class="line">    h ^= h &gt;&gt; <span class="number">15</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">unsigned</span> <span class="keyword">int</span>)h;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>上面的这种<code>MurmurHash2</code>算法即使在输入的键是有规律的情况下，仍能给出很好的随机分布性，较好的解决了哈希冲突的频率。而当两个或两个以上键被分配到到哈希表数组同一个索引上时，Redis使用<strong>链地址法解决键冲突</strong>。</p>
-<h4 id="哈希表的收缩与扩展"><a href="#哈希表的收缩与扩展" class="headerlink" title="哈希表的收缩与扩展"></a>哈希表的收缩与扩展</h4><p>首先说明在哈希表中的<strong>负载因子</strong>如何计算：<br>$$<br>负载因子 = 哈希表中已经保存的节点数量 / 哈希表数组的大小<br>$$<br>即：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">load_factor = ht[<span class="number">0</span>].used / ht[<span class="number">0</span>].<span class="built_in">size</span> <span class="comment">//负载因子 = 哈希表中已经保存的节点数量 / 哈希表数组的大小</span></span><br></pre></td></tr></table></figure>
-
-<p>有以下两种情况会<strong>触发哈希表的扩容操作</strong>：</p>
-<ul>
-<li>服务器目前<strong>没有在执行</strong><code>BGSAVE</code>或者<code>BGREWRITEAOF</code>命令时，且哈希表的<strong>负载因子≥1</strong>，扩容；</li>
-<li>服务器目前<strong>正在执行</strong><code>BGSAVE</code>或者<code>BGREWRITEAOF</code>命令时，且哈希表的<strong>负载因子≥5</strong>，扩容。</li>
-</ul>
-<p>而对于哈希表的<strong>收缩操作</strong>：当哈希表的<strong>负载因子≤0.1</strong>时触发收缩操作。</p>
-<p>对于<strong>扩容操作的具体源码</strong>如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 创建一个新的哈希表或是对一个已经存在的哈希表扩容，并根据字典的情况，选择以下其中一个动作来进行：</span></span><br><span class="line"><span class="comment"> * 1) 如果字典的 0 号哈希表为空，那么将新哈希表设置为 0 号哈希表</span></span><br><span class="line"><span class="comment"> * 2) 如果字典的 0 号哈希表非空，那么将新哈希表设置为 1 号哈希表，并打开字典的 rehash 标识，使得程序可以开始对字典进行 rehash</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * size 参数不够大，或者 rehash 已经在进行时，返回 DICT_ERR 。</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 成功创建 0 号哈希表，或者 1 号哈希表时，返回 DICT_OK 。</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">dictExpand</span><span class="params">(dict *d, <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="built_in">size</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    dictht n; <span class="comment">/* 新哈希表 */</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> realsize = _dictNextPower(<span class="built_in">size</span>);<span class="comment">//返回第一个 ≥ 2倍size 的 2的n次方幂</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 不能在字典正在 rehash 时进行，size 的值也不能小于 0 号哈希表的当前已使用节点</span></span><br><span class="line">    <span class="keyword">if</span> (dictIsRehashing(d) || d-&gt;ht[<span class="number">0</span>].used &gt; <span class="built_in">size</span>)</span><br><span class="line">        <span class="keyword">return</span> DICT_ERR;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 为哈希表分配空间，并将所有指针指向 NULL</span></span><br><span class="line">    n.<span class="built_in">size</span> = realsize;</span><br><span class="line">    n.sizemask = realsize<span class="number">-1</span>; <span class="comment">//前面提到过的哈希表的sizemask字段永远比其size少1</span></span><br><span class="line">    n.table = zcalloc(realsize*<span class="keyword">sizeof</span>(dictEntry*));</span><br><span class="line">    n.used = <span class="number">0</span>; <span class="comment">//新哈希表中数据数量为0</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果 0 号哈希表为空，那么这是一次初始化：</span></span><br><span class="line">    <span class="comment">// 程序将新哈希表赋给 0 号哈希表的指针，然后字典就可以开始处理键值对了。</span></span><br><span class="line">    <span class="keyword">if</span> (d-&gt;ht[<span class="number">0</span>].table == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        d-&gt;ht[<span class="number">0</span>] = n;</span><br><span class="line">        <span class="keyword">return</span> DICT_OK;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果 0 号哈希表非空，那么这是一次 rehash ：</span></span><br><span class="line">    <span class="comment">// 程序将新哈希表设置为 1 号哈希表，</span></span><br><span class="line">    <span class="comment">// 并将字典的 rehash 标识打开，让程序可以开始对字典进行 rehash</span></span><br><span class="line">    d-&gt;ht[<span class="number">1</span>] = n;</span><br><span class="line">    d-&gt;rehashidx = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> DICT_OK;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 计算第一个大于等于 size 的 2 的 N 次方，用作哈希表的新容量 */</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">unsigned</span> <span class="keyword">long</span> _dictNextPower(<span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="built_in">size</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> i = DICT_HT_INITIAL_SIZE; <span class="comment">// 定义为4</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">size</span> &gt;= LONG_MAX) <span class="keyword">return</span> LONG_MAX;</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (i &gt;= <span class="built_in">size</span>) </span><br><span class="line">            <span class="keyword">return</span> i; <span class="comment">// i为第一个 ≥ 2倍size 的 2的n次方幂</span></span><br><span class="line">        i *= <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>即当进行扩容时，新的<strong>哈希表的大小为第一个大于等于”原来哈希表存储元素数量×2”的2^n</strong>（2的n次幂）；</p>
-<p>而对于收缩操作，新的<strong>哈希表的大小为第一个大于等于”原来哈希表存储元素数量”的2^n</strong>（2的n次幂）。</p>
-<h4 id="rehash及渐进式rehash"><a href="#rehash及渐进式rehash" class="headerlink" title="rehash及渐进式rehash"></a>rehash及渐进式rehash</h4><p>上述对于哈希表的扩容和收缩操作时通过执行<code>rehash</code>操作完成的，对于字典中的哈希表，rehash步骤如下：</p>
-<ul>
-<li>为字典的<code>ht[1]</code>分配空间，<code>ht[1]</code>的空间大小取决于是扩容还是收缩操作以及<code>ht[0]</code>的键值对数量（即<code>ht[0].used</code>）：<ul>
-<li>操作为扩容：<code>ht[1].size</code> = 第一个≥<code>ht[0].used * 2</code>的<code>2^n</code>；</li>
-<li>操作为收缩：<code>ht[1].size</code> = 第一个≥<code>ht[0].used</code>的<code>2^n</code>。</li>
-</ul>
-</li>
-<li>将原来在<code>ht[0]</code>中的键值对rehash到<code>ht[1]</code>中，即重新计算键的哈希值和索引值，将数据重新映射到<code>ht[1]</code>中的新位置上；</li>
-<li>在原<code>ht[0]</code>上的数据都重新rehash到<code>ht[1]</code>后，释放<code>ht[0]</code>，令<code>ht[1]</code>成为新的<code>ht[0]</code>，然后为新<code>ht[0]</code>创建一个新的空白<code>ht[1]</code>用作下次rehash。</li>
-</ul>
-<p>而一个哈希表中的数据可能有几百上千万，不可能一次rehash转移完，所以在Redis中采用<strong>渐进式rehash</strong>——在rehash的过程中：</p>
-<ul>
-<li><p>对数据库的查询、更新操作首先会在<code>ht[0]</code>中查找，没有找到，然后转到<code>ht[1]</code>中操作；</p>
-</li>
-<li><p>对于插入操作，直接插入到<code>ht[1]</code>中，而不再向<code>ht[0]</code>中添加任何数据；</p>
-</li>
-</ul>
-<p>其<strong>渐进式rehash的源码</strong>如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * 执行 N 步渐进式 rehash 。</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 返回 1 表示仍有键需要从 0 号哈希表移动到 1 号哈希表，</span></span><br><span class="line"><span class="comment"> * 返回 0 则表示所有键都已经迁移完毕。</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment"> * 每步 rehash 都是以一个哈希表索引（桶）作为单位的，</span></span><br><span class="line"><span class="comment"> * 一个桶里可能会有多个节点，</span></span><br><span class="line"><span class="comment"> * 被 rehash 的桶里的所有节点都会被移动到新哈希表。</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">dictRehash</span><span class="params">(dict *d, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 只可以在 rehash 进行中时执行</span></span><br><span class="line">    <span class="keyword">if</span> (!dictIsRehashing(d)) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 进行 N 步迁移</span></span><br><span class="line">    <span class="keyword">while</span>(n--) &#123;</span><br><span class="line">        dictEntry *de, *nextde;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果 0 号哈希表为空，那么表示 rehash 执行完毕</span></span><br><span class="line">        <span class="keyword">if</span> (d-&gt;ht[<span class="number">0</span>].used == <span class="number">0</span>) &#123;</span><br><span class="line">            </span><br><span class="line">            zfree(d-&gt;ht[<span class="number">0</span>].table); <span class="comment">// 释放 0 号哈希表         </span></span><br><span class="line">            d-&gt;ht[<span class="number">0</span>] = d-&gt;ht[<span class="number">1</span>];  <span class="comment">// 将原来的 1 号哈希表设置为新的 0 号哈希表</span></span><br><span class="line">            _dictReset(&amp;d-&gt;ht[<span class="number">1</span>]);  <span class="comment">// 重置旧的 1 号哈希表           </span></span><br><span class="line">            d-&gt;rehashidx = <span class="number">-1</span>; <span class="comment">// 关闭 rehash 标识            </span></span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>; <span class="comment">// 返回 0 ，向调用者表示 rehash 已经完成</span></span><br><span class="line">        &#125;</span><br><span class="line">    </span><br><span class="line">        assert(d-&gt;ht[<span class="number">0</span>].<span class="built_in">size</span> &gt; (<span class="keyword">unsigned</span>)d-&gt;rehashidx); <span class="comment">// 确保 rehashidx 没有越界</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 略过数组中为空的索引，找到下一个非空索引</span></span><br><span class="line">        <span class="keyword">while</span>(d-&gt;ht[<span class="number">0</span>].table[d-&gt;rehashidx] == <span class="literal">NULL</span>) d-&gt;rehashidx++;</span><br><span class="line">        </span><br><span class="line">        de = d-&gt;ht[<span class="number">0</span>].table[d-&gt;rehashidx] <span class="comment">// 指向该索引的链表表头节点</span></span><br><span class="line">            </span><br><span class="line">        <span class="comment">// 将链表中的所有节点迁移到新哈希表</span></span><br><span class="line">        <span class="keyword">while</span>(de) &#123;</span><br><span class="line">            <span class="keyword">unsigned</span> <span class="keyword">int</span> h;</span><br><span class="line">            </span><br><span class="line">            nextde = de-&gt;next; <span class="comment">// 保存下个节点的指针</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">// 计算新哈希表的哈希值，以及节点插入的索引位置</span></span><br><span class="line">            h = dictHashKey(d, de-&gt;key) &amp; d-&gt;ht[<span class="number">1</span>].sizemask;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 插入节点到新哈希表</span></span><br><span class="line">            de-&gt;next = d-&gt;ht[<span class="number">1</span>].table[h];</span><br><span class="line">            d-&gt;ht[<span class="number">1</span>].table[h] = de;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 更新计数器</span></span><br><span class="line">            d-&gt;ht[<span class="number">0</span>].used--;</span><br><span class="line">            d-&gt;ht[<span class="number">1</span>].used++;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 继续处理下个节点</span></span><br><span class="line">            de = nextde;</span><br><span class="line">        &#125;</span><br><span class="line">              </span><br><span class="line">        d-&gt;ht[<span class="number">0</span>].table[d-&gt;rehashidx] = <span class="literal">NULL</span>;<span class="comment">// 将刚迁移完的哈希表索引的指针设为空</span></span><br><span class="line">        d-&gt;rehashidx++; <span class="comment">// 更新 rehash 索引</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="压缩列表（ziplist）"><a href="#压缩列表（ziplist）" class="headerlink" title="压缩列表（ziplist）"></a>压缩列表（ziplist）</h3><p><strong>压缩列表的组成部分如下：</strong></p>
-<p><img src="/2020/07/29/Redis%E5%BA%95%E5%B1%82%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%8F%8A%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%AE%9E%E7%8E%B0/%E5%8E%8B%E7%BC%A9%E5%88%97%E8%A1%A8%E7%BB%93%E6%9E%84.jpg" alt></p>
-<p>其中各个组成部分的含义如下：</p>
-<table>
-<thead>
-<tr>
-<th>属性</th>
-<th>长度</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>zlbytes</strong></td>
-<td>4字节</td>
-<td>记录整个压缩列表占用的内存大小</td>
-</tr>
-<tr>
-<td><strong>zltail</strong></td>
-<td>4字节</td>
-<td>记录压缩列表尾结点举例压缩列表的起始地址有多少字节</td>
-</tr>
-<tr>
-<td><strong>zllen</strong></td>
-<td>2字节</td>
-<td>记录压缩列表包含的节点数量</td>
-</tr>
-<tr>
-<td><strong>entryX</strong></td>
-<td>不定</td>
-<td>压缩列表节点，即存储的具体内容</td>
-</tr>
-<tr>
-<td><strong>zlend</strong></td>
-<td>1字节</td>
-<td>特殊值<code>0xFF</code>(255)，用于标记压缩列表的末端</td>
-</tr>
-</tbody></table>
-<p>在压缩列表中，存储实际的数据是由压缩列表节点，即上图中的<code>entry</code>属性完成的，而<strong>每个<code>entry</code>的组成部分如下：</strong></p>
-<p><img src="/2020/07/29/Redis%E5%BA%95%E5%B1%82%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%8F%8A%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%AE%9E%E7%8E%B0/%E5%8E%8B%E7%BC%A9%E5%88%97%E8%A1%A8%E8%8A%82%E7%82%B9.jpg" alt></p>
-<p>其中各组成部分的含义如下：</p>
-<table>
-<thead>
-<tr>
-<th>属性</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>previous_entry_length</strong></td>
-<td>记录压缩列表中前一个节点的长度，其长度为1或5字节（若前一个节点长度小于254字节，则为1字节，如<code>0x05</code>就表示前一个节点长度为5；若前一个节点长度大于254字节，则为5字节，且第一字节设置为<code>0xFE</code>，然后后4个字节为前一个节点的长度，如<code>0xFE00002766</code>就表示前一个节点长度为10086）</td>
-</tr>
-<tr>
-<td><strong>encoding</strong></td>
-<td>记录节点的<code>content</code>属性保存的数据类型以及长度</td>
-</tr>
-<tr>
-<td><strong>content</strong></td>
-<td>保存节点的值（可以是字节数组或者整数）</td>
-</tr>
-</tbody></table>
-<p>由于每个节点记录了上一个节点的长度，所以可以通过当前节点的起始地址来计算出前一个节点的起始地址，即<strong>前一个节点起始地址 = 当前节点起始地址 - <code>previous_entry_length</code></strong>，这样就可以实现压缩列表从表尾向表头的遍历。</p>
-<p>作为底层的数据结果，<code>hash</code>结构在存储少量数据时选择压缩列表作为底层实现，<code>list</code>结构在包含少量列表项时，也是由压缩列表作为底层实现的。</p>
-<h3 id="整数集合（intset）"><a href="#整数集合（intset）" class="headerlink" title="整数集合（intset）"></a>整数集合（intset）</h3><p>当一组集合键只包含整数值元素，并且这个集合的元素数量不多时，<code>set</code> 就由整数集合这种数据结构实现。下面展示了一个<code>intset</code>的存储结构：</p>
-<p><img src="/2020/07/29/Redis%E5%BA%95%E5%B1%82%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%8F%8A%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%AE%9E%E7%8E%B0/intset.jpg" alt></p>
-<p><code>contents</code>数组是整数集合的底层实现，<code>intset</code>存储的每一项数据都是<code>contents</code>数组中的一项，<code>contents</code>数组中的<strong>数值按照从小到大排列，且不含重复元素</strong>，其存储的数据类型由<code>encoding</code>属性决定，而<code>length</code>属性记录了存储数据的数量，即<code>contents</code>数组的长度，其源码如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">intset</span> &#123;</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">uint32_t</span> encoding;<span class="comment">// 编码方式</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">uint32_t</span> length;<span class="comment">// 集合包含的元素数量</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int8_t</span> contents[];<span class="comment">// 保存元素的数组</span></span><br><span class="line"></span><br><span class="line">&#125; intset;</span><br></pre></td></tr></table></figure>
-
-<h3 id="跳跃表（skip-list）"><a href="#跳跃表（skip-list）" class="headerlink" title="跳跃表（skip list）"></a>跳跃表（skip list）</h3><p>下面展示了存储3个数据的一个跳跃表：</p>
-<p><img src="/2020/07/29/Redis%E5%BA%95%E5%B1%82%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%8F%8A%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%AE%9E%E7%8E%B0/%E8%B7%B3%E8%A1%A8.jpg" alt></p>
-<p>一个跳跃表由两个数据结构所定义，分别是<code>zskiplist</code>以及<code>zskiplistNode</code>，其数据结构源码如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 跳跃表 */</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">zskiplist</span> &#123;</span></span><br><span class="line">    </span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">zskiplistNode</span> *<span class="title">header</span>, *<span class="title">tail</span>;</span> <span class="comment">// 表头节点和表尾节点</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> length; <span class="comment">// 表中节点的数量</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> level; <span class="comment">// 表中层数最大的节点的层数</span></span><br><span class="line">    </span><br><span class="line">&#125; zskiplist;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 跳跃表节点 */</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">zskiplistNode</span> &#123;</span></span><br><span class="line">    </span><br><span class="line">    robj *obj; <span class="comment">// 成员对象</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">double</span> score; <span class="comment">// 分值</span></span><br><span class="line">   </span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">zskiplistNode</span> *<span class="title">backward</span>;</span> <span class="comment">// 后退指针</span></span><br><span class="line">   </span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">zskiplistLevel</span> &#123;</span> <span class="comment">// 层</span></span><br><span class="line">        </span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">zskiplistNode</span> *<span class="title">forward</span>;</span> <span class="comment">// 前进指针</span></span><br><span class="line">      </span><br><span class="line">        <span class="keyword">unsigned</span> <span class="keyword">int</span> span; <span class="comment">// 跨度</span></span><br><span class="line"></span><br><span class="line">    &#125; level[];</span><br><span class="line"></span><br><span class="line">&#125; zskiplistNode;</span><br></pre></td></tr></table></figure>
-
-<h2 id="五大基本类型的底层实现"><a href="#五大基本类型的底层实现" class="headerlink" title="五大基本类型的底层实现"></a>五大基本类型的底层实现</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>Redis利用上面介绍的数据结构实现了一个对象系统，这个对象系统包含了Redis数据库的五大基本类型，即<strong>字符串对象、列表对象、哈希对象、集合对象、有序集合对象</strong>，也就是Redis使用<strong>对象来表示数据库中的键和值</strong>，每创建一个键值对（即一条数据）时，数据库至少会创建两个对象，一个用作存储键（总是字符串对象），一个用来存储值（即五大基本类型），而Redis中的每个对象其结构如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">redisObject</span> &#123;</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">unsigned</span> type:<span class="number">4</span>; <span class="comment">// 类型</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">unsigned</span> encoding:<span class="number">4</span>; <span class="comment">// 编码</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">unsigned</span> lru:REDIS_LRU_BITS; <span class="comment">// 对象最后一次被访问的时间</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> refcount; <span class="comment">// 引用计数</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">void</span> *ptr; <span class="comment">// 指向实际值的指针</span></span><br><span class="line"></span><br><span class="line">&#125; robj;</span><br></pre></td></tr></table></figure>
-
-<h4 id="type字段"><a href="#type字段" class="headerlink" title="type字段"></a>type字段</h4><p><strong><code>type</code>字段</strong>记录了对象的类型，其值即五大基本类型，包括：</p>
-<table>
-<thead>
-<tr>
-<th>类型常量（即<code>type</code>的取值）</th>
-<th>对象名称</th>
-<th><code>TYPE</code>命令的输出</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>REDIS_STRING</td>
-<td>字符串对象</td>
-<td>string</td>
-</tr>
-<tr>
-<td>REDIS_LIST</td>
-<td>列表对象</td>
-<td>list</td>
-</tr>
-<tr>
-<td>REDIS_HASH</td>
-<td>哈希对象</td>
-<td>hash</td>
-</tr>
-<tr>
-<td>REDIS_SET</td>
-<td>集合对象</td>
-<td>set</td>
-</tr>
-<tr>
-<td>REDIS_ZSET</td>
-<td>有序集合对象</td>
-<td>zset</td>
-</tr>
-</tbody></table>
-<h4 id="encoding字段"><a href="#encoding字段" class="headerlink" title="encoding字段"></a>encoding字段</h4><p><strong><code>encoding</code>字段</strong>记录了对象使用的编码，即该对象由哪一个底层数据结构实现，其值即底层的数据结构，包括：</p>
-<table>
-<thead>
-<tr>
-<th>编码常量（即<code>encoding</code>的取值）</th>
-<th>底层数据结构</th>
-<th>可实现的对象</th>
-<th><code>OBJECT ENCODING</code>命令输出</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>REDIS_ENCODING_INT</td>
-<td>long类型整数</td>
-<td>string</td>
-<td>int</td>
-</tr>
-<tr>
-<td>REDIS_ENCODING_EMBSTR</td>
-<td>embstr编码的简单动态字符串</td>
-<td>string</td>
-<td>embstr</td>
-</tr>
-<tr>
-<td>REDIS_ENCODING_RAW</td>
-<td>简单动态字符串</td>
-<td>string</td>
-<td>raw</td>
-</tr>
-<tr>
-<td>REDIS_ENCODING_HT</td>
-<td>字典</td>
-<td>hash，set</td>
-<td>hashtable</td>
-</tr>
-<tr>
-<td>REDIS_ENCODING_LINKEDLIST</td>
-<td>双端列表</td>
-<td>list</td>
-<td>linkedlist</td>
-</tr>
-<tr>
-<td>REDIS_ENCODING_ZIPLIST</td>
-<td>压缩列表</td>
-<td>list，hash，zset</td>
-<td>ziplist</td>
-</tr>
-<tr>
-<td>REDIS_ENCODING_INTSET</td>
-<td>整数集合</td>
-<td>set</td>
-<td>intset</td>
-</tr>
-<tr>
-<td>REDIS_ENCODING_SKIPLIST</td>
-<td>跳跃表和字典</td>
-<td>zset</td>
-<td>skiplist</td>
-</tr>
-</tbody></table>
-<h4 id="refcount字段——内存回收"><a href="#refcount字段——内存回收" class="headerlink" title="refcount字段——内存回收"></a>refcount字段——内存回收</h4><p><strong><code>refcount</code>字段</strong>即引用计数（reference counting）用来记录对象是否要被内存回收：</p>
-<ul>
-<li>在创建一个新对象时，引用计数值被初始化为1；</li>
-<li>对象每被一个新程序使用时，其引用计数值+1；</li>
-<li>对象不再被原来使用它的一个程序使用时，其引用计数值-1；</li>
-<li>当对象的引用计数值变为0时，对象占用的内存被释放</li>
-</ul>
-<h3 id="字符串（string）"><a href="#字符串（string）" class="headerlink" title="字符串（string）"></a>字符串（string）</h3><h4 id="基本操作命令"><a href="#基本操作命令" class="headerlink" title="基本操作命令"></a>基本操作命令</h4><p><strong>string类型的通用操作</strong>：</p>
-<table>
-<thead>
-<tr>
-<th>命令</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>set</strong> key value</td>
-<td>添加/修改数据</td>
-</tr>
-<tr>
-<td><strong>get</strong> key</td>
-<td>获取数据</td>
-</tr>
-<tr>
-<td><strong>del</strong> key</td>
-<td>删除数据</td>
-</tr>
-<tr>
-<td><strong>mset</strong> key1 value1 key2 value2 …</td>
-<td>添加/修改多个数据</td>
-</tr>
-<tr>
-<td><strong>mget</strong> key1 key2 …</td>
-<td>获取多个数据</td>
-</tr>
-<tr>
-<td><strong>strlen</strong> key</td>
-<td>获取数据字符个数（字符串长度）</td>
-</tr>
-<tr>
-<td><strong>getset</strong> key value</td>
-<td>修改原来key的对应值，并将旧值返回</td>
-</tr>
-<tr>
-<td><strong>getrange</strong> key start end</td>
-<td>获取子串，若获取整个字符串则<code>start=0,end=-1</code></td>
-</tr>
-<tr>
-<td><strong>append</strong> key value</td>
-<td>追加信息到原始信息后部</td>
-</tr>
-<tr>
-<td><strong>setex</strong> key seconds value</td>
-<td>设置数据具有指定的生命周期，单位为秒</td>
-</tr>
-<tr>
-<td><strong>psetex</strong> key milliseconds value</td>
-<td>设置数据具有指定的生命周期，单位为毫秒</td>
-</tr>
-</tbody></table>
-<p><img src="/2020/07/29/Redis%E5%BA%95%E5%B1%82%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%8F%8A%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%AE%9E%E7%8E%B0/01%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%91%BD%E4%BB%A4%E6%B5%8B%E8%AF%95.jpg" alt></p>
-<p><strong>string作为数字时支持的简单运算：</strong></p>
-<table>
-<thead>
-<tr>
-<th>命令</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>incr</strong> key</td>
-<td>在原字段上加1</td>
-</tr>
-<tr>
-<td><strong>incrby</strong> key increment</td>
-<td>在原字段上加上整数increment</td>
-</tr>
-<tr>
-<td><strong>increbyfloat</strong> key increment</td>
-<td>在原字段上加上浮点数increment</td>
-</tr>
-<tr>
-<td><strong>decr</strong> key</td>
-<td>在原字段上减1</td>
-</tr>
-<tr>
-<td><strong>decrby</strong> key increment</td>
-<td>在原字段上减去整数increment</td>
-</tr>
-</tbody></table>
-<p><img src="/2020/07/29/Redis%E5%BA%95%E5%B1%82%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%8F%8A%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%AE%9E%E7%8E%B0/02%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8A%A0%E5%87%8F.jpg" alt></p>
-<h4 id="底层实现"><a href="#底层实现" class="headerlink" title="底层实现"></a>底层实现</h4><table>
-<thead>
-<tr>
-<th>值</th>
-<th>编码</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>可以用<code>long</code>类型保存的整数</td>
-<td>int</td>
-</tr>
-<tr>
-<td>可以用<code>long double</code>类型保存的浮点数</td>
-<td>embstr或raw</td>
-</tr>
-<tr>
-<td>字符串值，或因长度太大无法用<code>long</code>类型表示的整数，或因长度太大无法用<code>long double</code>表示的浮点数</td>
-<td>embstr或raw</td>
-</tr>
-</tbody></table>
-<p>在底层数据结构中讲过简单动态字符串的结构（即<code>raw</code>编码），而<code>embstr</code>是专门用于保存短字符串的优化编码方式，它和<code>raw</code>一样底层由<code>redisObject</code>结构和<code>sdshdr</code>结构来表示字符串对象，其区别如下：</p>
-<p><img src="/2020/07/29/Redis%E5%BA%95%E5%B1%82%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%8F%8A%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%AE%9E%E7%8E%B0/raw%E5%92%8Cembstr.jpg" alt></p>
-<p>而至于<code>int</code>编码，只不过是在<code>redisObject</code>中，其<code>ptr</code>指向了一个整数而已。</p>
-<p><code>int</code>编码的字符串对象和<code>embstr</code>编码的字符串对象在条件满足时会转换成<code>raw</code>编码的字符串对象，转换规则如下：</p>
-<ul>
-<li>对于<code>int</code>，当向对象执行了一些命令，使对象保存的不再是整数值，则编码由<code>int</code>变为<code>raw</code>；</li>
-<li>对于<code>embstr</code>，Redis并为为其编写任何修改程序（只有<code>int</code>和<code>raw</code>可以修改），所以对<code>embstr</code>编码的字符串对象执行任何修改命令时，其会变为<code>raw</code>编码的字符串对象；</li>
-<li>字符串值的长度大于32字节时，一定由<code>raw</code>编码的字符串对象存储。</li>
-</ul>
-<p>下面是其转换的一些例子：</p>
-<p><img src="/2020/07/29/Redis%E5%BA%95%E5%B1%82%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%8F%8A%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%AE%9E%E7%8E%B0/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%BA%95%E5%B1%82%E7%BB%93%E6%9E%84%E8%BD%AC%E5%8C%96.jpg" alt></p>
-<h3 id="列表（list）"><a href="#列表（list）" class="headerlink" title="列表（list）"></a>列表（list）</h3><h4 id="基本操作命令-1"><a href="#基本操作命令-1" class="headerlink" title="基本操作命令"></a>基本操作命令</h4><p><strong>list常用的基本操作：</strong></p>
-<table>
-<thead>
-<tr>
-<th>命令</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>lpush</strong> key value1 [value2] …</td>
-<td>把节点加入到链表最左边</td>
-</tr>
-<tr>
-<td><strong>rpush</strong> key value1 [value2] …</td>
-<td>把节点加入到链表最右边</td>
-</tr>
-<tr>
-<td><strong>lindex</strong> key index</td>
-<td>读取下标为index的节点（从0开始算）</td>
-</tr>
-<tr>
-<td><strong>llen</strong> key</td>
-<td>获得链表的长度</td>
-</tr>
-<tr>
-<td><strong>lrange</strong> key start stop</td>
-<td>获取链表key的下标从start到end的节点值，<code>[star, end]</code>，若获取所有节点可以用<code>lrange key 0 -1</code></td>
-</tr>
-<tr>
-<td><strong>lpop</strong> key</td>
-<td>删除左边第一个节点并返回</td>
-</tr>
-<tr>
-<td><strong>rpop</strong> key</td>
-<td>删除右边第一个节点并返回</td>
-</tr>
-<tr>
-<td><strong>lset</strong> key index value</td>
-<td>设置下标为index的节点的值为value</td>
-</tr>
-</tbody></table>
-<p>list还提供了阻塞命令，如下这几个命令是阻塞版本命令，比如阻塞取数据的时候，现在没有不代表以后没有，可以等！比如当前没有值，但是在timeout时间内有其他客户端添加了值，就可以取到了。</p>
-<table>
-<thead>
-<tr>
-<th>命令</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>blpop</strong> key1 [key2] timeout</td>
-<td>移除并获取第一个元素，如果列表没有元素会阻塞列表直到超时时间或有元素可以弹出</td>
-</tr>
-<tr>
-<td><strong>brpop</strong> key1 [key2] timeout</td>
-<td>移除并获取最后一个元素，如果列表没有元素会阻塞列表直到超时时间或有元素可以弹出</td>
-</tr>
-</tbody></table>
-<p><img src="/2020/07/29/Redis%E5%BA%95%E5%B1%82%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%8F%8A%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%AE%9E%E7%8E%B0/10%E5%88%97%E8%A1%A8%E5%91%BD%E4%BB%A4%E6%B5%8B%E8%AF%95.jpg" alt></p>
-<h4 id="底层实现-1"><a href="#底层实现-1" class="headerlink" title="底层实现"></a>底层实现</h4><p>列表对象的底层编码可以为<code>ziplist</code>和<code>linkedlist</code>，即列表对象可以由 “<code>redisObject</code> + 压缩列表/双端列表” 实现，其区别如下：</p>
-<p><img src="/2020/07/29/Redis%E5%BA%95%E5%B1%82%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%8F%8A%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%AE%9E%E7%8E%B0/%E5%88%97%E8%A1%A8%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0.jpg" alt></p>
-<p>注意在<code>linkedlist</code>编码的列表其底层双端链表中包含了多个字符串对象，这种<strong>嵌套字符串对象</strong>的行为在哈希对象、集合对象和有序集合对象中存在，字符串对象也是五大基本类型中唯一一种被嵌套的对象（且会被其他四种对象都嵌套）。</p>
-<p>列表对象同时满足如下两个条件时，才会使用<code>ziplist</code>编码，否则使用<code>linkedlist</code>编码：</p>
-<ul>
-<li>列表对象保存的所有字符串元素长度均小于64字节；</li>
-<li>列表对象保存的元素数量小于512个。</li>
-</ul>
-<blockquote>
-<p>上面两个条件可以通过Redis配置文件中的<code>list-max-ziplist-value</code>和<code>list-max-ziplist-entries</code>选项修改。</p>
-</blockquote>
-<h3 id="哈希（hash）"><a href="#哈希（hash）" class="headerlink" title="哈希（hash）"></a>哈希（hash）</h3><h4 id="基本操作命令-2"><a href="#基本操作命令-2" class="headerlink" title="基本操作命令"></a>基本操作命令</h4><p><strong>hash类型的通用操作</strong>：</p>
-<table>
-<thead>
-<tr>
-<th>命令</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>hset</strong> key field value</td>
-<td>在hash中设置单个键值对</td>
-</tr>
-<tr>
-<td><strong>hget</strong> key field</td>
-<td>获取hash中指定的键的值</td>
-</tr>
-<tr>
-<td><strong>hgetall</strong> key</td>
-<td>获取所有hash中的键值对</td>
-</tr>
-<tr>
-<td><strong>hdel</strong> key field1 [field2 …]</td>
-<td>删除hash中的某个（些）字段</td>
-</tr>
-<tr>
-<td><strong>hmset</strong> key field1 value1 field2 value2 …</td>
-<td>在hash中设置多个键值对</td>
-</tr>
-<tr>
-<td><strong>hmget</strong> key field1 field2 …</td>
-<td>获取hash中指定的多个键的值</td>
-</tr>
-<tr>
-<td><strong>hlen</strong> key</td>
-<td>返回hash中键值对的数量</td>
-</tr>
-<tr>
-<td><strong>hexists</strong> key field</td>
-<td>判断hash中是否存在field字段</td>
-</tr>
-<tr>
-<td><strong>hkeys</strong> key</td>
-<td>获取hash中所有的字段名（键）</td>
-</tr>
-<tr>
-<td><strong>hvals</strong> key</td>
-<td>获取hash中所有的字段值（值）</td>
-</tr>
-</tbody></table>
-<p><img src="/2020/07/29/Redis%E5%BA%95%E5%B1%82%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%8F%8A%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%AE%9E%E7%8E%B0/05hash%E5%91%BD%E4%BB%A4%E6%B5%8B%E8%AF%95,jpg" alt></p>
-<p><strong>若键值对中的value存储为数字字符串时的操作</strong>：</p>
-<table>
-<thead>
-<tr>
-<th>命令</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>hincrby</strong> key field increment</td>
-<td>指定字段的数值数据加increment</td>
-</tr>
-<tr>
-<td><strong>hincrbyfloat</strong> key field increment</td>
-<td>指定字段的数值数据加increment</td>
-</tr>
-</tbody></table>
-<h4 id="底层实现-2"><a href="#底层实现-2" class="headerlink" title="底层实现"></a>底层实现</h4><p>哈希对象的底层编码可以是<code>ziplist</code>或<code>hashtable</code>，其区别如下：</p>
-<p><img src="/2020/07/29/Redis%E5%BA%95%E5%B1%82%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%8F%8A%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%AE%9E%E7%8E%B0/%E5%93%88%E5%B8%8C%E5%BA%95%E5%B1%82.jpg" alt></p>
-<p>对于<code>ziplist</code>编码的哈希对象，每当有新键值加入到哈希对象中时，会一次向压缩列表<strong>表尾</strong>添加<strong>保存了键的压缩列表节点</strong>和<strong>保存了值的压缩列表节点</strong>；而对于<code>hashtable</code>编码的哈希对象其底层由字典实现，哈希对象的每个键值对都由字典键值对保存。</p>
-<p><img src="/2020/07/29/Redis%E5%BA%95%E5%B1%82%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%8F%8A%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%AE%9E%E7%8E%B0/04hash%E5%AD%98%E5%82%A8.jpg" alt></p>
-<p>哈希对象只有同时满足下面两个条件时，才有<code>ziplist</code>编码，否则由<code>hashtable</code>编码：</p>
-<ul>
-<li>哈希对象保存的所有键值对的键和值的字符串长度都小于64字节；</li>
-<li>哈希对象保存的键值对数量小于512个。</li>
-</ul>
-<blockquote>
-<p>上面两个条件可以通过Redis配置文件中的<code>hash-max-ziplist-value</code>和<code>hash-max-ziplist-entries</code>选项修改。</p>
-</blockquote>
-<h3 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h3><h4 id="基本操作命令-3"><a href="#基本操作命令-3" class="headerlink" title="基本操作命令"></a>基本操作命令</h4><table>
-<thead>
-<tr>
-<th>命令</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>sadd</strong> key member1 [member2]</td>
-<td>给键为key的集合增添成员</td>
-</tr>
-<tr>
-<td><strong>smembers</strong> key</td>
-<td>返回集合所有成员</td>
-</tr>
-<tr>
-<td><strong>srem</strong> key member1 [member2]</td>
-<td>删除集合中成员</td>
-</tr>
-<tr>
-<td><strong>scard</strong> key</td>
-<td>获取集合中成员个数</td>
-</tr>
-<tr>
-<td><strong>sismember</strong> key member</td>
-<td>判断集合中是否包含指定数据</td>
-</tr>
-<tr>
-<td><strong>srandmember</strong> key [count]</td>
-<td>随机返回集合中一个或多个元素，count为限制返回总数，若count小于0，先对其求绝对值，若count大于集合成员数，则返回所有成员，若无count，默认返回1个</td>
-</tr>
-<tr>
-<td><strong>spop</strong> key [count]</td>
-<td>随机从集合中移除数据并返回，count作用同上</td>
-</tr>
-<tr>
-<td><strong>sinter</strong> key1 [key2]</td>
-<td>求key1和key2的交集，若无key2则返回key1的所有元素</td>
-</tr>
-<tr>
-<td><strong>sinterstore</strong> des key1 [key2]</td>
-<td>求key1和key2的交集并保存到des中</td>
-</tr>
-<tr>
-<td><strong>sunion</strong> key1 [key2]</td>
-<td>求key1和key2的并集，若无key2则返回key1的所有元素</td>
-</tr>
-<tr>
-<td><strong>sunionstore</strong> des key1 [key2]</td>
-<td>求key1和key2的并集并保存到des中</td>
-</tr>
-<tr>
-<td><strong>sdiff</strong> key1 [key2]</td>
-<td>求key1和key2的差集，若无key2则返回key1的所有元素</td>
-</tr>
-<tr>
-<td><strong>sdiffstore</strong> des key1 [key2]</td>
-<td>求key1和key2的差集并保存到des中</td>
-</tr>
-<tr>
-<td><strong>smove</strong> src des member</td>
-<td>将指定成员从原集合移动到目标集合中</td>
-</tr>
-</tbody></table>
-<p><img src="/2020/07/29/Redis%E5%BA%95%E5%B1%82%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%8F%8A%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%AE%9E%E7%8E%B0/12%E6%B5%8B%E8%AF%95set%E5%91%BD%E4%BB%A4.jpg" alt></p>
-<h4 id="底层实现-3"><a href="#底层实现-3" class="headerlink" title="底层实现"></a>底层实现</h4><p>集合对象的底层编码可以是<code>intset</code>或<code>hashtable</code>，当一个集合只包含整数值元素，并且这个集合的元素数量不多时，<code>set</code> 就由整数集合实现，而当<code>set</code> 由<code>hashtable</code>实现时，其底层就是类似于<code>hash</code>对象一样，只不过字典中的每个键存储一个字符串对象（该字符串对象包含一个集合元素），而字典中的每个值则全部设置为<code>NULL</code>，如下图所示：</p>
-<p><img src="/2020/07/29/Redis%E5%BA%95%E5%B1%82%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%8F%8A%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%AE%9E%E7%8E%B0/14set%E5%AD%98%E5%82%A8.jpg" alt></p>
-<p>当集合对象同时满足如下两个条件时，才使用<code>intset</code>编码，否则使用<code>hashtable</code>编码：</p>
-<ul>
-<li>集合对象保存的所有元素都是整数值；</li>
-<li>集合对象保存的元素数量不超过512个。</li>
-</ul>
-<blockquote>
-<p>第二个条件可以通过Redis配置文件中的<code>set-max-intset-entries</code>选项修改。</p>
-</blockquote>
-<h3 id="有序集合"><a href="#有序集合" class="headerlink" title="有序集合"></a>有序集合</h3><h4 id="基本操作命令-4"><a href="#基本操作命令-4" class="headerlink" title="基本操作命令"></a>基本操作命令</h4><table>
-<thead>
-<tr>
-<th>命令</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>zadd</strong> key score1 member1 [score2 member2]</td>
-<td>添加数据</td>
-</tr>
-<tr>
-<td><strong>zrange</strong> key start stop [WITHSCORES]</td>
-<td>按照排序正向获取索引内的数据，可选参数带分数</td>
-</tr>
-<tr>
-<td><strong>zrevrange</strong> key start stop [WITHSCORES]</td>
-<td>按照排序逆向获取索引内的数据，可选参数带分数</td>
-</tr>
-<tr>
-<td><strong>zrem</strong> key member [member …]</td>
-<td>删除数据</td>
-</tr>
-<tr>
-<td><strong>zrangebyscore</strong> key min max [WITHSCORES] [LIMIT]</td>
-<td>按条件获取数据</td>
-</tr>
-<tr>
-<td><strong>zrevrangebyscore</strong> key min max [WITHSCORES] [LIMIT]</td>
-<td>按条件获取数据</td>
-</tr>
-<tr>
-<td><strong>zremrangebyrank</strong> key start stop</td>
-<td>根据排序条件删除数据</td>
-</tr>
-<tr>
-<td><strong>zremrangebyscore</strong> key min max</td>
-<td>根据分数值条件删除数据</td>
-</tr>
-<tr>
-<td><strong>zrank</strong> key member</td>
-<td>获取成员对应的索引（排名）</td>
-</tr>
-<tr>
-<td><strong>zrevrank</strong> key member</td>
-<td>获取成员对应的倒序排名</td>
-</tr>
-<tr>
-<td><strong>zscore</strong> key member</td>
-<td>获取成员的分数</td>
-</tr>
-<tr>
-<td><strong>zincrby</strong> key increment member</td>
-<td>将成员分数加increment</td>
-</tr>
-<tr>
-<td><strong>zcard</strong> key</td>
-<td>获取集合中成员数量</td>
-</tr>
-<tr>
-<td><strong>zcount</strong> key min max</td>
-<td>获取集合中分数满足条件的数量</td>
-</tr>
-</tbody></table>
-<p><img src="/2020/07/29/Redis%E5%BA%95%E5%B1%82%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%8F%8A%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%AE%9E%E7%8E%B0/16sorted_set%E5%91%BD%E4%BB%A4%E6%B5%8B%E8%AF%95.jpg" alt></p>
-<h4 id="底层实现-4"><a href="#底层实现-4" class="headerlink" title="底层实现"></a>底层实现</h4><p>有序集合对象的底层编码可以是<code>ziplist</code>或<code>skiplist</code>，其区别如下：</p>
-<p><img src="/2020/07/29/Redis%E5%BA%95%E5%B1%82%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%8F%8A%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%AE%9E%E7%8E%B0/%E6%9C%89%E5%BA%8F%E9%9B%86%E5%90%88%E5%BA%95%E5%B1%82.jpg" alt></p>
-<p>当有序集合对象同时满足如下两个条件时，才使用<code>ziplist</code>编码，否则使用<code>skiplist</code>编码：</p>
-<ul>
-<li>有序集合保存的元素数量小于128个；</li>
-<li>有序集合保存的所有元素成员的长度都小于64字节。</li>
-</ul>
-<blockquote>
-<p>上面两个条件可以通过Redis配置文件中的<code>zset-max-ziplist-entries</code>和<code>zset-max-ziplist-value</code>选项修改。</p>
-</blockquote>
-
+        
+          <a class="article-more-a" href="/2020/07/29/Redis%E5%BA%95%E5%B1%82%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%8F%8A%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%AE%9E%E7%8E%B0/#more">more >></a>
+        
       
 
       
@@ -1772,18 +1098,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JVM</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">多线程</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
@@ -1792,7 +1106,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">JVM</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">读书笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">多线程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1840,6 +1166,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">虚拟机</a>
               </li>
              
@@ -1848,7 +1178,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
+                <a href="javascript:void(0)" class="js-tag color2">Ubuntu</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1856,15 +1186,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Ubuntu</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">FastDSF</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">源码</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1872,11 +1194,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数组</a>
+                <a href="javascript:void(0)" class="js-tag color5">异常处理</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">异常处理</a>
+                <a href="javascript:void(0)" class="js-tag color3">源码</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">数组</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1900,19 +1226,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">树</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">并查集</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+                <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
+                <a href="javascript:void(0)" class="js-tag color2">树</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
             
             <div class="clearfix"></div>

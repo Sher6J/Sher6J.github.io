@@ -15,11 +15,14 @@
 <meta property="og:site_name" content="菜菜六甲的博客">
 <meta property="og:description" content="SpringBoot起步依赖和自动配置起步依赖我们知道一个SpringBoot项目都要以 spring-boot-starter-parent 作为父工程，也就是要在工程的 pom 文件中引入如下依赖（以 2.2.6版本为例）：">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20201028163626210.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWppYTIxMTU=,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20201028163638647.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWppYTIxMTU=,size_16,color_FFFFFF,t_70#pic_center">
 <meta property="article:published_time" content="2020-10-28T04:20:20.000Z">
-<meta property="article:modified_time" content="2020-10-28T05:01:52.858Z">
+<meta property="article:modified_time" content="2020-10-28T08:39:07.287Z">
 <meta property="article:author" content="Sher6J">
 <meta property="article:tag" content="Spring">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20201028163626210.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWppYTIxMTU=,size_16,color_FFFFFF,t_70#pic_center">
   
     <link rel="alternative" href="/atom.xml" title="菜菜六甲的博客" type="application/atom+xml">
   
@@ -186,6 +189,52 @@
 <h2 id="自动配置"><a href="#自动配置" class="headerlink" title="自动配置"></a>自动配置</h2><p>自动配置的关键核心还是要查看启动类上这个即为重要的注解 <code>@SpringBootApplication</code>。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BlogApplication</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(BlogApplication<span class="class">.<span class="keyword">class</span>, <span class="title">args</span>)</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p>进入到 <code>@SpringBootApplication</code> 注解内部，可以看到这是一个组合注解：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(ElementType.TYPE) <span class="comment">// 元注解，表示注解可使用的范围</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME) <span class="comment">// 元注解，表示该注解被保留到的阶段</span></span><br><span class="line"><span class="meta">@Documented</span> <span class="comment">// 元注解，表示该注解应该被javadoc工具记录</span></span><br><span class="line"><span class="meta">@Inherited</span> <span class="comment">// 元注解，表示允许子类继承父类的注解</span></span><br><span class="line"><span class="meta">@SpringBootConfiguration</span> </span><br><span class="line"><span class="meta">@EnableAutoConfiguration</span></span><br><span class="line"><span class="meta">@ComponentScan</span>(excludeFilters = &#123; <span class="meta">@Filter</span>(type = FilterType.CUSTOM, classes = TypeExcludeFilter<span class="class">.<span class="keyword">class</span>),</span></span><br><span class="line"><span class="class">		@<span class="title">Filter</span>(<span class="title">type</span> </span>= FilterType.CUSTOM, classes = AutoConfigurationExcludeFilter<span class="class">.<span class="keyword">class</span>) &#125;)</span></span><br><span class="line"><span class="class"><span class="title">public</span> @<span class="title">interface</span> <span class="title">SpringBootApplication</span> </span>&#123;</span><br><span class="line">	<span class="meta">@AliasFor</span>(annotation = EnableAutoConfiguration<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line">	Class&lt;?&gt;[] exclude() default &#123;&#125;;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@AliasFor</span>(annotation = EnableAutoConfiguration<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line">	String[] excludeName() default &#123;&#125;;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@AliasFor</span>(annotation = ComponentScan<span class="class">.<span class="keyword">class</span>, <span class="title">attribute</span> </span>= <span class="string">"basePackages"</span>)</span><br><span class="line">	String[] scanBasePackages() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@AliasFor</span>(annotation = ComponentScan<span class="class">.<span class="keyword">class</span>, <span class="title">attribute</span> </span>= <span class="string">"basePackageClasses"</span>)</span><br><span class="line">	Class&lt;?&gt;[] scanBasePackageClasses() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@AliasFor</span>(annotation = Configuration<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class">	<span class="title">boolean</span> <span class="title">proxyBeanMethods</span>() <span class="title">default</span> <span class="title">true</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>@SpringBootApplication</code>注解除了4个元注解外具有三个注解：</p>
+<ul>
+<li><p><code>@SpringBootConfiguration</code> ：该注解实际上和 <code>@Configuration</code> 注解作用相同，配置了该注解的类就可以使用 <code>JavaConfig</code> 的方式进行配置，而无需使用 <code>XML</code> 配置；</p>
+</li>
+<li><p><code>@ComponentScan</code> ： 该注解完成<strong>自动扫描</strong>的功能，和Spring的 <code>XML</code> 配置文件中的 <code>&lt;context:component-scan&gt;</code> 功能相同，可以使用 <code>basePackages</code> 属性指定所需扫描的包以及扫描的条件，如果没有设置属性则默认扫描该注解所在类的同级类和其同级目录下的所有类。</p>
+</li>
+<li><p><code>@EnableAutoConfiguration</code> ：该注解实现了SpringBoot的自动配置，其源码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(ElementType.TYPE)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Inherited</span></span><br><span class="line"><span class="meta">@AutoConfigurationPackage</span></span><br><span class="line"><span class="meta">@Import</span>(AutoConfigurationImportSelector<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class"><span class="title">public</span> @<span class="title">interface</span> <span class="title">EnableAutoConfiguration</span> </span>&#123;</span><br><span class="line">	String ENABLED_OVERRIDE_PROPERTY = <span class="string">"spring.boot.enableautoconfiguration"</span>;</span><br><span class="line"></span><br><span class="line">	Class&lt;?&gt;[] exclude() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">	String[] excludeName() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>在 <code>@EnableAutoConfiguration</code> 中用注解 <code>@Import</code> 引入了一个资源类 <code>AutoConfigurationImportSelector</code>，在该类中有如下一个方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* in org.springframework.boot.autoconfigure.AutoConfigurationImportSelector*/</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> List&lt;String&gt; <span class="title">getCandidateConfigurations</span><span class="params">(AnnotationMetadata metadata, AnnotationAttributes attributes)</span> </span>&#123;</span><br><span class="line">	List&lt;String&gt; configurations = SpringFactoriesLoader.loadFactoryNames(getSpringFactoriesLoaderFactoryClass(),</span><br><span class="line">			getBeanClassLoader());</span><br><span class="line">	Assert.notEmpty(configurations, <span class="string">"No auto configuration classes found in META-INF/spring.factories. If you "</span></span><br><span class="line">			+ <span class="string">"are using a custom packaging, make sure that file is correct."</span>);</span><br><span class="line">	<span class="keyword">return</span> configurations;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>而在进入 <code>SpringFactoriesLoader</code> 类中，其中定义了常量：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* The location to look for factories. */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String FACTORIES_RESOURCE_LOCATION = <span class="string">"META-INF/spring.factories"</span>;</span><br></pre></td></tr></table></figure>
+
+<p>也就是说默认的配置事实上由该目录中取出：</p>
+<p><img src="https://img-blog.csdnimg.cn/20201028163626210.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWppYTIxMTU=,size_16,color_FFFFFF,t_70#pic_center" alt="image-20201028160502732"></p>
+<p>在该文件中保存了150行左右的如下存有自动配置信息的类：</p>
+<p><img src="https://img-blog.csdnimg.cn/20201028163638647.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWppYTIxMTU=,size_16,color_FFFFFF,t_70#pic_center" alt="image-20201028160944621"></p>
+<p>让我们进入一个与SpringBoot中最熟悉的配置 <code>server.port</code> 来查看其配置类 <code>ServletWebServerFactoryAutoConfiguration</code>，该类是servlet的Web服务器的自动配置</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* package: org.springframework.boot.autoconfigure.web.servlet.*/</span></span><br><span class="line"><span class="meta">@Configuration</span>(proxyBeanMethods = <span class="keyword">false</span>)</span><br><span class="line"><span class="meta">@AutoConfigureOrder</span>(Ordered.HIGHEST_PRECEDENCE)</span><br><span class="line"><span class="meta">@ConditionalOnClass</span>(ServletRequest<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class">@<span class="title">ConditionalOnWebApplication</span>(<span class="title">type</span> </span>= Type.SERVLET)</span><br><span class="line"><span class="meta">@EnableConfigurationProperties</span>(ServerProperties<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class">@<span class="title">Import</span>(</span>&#123; ServletWebServerFactoryAutoConfiguration.BeanPostProcessorsRegistrar<span class="class">.<span class="keyword">class</span>,</span></span><br><span class="line"><span class="class">		<span class="title">ServletWebServerFactoryConfiguration</span>.<span class="title">EmbeddedTomcat</span>.<span class="title">class</span>,</span></span><br><span class="line"><span class="class">		<span class="title">ServletWebServerFactoryConfiguration</span>.<span class="title">EmbeddedJetty</span>.<span class="title">class</span>,</span></span><br><span class="line"><span class="class">		<span class="title">ServletWebServerFactoryConfiguration</span>.<span class="title">EmbeddedUndertow</span>.<span class="title">class</span> &#125;)</span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">class</span> <span class="title">ServletWebServerFactoryAutoConfiguration</span> </span>&#123;</span><br><span class="line">    …………………………</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>该类中用 <code>@EnableConfigurationProperties</code> 注解引入了 <code>ServerProperties</code> 类作为配置:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ConfigurationProperties</span>(prefix = <span class="string">"server"</span>, ignoreUnknownFields = <span class="keyword">true</span>) <span class="comment">// 表示前缀</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServerProperties</span> </span>&#123;</span><br><span class="line">	<span class="comment">/* Server HTTP port.*/</span></span><br><span class="line">	<span class="keyword">private</span> Integer port;</span><br><span class="line"> 	………………</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这不就是我们熟悉的 <code>server.port</code> 属性嘛！</p>
+<blockquote>
+<p>元注解只有4个：</p>
+<ul>
+<li><p><code>@Target</code> 元注解可以应用于一个注解，以限制该注解可以应用到哪些项上，其属性取值在枚举类型 <code>ElementType</code> 中：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> ElementType &#123;</span><br><span class="line">    TYPE,            <span class="comment">// 类（包括枚举类型）及接口（包括注解类型）</span></span><br><span class="line">    FIELD,           <span class="comment">// 成员域（包括枚举常量）</span></span><br><span class="line">    METHOD,          <span class="comment">// 方法</span></span><br><span class="line">    PARAMETER,       <span class="comment">// 方法或构造参数</span></span><br><span class="line">    CONSTRUCTOR,     <span class="comment">// 构造器</span></span><br><span class="line">    LOCAL_VARIABLE,  <span class="comment">// 局部变量</span></span><br><span class="line">    ANNOTATION_TYPE, <span class="comment">// 注解类型声明</span></span><br><span class="line">    PACKAGE,         <span class="comment">// 包</span></span><br><span class="line">    TYPE_PARAMETER,  <span class="comment">// 类型参数</span></span><br><span class="line">    TYPE_USE,        <span class="comment">// 类型用法</span></span><br><span class="line">    MODULE;          <span class="comment">// JDK9新增的模块</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>@Retention</code> 元注解用于指定一条注解应该保留多长时间，其取值在枚举类型 <code>RetentionPolicy</code> 中：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> RetentionPolicy &#123;</span><br><span class="line">    SOURCE,		<span class="comment">// 不包括在类文件中的注解</span></span><br><span class="line">    CLASS,      <span class="comment">// 包括在类文件中的注解，但是虚拟机不需要将它们载入</span></span><br><span class="line">    RUNTIME;    <span class="comment">// 包括在类文件中的注解，并由虚拟机载入，通过反射可以获得这种注解</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>@Document</code> 元注解为像 <code>javadoc</code> 这样的归档工具提供了一些提示。</p>
+</li>
+<li><p><code>@Inherited</code> 元注解只能应用于对类的注解。如果一个类具有该注解，则它的所有子类都自动具有它所有的注解。</p>
+</li>
+</ul>
+</blockquote>
 
       
 
@@ -456,15 +505,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">JVM</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">多线程</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JVM</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -488,15 +537,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">数据库</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">MyBatis</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">框架</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">数据库</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -508,7 +557,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -517,14 +574,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">SpringCloud</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -580,11 +629,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
+                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
+                <a href="javascript:void(0)" class="js-tag color2">树</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -592,7 +641,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">树</a>
+                <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
               </li>
             
             <div class="clearfix"></div>

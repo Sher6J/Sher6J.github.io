@@ -24,7 +24,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/05/29/Java%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%AE%B9%E5%99%A8/D:%5Cblog%5Csource_posts%5CJava%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%AE%B9%E5%99%A8%5CLinkedHashSet%E7%B1%BB%E5%9B%BE.jpg">
 <meta property="og:image" content="http://yoursite.com/2020/05/29/Java%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%AE%B9%E5%99%A8/D:%5Cblog%5Csource_posts%5CJava%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%AE%B9%E5%99%A8%5CLinkedHashSet%E6%9E%84%E9%80%A0%E5%99%A8.jpg">
 <meta property="article:published_time" content="2020-05-29T10:50:31.047Z">
-<meta property="article:modified_time" content="2020-10-31T12:56:39.191Z">
+<meta property="article:modified_time" content="2020-11-02T07:56:10.618Z">
 <meta property="article:author" content="Sher6J">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://yoursite.com/2020/05/29/Java%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%AE%B9%E5%99%A8/D:%5Cblog%5Csource_posts%5CJava%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%AE%B9%E5%99%A8%5C%E5%AE%B9%E5%99%A8%E6%A1%86%E6%9E%B6%E4%B8%AD%E7%9A%84%E6%8E%A5%E5%8F%A3.jpg">
@@ -259,6 +259,10 @@
 <p>通过一个 <code>Map</code> 进行迭代要比 <code>Collection</code> 复杂，因为 <code>Map</code> 不提供迭代器，而是提供了三种方法，将 <code>Map</code> 对象的视图作为 <code>Collection</code> 对象返回，而这些视图本身就是 <code>Collection</code>  （继承了 <code>Iterable</code> 接口），故可以将它们迭代：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Views(视图)</span></span><br><span class="line"><span class="function">Set&lt;K&gt; <span class="title">keySet</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function">Collection&lt;V&gt; <span class="title">values</span><span class="params">()</span></span>;</span><br><span class="line">Set&lt;Map.Entry&lt;K, V&gt;&gt; entrySet();</span><br></pre></td></tr></table></figure>
 
+<p>在 <code>Map</code> 中还定义了其内部接口 <code>Entry</code>，用于表示 <code>key-value</code> 结构：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Entry</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function">K <span class="title">getKey</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function">V <span class="title">getValue</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function">V <span class="title">setValue</span><span class="params">(V value)</span></span>;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Compares the specified object with this entry for equality.</span></span><br><span class="line"><span class="comment">     * Returns &lt;tt&gt;true&lt;/tt&gt; if the given object is also a map entry and</span></span><br><span class="line"><span class="comment">     * the two entries represent the same mapping.  More formally, two</span></span><br><span class="line"><span class="comment">     * entries &lt;tt&gt;e1&lt;/tt&gt; and &lt;tt&gt;e2&lt;/tt&gt; represent the same mapping</span></span><br><span class="line"><span class="comment">     * if&lt;pre&gt;</span></span><br><span class="line"><span class="comment">     *     (e1.getKey()==null ?</span></span><br><span class="line"><span class="comment">     *      e2.getKey()==null : e1.getKey().equals(e2.getKey()))  &amp;amp;&amp;amp;</span></span><br><span class="line"><span class="comment">     *     (e1.getValue()==null ?</span></span><br><span class="line"><span class="comment">     *      e2.getValue()==null : e1.getValue().equals(e2.getValue()))</span></span><br><span class="line"><span class="comment">     * &lt;/pre&gt;</span></span><br><span class="line"><span class="comment">     * This ensures that the &lt;tt&gt;equals&lt;/tt&gt; method works properly across</span></span><br><span class="line"><span class="comment">     * different implementations of the &lt;tt&gt;Map.Entry&lt;/tt&gt; interface.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> o object to be compared for equality with this map entry</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> &lt;tt&gt;true&lt;/tt&gt; if the specified object is equal to this map</span></span><br><span class="line"><span class="comment">     *         entry</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object o)</span></span>;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Returns the hash code value for this map entry.  The hash code</span></span><br><span class="line"><span class="comment">     * of a map entry &lt;tt&gt;e&lt;/tt&gt; is defined to be: &lt;pre&gt;</span></span><br><span class="line"><span class="comment">     *     (e.getKey()==null   ? 0 : e.getKey().hashCode()) ^</span></span><br><span class="line"><span class="comment">     *     (e.getValue()==null ? 0 : e.getValue().hashCode())</span></span><br><span class="line"><span class="comment">     * &lt;/pre&gt;</span></span><br><span class="line"><span class="comment">     * This ensures that &lt;tt&gt;e1.equals(e2)&lt;/tt&gt; implies that</span></span><br><span class="line"><span class="comment">     * &lt;tt&gt;e1.hashCode()==e2.hashCode()&lt;/tt&gt; for any two Entries</span></span><br><span class="line"><span class="comment">     * &lt;tt&gt;e1&lt;/tt&gt; and &lt;tt&gt;e2&lt;/tt&gt;, as required by the general</span></span><br><span class="line"><span class="comment">     * contract of &lt;tt&gt;Object.hashCode&lt;/tt&gt;.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> the hash code value for this map entry</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> Object#hashCode()</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> Object#equals(Object)</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> #equals(Object)</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span></span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 一系列的比较器，比较键值等</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;K extends Comparable&lt;? <span class="keyword">super</span> K&gt;, V&gt; Comparator&lt;Map.Entry&lt;K,V&gt;&gt; comparingByKey() &#123;</span><br><span class="line">        <span class="keyword">return</span> (Comparator&lt;Map.Entry&lt;K, V&gt;&gt; &amp; Serializable)</span><br><span class="line">            (c1, c2) -&gt; c1.getKey().compareTo(c2.getKey());</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;K, V extends Comparable&lt;? <span class="keyword">super</span> V&gt;&gt; Comparator&lt;Map.Entry&lt;K,V&gt;&gt; comparingByValue() &#123;</span><br><span class="line">        <span class="keyword">return</span> (Comparator&lt;Map.Entry&lt;K, V&gt;&gt; &amp; Serializable)</span><br><span class="line">            (c1, c2) -&gt; c1.getValue().compareTo(c2.getValue());</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;K, V&gt; Comparator&lt;Map.Entry&lt;K, V&gt;&gt; comparingByKey(Comparator&lt;? <span class="keyword">super</span> K&gt; cmp) &#123;</span><br><span class="line">        Objects.requireNonNull(cmp);</span><br><span class="line">        <span class="keyword">return</span> (Comparator&lt;Map.Entry&lt;K, V&gt;&gt; &amp; Serializable)</span><br><span class="line">            (c1, c2) -&gt; cmp.compare(c1.getKey(), c2.getKey());</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;K, V&gt; Comparator&lt;Map.Entry&lt;K, V&gt;&gt; comparingByValue(Comparator&lt;? <span class="keyword">super</span> V&gt; cmp) &#123;</span><br><span class="line">        Objects.requireNonNull(cmp);</span><br><span class="line">        <span class="keyword">return</span> (Comparator&lt;Map.Entry&lt;K, V&gt;&gt; &amp; Serializable)</span><br><span class="line">            (c1, c2) -&gt; cmp.compare(c1.getValue(), c2.getValue());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意特意保留了其 <code>hashCode</code> 方法中的注释，可以看到一个 <strong><code>Entry</code> 的 <code>hash</code>值实际上是用了其 <code>key</code> 和 <code>value</code> 的哈希值做了异或运算</strong>。</p>
 <h1 id="2-主要的具体集合及其源码分析"><a href="#2-主要的具体集合及其源码分析" class="headerlink" title="2. 主要的具体集合及其源码分析"></a>2. 主要的具体集合及其源码分析</h1><h2 id="2-1-ArrayList"><a href="#2-1-ArrayList" class="headerlink" title="2.1. ArrayList"></a>2.1. <code>ArrayList</code></h2><p><code>ArrayList</code>的类图如下，其实现了<code>List</code>接口，且<font color="red"><strong>可以随机访问</strong></font>：</p>
 <p><img src="/2020/05/29/Java%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%AE%B9%E5%99%A8/D:%5Cblog%5Csource_posts%5CJava%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%AE%B9%E5%99%A8%5CArrayList%E7%B1%BB%E5%9B%BE.jpg" alt></p>
 <h3 id="2-1-1-jdk-7-情况下："><a href="#2-1-1-jdk-7-情况下：" class="headerlink" title="2.1.1. jdk 7 情况下："></a>2.1.1. jdk 7 情况下：</h3><p>查看<code>ArrayList</code>源码，发现其类中有属性值：</p>
@@ -336,8 +340,23 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// LinkedHashSet调用的HashSet中的构造器</span></span><br><span class="line">HashSet(<span class="keyword">int</span> initialCapacity, <span class="keyword">float</span> loadFactor, <span class="keyword">boolean</span> dummy) &#123;</span><br><span class="line">    map = <span class="keyword">new</span> LinkedHashMap&lt;&gt;(initialCapacity, loadFactor);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>所以对于<code>LinkedHashSet</code>的底层源码也无需赘述，重点看<code>LinkedHashMap</code>的底层源码即可。</p>
-<h2 id="2-5-HashMap"><a href="#2-5-HashMap" class="headerlink" title="2.5. HashMap"></a>2.5. <code>HashMap</code></h2><p>对于<code>HashMap</code>事实上在JDK7和JDK8中是有区别的，这点大家基本都知道在JDK7以前<code>HashMap</code>的底层结构是<strong>数组+链表</strong>，而在JDK8中的底层结构为<strong>数组+链表+红黑树</strong>，这里就仅以JDK8为例阅读<code>HashMap</code>的相关源码。</p>
+<h2 id="2-5-HashMap"><a href="#2-5-HashMap" class="headerlink" title="2.5. HashMap"></a>2.5. <code>HashMap</code></h2><p>对于<code>HashMap</code>事实上在JDK7和JDK8中是有区别的，其主要区别有以下三点：</p>
+<ul>
+<li>在JDK7以前<code>HashMap</code>的底层结构是<strong>数组+链表</strong>，而在JDK8中的底层结构为<strong>数组+链表+红黑树</strong>；</li>
+<li>JDK7时当出现哈希冲突时，新节点是添加到链表的表头，而在JDK8中新节点是添加到链表的表尾；</li>
+<li>JDK7中的数据数组在 <code>HashMap</code> 初始构造时就进行了创建，而JDK8中是在其第一次使用时才进行创建。</li>
+</ul>
+<p>这里仅对JDK8进行分析。（红黑树的部分以后有经理再进行补充吧，左旋右旋，treefy，实在是磕不懂源码了哈哈哈）</p>
+<h4 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h4><p>首先说明 <code>HashMap</code> 中定义的若干常量：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 默认的初始容量（即桶的个数），必须为2的次方，默认为 16</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DEFAULT_INITIAL_CAPACITY = <span class="number">1</span> &lt;&lt; <span class="number">4</span>; <span class="comment">// aka 16</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 最大的容量，也必须为2的次方</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MAXIMUM_CAPACITY = <span class="number">1</span> &lt;&lt; <span class="number">30</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 默认的负载因子，为 0.75</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">float</span> DEFAULT_LOAD_FACTOR = <span class="number">0.75f</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 对于一个桶内采取红黑树结构代替链表结构时，桶中元素个数的阈值</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TREEIFY_THRESHOLD = <span class="number">8</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 对于一个桶内取消红黑树结构而恢复为链表结构时，桶中元素个数的阈值</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> UNTREEIFY_THRESHOLD = <span class="number">6</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 当哈希表的大小超过这个阈值，才会把链式结构转化成树型结构，否则仅采取扩容来尝试减少冲突</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MIN_TREEIFY_CAPACITY = <span class="number">64</span>;</span><br></pre></td></tr></table></figure>
 
+<p>然后在 <code>HashMap</code> 中定义了其静态内部类 <code>HashMap.Node</code> ，该内部类实现了上面在 <code>Map</code> 接口中提到的 <code>Map.Entry</code> 接口，<code>Node</code>类作为哈希表的一个桶中的默认结构，实际上就是一个链表，可以看到其具有 <code>next</code> 指针，而在当一个桶需要红黑树化后，其结构就会由另一个内部类 <code>HashMap.TreeNode</code> 所代替：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 桶中的链表结构</span></span><br><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt; <span class="keyword">implements</span> <span class="title">Map</span>.<span class="title">Entry</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> hash; <span class="comment">// 节点的哈希值</span></span><br><span class="line">    <span class="keyword">final</span> K key; <span class="comment">// 键</span></span><br><span class="line">    V value; <span class="comment">// 值</span></span><br><span class="line">    Node&lt;K,V&gt; next; <span class="comment">// 链表的下一个节点</span></span><br><span class="line">    Node(<span class="keyword">int</span> hash, K key, V value, Node&lt;K,V&gt; next) &#123;</span><br><span class="line">        <span class="keyword">this</span>.hash = hash;</span><br><span class="line">        <span class="keyword">this</span>.key = key;</span><br><span class="line">        <span class="keyword">this</span>.value = value;</span><br><span class="line">        <span class="keyword">this</span>.next = next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> K <span class="title">getKey</span><span class="params">()</span>        </span>&#123; <span class="keyword">return</span> key; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> V <span class="title">getValue</span><span class="params">()</span>      </span>&#123; <span class="keyword">return</span> value; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> key + <span class="string">"="</span> + value; &#125;</span><br><span class="line">    <span class="comment">// 键值对节点的哈希码 = 键和值的哈希码做异或运算</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 该 hashCode 方法是一个本地方法</span></span><br><span class="line">        <span class="keyword">return</span> Objects.hashCode(key) ^ Objects.hashCode(value);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> V <span class="title">setValue</span><span class="params">(V newValue)</span> </span>&#123;</span><br><span class="line">        V oldValue = value;</span><br><span class="line">        value = newValue;</span><br><span class="line">        <span class="keyword">return</span> oldValue;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (o == <span class="keyword">this</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">if</span> (o <span class="keyword">instanceof</span> Map.Entry) &#123;</span><br><span class="line">            Map.Entry&lt;?,?&gt; e = (Map.Entry&lt;?,?&gt;)o;</span><br><span class="line">            <span class="keyword">if</span> (Objects.equals(key, e.getKey()) &amp;&amp;</span><br><span class="line">                Objects.equals(value, e.getValue()))</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>HashMap</code> 中具有如下的属性字段：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 实际存储数据的 Node数组，在第一次使用时才初始化长度，否则为空数组</span></span><br><span class="line"><span class="keyword">transient</span> Node&lt;K,V&gt;[] table;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 临时的节点集合</span></span><br><span class="line"><span class="keyword">transient</span> Set&lt;Map.Entry&lt;K,V&gt;&gt; entrySet;</span><br><span class="line"></span><br><span class="line"><span class="comment">// HashMap中的键值对数量</span></span><br><span class="line"><span class="keyword">transient</span> <span class="keyword">int</span> size;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 和之前在 ArrayList 中说明过的 modCount 为同种用途，用于记录HashMap的结构性修改（包括put、rehash等）</span></span><br><span class="line"><span class="comment">// 用于实现其Collection-views的fail-fast功能，即在遍历其keySet或values或entrySet时，</span></span><br><span class="line"><span class="comment">// 如果HashMap有结构性修改，则立即抛出ConcurrentModificationException</span></span><br><span class="line"><span class="keyword">transient</span> <span class="keyword">int</span> modCount;</span><br><span class="line"></span><br><span class="line"><span class="comment">// rehash时的其键值对数量阈值 = 桶的个数（capacity，默认为16）* 负载因子(load factor，默认为0.75)</span></span><br><span class="line"><span class="keyword">int</span> threshold; <span class="comment">// 默认为12</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 负载因子</span></span><br><span class="line"><span class="keyword">final</span> <span class="keyword">float</span> loadFactor;</span><br></pre></td></tr></table></figure>
+
+<h4 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h4>
       
 
       
@@ -577,31 +596,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">力扣</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JVM</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">CentOS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -613,11 +608,31 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">读书笔记</a>
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">多线程</a>
+                <a href="javascript:void(0)" class="js-tag color3">力扣</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">CentOS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">JVM</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">读书笔记</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -629,23 +644,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color4">多线程</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">消息队列</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">RabbitMQ</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">数据库</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -657,7 +660,31 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">数据库</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">消息队列</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">RabbitMQ</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -669,18 +696,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">非关系型数据库</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">虚拟机</a>
               </li>
              
@@ -689,11 +704,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">非关系型数据库</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Ubuntu</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">FastDSF</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -717,11 +740,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
+                <a href="javascript:void(0)" class="js-tag color2">栈</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">栈</a>
+                <a href="javascript:void(0)" class="js-tag color2">树</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -729,7 +752,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">树</a>
+                <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -738,10 +761,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
               </li>
             
             <div class="clearfix"></div>

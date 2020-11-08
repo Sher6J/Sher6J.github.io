@@ -150,6 +150,119 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-CentOS7安装Redis6全过程及出现的问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/08/CentOS7%E5%AE%89%E8%A3%85Redis6%E5%85%A8%E8%BF%87%E7%A8%8B%E5%8F%8A%E5%87%BA%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98/">CentOS7安装Redis6全过程及出现的问题</a>
+    </h1>
+  
+
+        
+        <a href="/2020/11/08/CentOS7%E5%AE%89%E8%A3%85Redis6%E5%85%A8%E8%BF%87%E7%A8%8B%E5%8F%8A%E5%87%BA%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98/" class="archive-article-date">
+  	<time datetime="2020-11-08T01:53:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-08</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="CentOS7安装Redis6全过程及出现的问题"><a href="#CentOS7安装Redis6全过程及出现的问题" class="headerlink" title="CentOS7安装Redis6全过程及出现的问题"></a>CentOS7安装Redis6全过程及出现的问题</h1><p>首先在 <code>/usr/local</code> 目录下创建 <code>redis</code> 目录：</p>
+<figure class="highlight plain"><figcaption><span>~]# makedir</span><a href="/usr/local/redis```">link</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">然后通过ftp工具将下载好的Redis6压缩包上传至该目录，下载地址见[Redis官网](https:&#x2F;&#x2F;redis.io&#x2F;download)，将其解压到当前目录：</span><br><span class="line"></span><br><span class="line">&lt;!--more--&gt;</span><br></pre></td></tr></table></figure>
+<p>[root@sher6j-01 redis]# tar -zxvf redis-6.0.9.tar.gz -C ./</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">![在这里插入图片描述](https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20201108093433457.png#pic_center)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">然后就有了该 &#96;redis-6.0.9&#96; 目录，之后将压缩包删除即可：</span><br></pre></td></tr></table></figure>
+<p>[root@sher6j-01 redis]# rm -rf redis-6.0.9.tar.gz </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">然后进入 &#96;redis-6.0.9&#96; 目录：</span><br></pre></td></tr></table></figure>
+<p>[root@sher6j-01 redis]# cd redis-6.0.9/</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">下面按道理来说就是应该进行 &#96;make&#96; 编译了，官网中也是这么介绍的，所以键入如下命令：</span><br></pre></td></tr></table></figure>
+<p>[root@sher6j-01 redis-6.0.9]# make &amp;&amp; make install</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">却发现产生了如下的**各种错误**：</span><br><span class="line"></span><br><span class="line">![在这里插入图片描述](https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20201108093458524.png?x-oss-process&#x3D;image&#x2F;watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWppYTIxMTU&#x3D;,size_16,color_FFFFFF,t_70#pic_center)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">这是因为我们都知道Redis是用C语言写的，而我们崭新的CentOS7主机中还没有安装C语言，所以我们下一步安装 &#96;gcc&#96; 即可：</span><br></pre></td></tr></table></figure>
+<p>[root@sher6j-01 redis-6.0.9]# yum install gcc </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">再重新键入上面的 &#96;make&#96; 编译命令，但是又一次出现了如下错误！！！</span><br><span class="line"></span><br><span class="line">![在这里插入图片描述](https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;2020110809352160.png#pic_center)</span><br><span class="line"></span><br><span class="line">这次是因为CentOS7自动安装的 &#96;gcc&#96; 版本不够导致的，查看 &#96;gcc&#96; 版本用如下命令：</span><br></pre></td></tr></table></figure>
+<p>[root@sher6j-01 redis-6.0.9]# gcc -version</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">![在这里插入图片描述](https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20201108093539511.png#pic_center)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">可以看到系统默认安装的 &#96;gcc&#96; 版本是 &#96;4.8.5&#96;，这达不到安装Redis6需要的版本，Redis6要求 &#96;gcc&#96; 版本至少是 &#96;5.3&#96;，所以我们直接对 &#96;gcc&#96; 版本进行升级更新到 &#96;9.3&#96; 版本，分别键入如下命令：</span><br></pre></td></tr></table></figure>
+<p>[root@sher6j-01 redis-6.0.9]# yum -y install centos-release-scl<br>[root@sher6j-01 redis-6.0.9]# yum -y install devtoolset-9-gcc devtoolset-9-gcc-c++ devtoolset-9-binutils<br>[root@sher6j-01 redis-6.0.9]# scl enable devtoolset-9 bash</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">需要注意的是 &#96;scl&#96; 命令启用只是临时的，退出shell或重启就会恢复原系统 &#96;gcc&#96; 版本，如果要长期使用该高版本 &#96;gcc&#96; 的话，需要键入如下命令：</span><br></pre></td></tr></table></figure>
+<p>[root@sher6j-01 redis-6.0.9]# echo “source /opt/rh/devtoolset-9/enable” &gt;&gt;/etc/profile</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">此时再查看 &#96;gcc&#96; 版本，已经成功升级</span><br><span class="line"></span><br><span class="line">![在这里插入图片描述](https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20201108093556717.png#pic_center)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">然后。。。。。。然后就又出现了新问题。。。啊哈哈哈哈哈，山路崎岖过于坎坷：</span><br><span class="line"></span><br><span class="line">![在这里插入图片描述](https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;2020110809360962.png?x-oss-process&#x3D;image&#x2F;watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWppYTIxMTU&#x3D;,size_16,color_FFFFFF,t_70#pic_center)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">这里参考了[大佬的文章](https:&#x2F;&#x2F;blog.csdn.net&#x2F;honchou56&#x2F;article&#x2F;details&#x2F;53994708)，原因大佬进行了介绍，这里只说明解决办法，在 &#96;make&#96; 的时候加入 &#96;MALLOC&#96; 命令，即键入如下命令：</span><br></pre></td></tr></table></figure>
+<p>[root@sher6j-01 redis-6.0.9]# make MALLOC=libc</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">![在这里插入图片描述](https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20201108093625473.png#pic_center)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">终于！看到了我们熟悉的一些编译过程，好了，Redis6的安装过程就是这么的曲折，然后为了让我们的机器不用每次启动后都重新打开Redis，还是将其安装为系统服务并后台启动吧，进入Redis中的 &#96;utils&#96; 目录，执行该目录下自带的 &#96;.&#x2F;install_server.sh&#96; 脚本：</span><br></pre></td></tr></table></figure>
+<p>[root@sher6j-01 redis-6.0.9]# cd utils/<br>[root@sher6j-01 utils]# ./install_server.sh</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">然后。。。然后。。。又又又又出错了。。。</span><br><span class="line"></span><br><span class="line">![在这里插入图片描述](https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20201108093638336.png#pic_center)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">这是该脚本中的小问题，我们对该脚本进行编辑</span><br></pre></td></tr></table></figure>
+<p>[root@sher6j-01 utils]# vim install_server.sh</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">可以在该脚本中找到如下代码：</span><br><span class="line"></span><br><span class="line">![在这里插入图片描述](https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20201108093649416.png#pic_center)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">这和我们看到的错误是一样的，**注释掉吧**，就变成了这个样子：</span><br><span class="line"></span><br><span class="line">![在这里插入图片描述](https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20201108093700628.png#pic_center)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">然后 &#96;wq&#96; 保存即可。</span><br><span class="line"></span><br><span class="line">再执行如下脚本，当然选项参数是可以更换的，这里我就都用的默认参数啦，毕竟是自己平时学习尝鲜用的</span><br><span class="line"></span><br><span class="line">![在这里插入图片描述](https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20201108093714513.png?x-oss-process&#x3D;image&#x2F;watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWppYTIxMTU&#x3D;,size_16,color_FFFFFF,t_70#pic_center)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">看到了若干 &#96;successfully&#96; 真的是五味杂陈啊，当然现在我们查看Redis服务的状态发现其还未开启：</span><br></pre></td></tr></table></figure>
+<p>[root@sher6j-01 utils]# systemctl status redis_6379.service</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">![在这里插入图片描述](https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20201108093726746.png#pic_center)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">还需要开启该服务：</span><br></pre></td></tr></table></figure>
+<p>[root@sher6j-01 utils]# systemctl start redis_6379.service</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">![在这里插入图片描述](https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20201108093741918.png#pic_center)</span><br><span class="line"></span><br><span class="line">最后最后最后，还有一步可别忘了！！！Redis默认是只有本机可以进行连接的，无法远程连接，这里只需要修改下Redis配置文件就好了：</span><br></pre></td></tr></table></figure>
+<p>[root@sher6j-01 utils]# vim /etc/redis/6379.conf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">![在这里插入图片描述](https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20201108093753703.png#pic_center)</span><br><span class="line"></span><br><span class="line">找到该行，将 &#96;127.0.0.1&#96; 修改为 &#96;0.0.0.0&#96; 即可。</span><br><span class="line"></span><br><span class="line">然后重启Redis服务就可以啦：</span><br></pre></td></tr></table></figure>
+<p>[root@sher6j-01 utils]# systemctl restart redis_6379.service</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">好了好了，大功告成，Peace，写下这篇博客的早上起来就看到远方的川宝好像要败选了，拜登赢了也没有啊，川宝就是不从白宫搬出去啊哈哈哈哈哈哈哈哈哈哈哈哈</span><br></pre></td></tr></table></figure>
+<p>[root@sher6j-01 utils]# systemctl restart redis_6379.service</p>
+<p>```</p>
+<p>好了好了，大功告成，Peace，写下这篇博客的早上起来就看到远方的川宝好像要败选了，拜登赢了也没有啊，川宝就是不从白宫搬出去啊哈哈哈哈哈哈哈哈哈哈哈哈</p>
+<p><img src="https://img-blog.csdnimg.cn/20201108093815625.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWppYTIxMTU=,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20201108093827441.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWppYTIxMTU=,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/08/CentOS7%E5%AE%89%E8%A3%85Redis6%E5%85%A8%E8%BF%87%E7%A8%8B%E5%8F%8A%E5%87%BA%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Java学习之容器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -901,86 +1014,6 @@
 
 
   
-    <article id="post-字典树" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/08/06/%E5%AD%97%E5%85%B8%E6%A0%91/">字典树</a>
-    </h1>
-  
-
-        
-        <a href="/2020/08/06/%E5%AD%97%E5%85%B8%E6%A0%91/" class="archive-article-date">
-  	<time datetime="2020-08-06T12:05:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="字典树"><a href="#字典树" class="headerlink" title="字典树"></a>字典树</h1><h2 id="字典树的结构"><a href="#字典树的结构" class="headerlink" title="字典树的结构"></a>字典树的结构</h2><p><code>Trie</code>树，即<strong>字典树</strong>，又称<strong>单词查找树</strong>、<strong>前缀树</strong>、<strong>键树</strong>，是一种树形结构，其典型的应用是用于统计和排序大量的字符串。</p>
-        
-          <a class="article-more-a" href="/2020/08/06/%E5%AD%97%E5%85%B8%E6%A0%91/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/08/06/%E5%AD%97%E5%85%B8%E6%A0%91/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
@@ -1078,6 +1111,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
@@ -1106,15 +1147,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JVM</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">多线程</a>
+                <a href="javascript:void(0)" class="js-tag color4">JVM</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1122,7 +1159,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">多线程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">源码</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">并发编程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1131,10 +1176,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">并发编程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1158,6 +1199,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">微服务</a>
               </li>
              
@@ -1166,23 +1215,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">虚拟机</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1210,23 +1243,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">递归</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">链表</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">哈希表</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">栈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1238,11 +1263,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
+                <a href="javascript:void(0)" class="js-tag color2">栈</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
               </li>
             
             <div class="clearfix"></div>

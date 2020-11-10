@@ -150,6 +150,190 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-CentOS7中安装ElasticSearch服务" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/10/CentOS7%E4%B8%AD%E5%AE%89%E8%A3%85ElasticSearch%E6%9C%8D%E5%8A%A1/">CentOS7中安装ElasticSearch服务</a>
+    </h1>
+  
+
+        
+        <a href="/2020/11/10/CentOS7%E4%B8%AD%E5%AE%89%E8%A3%85ElasticSearch%E6%9C%8D%E5%8A%A1/" class="archive-article-date">
+  	<time datetime="2020-11-10T05:17:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="安装-elasticsearch"><a href="#安装-elasticsearch" class="headerlink" title="安装 elasticsearch"></a>安装 <code>elasticsearch</code></h1><h2 id="创建用于启动-elasticsearch-服务的用户"><a href="#创建用于启动-elasticsearch-服务的用户" class="headerlink" title="创建用于启动 elasticsearch 服务的用户"></a>创建用于启动 <code>elasticsearch</code> 服务的用户</h2><p>ES不能以root用户身份启动，所以必须创建普通用户:</p>
+<ul>
+<li><p>创建一个新的<code>es</code>用户组</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@sher6j-01 ~]# groupadd es</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建新的用户<code>es6j</code>并将其放入<code>es</code>用户组</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@sher6j-01 ~]# useradd es6j -g es</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改<code>es6j</code>用户的密码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@sher6j-01 ~]# passwd es6j</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/11/10/CentOS7%E4%B8%AD%E5%AE%89%E8%A3%85ElasticSearch%E6%9C%8D%E5%8A%A1/C:%5CUsers%5Csher6j%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20201110105237950.png" alt></p>
+</li>
+</ul>
+<blockquote>
+<p>之所以上面提示无效的密码，是因为我将密码设置为了 <code>1234</code>，过于简单，该提示可以忽略，只要重新输入密码即可设置密码成功</p>
+</blockquote>
+<h2 id="用普通用户安装-elasticsearch-服务；"><a href="#用普通用户安装-elasticsearch-服务；" class="headerlink" title="用普通用户安装 elasticsearch 服务；"></a>用普通用户安装 <code>elasticsearch</code> 服务；</h2><p>利用ftp工具将安装包上传至<code>es6j</code>的<code>home</code>目录下</p>
+<p><img src="/2020/11/10/CentOS7%E4%B8%AD%E5%AE%89%E8%A3%85ElasticSearch%E6%9C%8D%E5%8A%A1/C:%5CUsers%5Csher6j%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20201110105838806.png" alt="image-20201110105838806"></p>
+<p>然后对其进行解压：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[es6j@sher6j-01 ~]$ tar -zxvf elasticsearch-6.8.0.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p>解压后其实就安装成功了，我们进入<code>elasticsearch</code>的目录进行查看</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[es6j@sher6j-01 ~]$ cd elasticsearch-6.8.0&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p>其主要目录说明如下：</p>
+<p><img src="/2020/11/10/CentOS7%E4%B8%AD%E5%AE%89%E8%A3%85ElasticSearch%E6%9C%8D%E5%8A%A1/C:%5CUsers%5Csher6j%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20201110110631125.png" alt="image-20201110110631125"></p>
+<p>如果要启动<code>elasticsearch</code>服务，则进入<code>bin</code>目录下执行启动脚本即可：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[es6j@sher6j-01 elasticsearch-6.8.0]$ cd bin</span><br><span class="line">[es6j@sher6j-01 bin]$ .&#x2F;elasticsearch</span><br></pre></td></tr></table></figure>
+
+<p>当出现started时代表启动成功</p>
+<p><img src="/2020/11/10/CentOS7%E4%B8%AD%E5%AE%89%E8%A3%85ElasticSearch%E6%9C%8D%E5%8A%A1/C:%5CUsers%5Csher6j%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20201110122838173.png" alt="image-20201110122838173"></p>
+<p>可以看到<code>elasticsearch</code>对外提供了两个端口<code>9200</code>和<code>9300</code>，其中<code>9200</code>作为Web端口可以用作浏览器访问，而<code>9300</code>作为TCP端口可以供如Java程序等进行连接。</p>
+<blockquote>
+<p>如果要关闭其服务，用 <code>Ctrl</code> + <code>C</code> 即可。</p>
+</blockquote>
+<p>我们可以以该主机中的任一用户使用 <code>curl</code> 命令模拟浏览器访问 <code>elasticsearch</code> 的服务：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@sher6j-01 ~]# curl http:&#x2F;&#x2F;localhost:9200</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/11/10/CentOS7%E4%B8%AD%E5%AE%89%E8%A3%85ElasticSearch%E6%9C%8D%E5%8A%A1/C:%5CUsers%5Csher6j%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20201110123431776.png" alt="image-20201110123431776"></p>
+<p>如上图可以看见 <code>elasticsearch</code> 响应的 <code>JSON</code> 串，而之所以用 <code>curl</code> 模拟而没有用外部浏览器直接访问，是因为 <code>elasticsearch</code> 默认只能够本机访问。</p>
+<h2 id="开启远程连接权限"><a href="#开启远程连接权限" class="headerlink" title="开启远程连接权限"></a>开启远程连接权限</h2><p>进入到 <code>config</code> 目录下，编辑其主配置文件 <code>eelasticsearch.yml</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[es6j@sher6j-01 elasticsearch-6.8.0]$ cd config&#x2F;</span><br><span class="line">[es6j@sher6j-01 config]$ vim elasticsearch.yml</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>vim</code> 界面中搜索 <code>network.host</code> 配置项（<code>/</code>搜索）</p>
+<p><img src="/2020/11/10/CentOS7%E4%B8%AD%E5%AE%89%E8%A3%85ElasticSearch%E6%9C%8D%E5%8A%A1/C:%5CUsers%5Csher6j%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20201110124138866.png" alt="image-20201110124138866"></p>
+<p>原配置文件如下：</p>
+<p><img src="/2020/11/10/CentOS7%E4%B8%AD%E5%AE%89%E8%A3%85ElasticSearch%E6%9C%8D%E5%8A%A1/C:%5CUsers%5Csher6j%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20201110124250827.png" alt="image-20201110124250827"></p>
+<p>将其修改为：<code>network.host: 0.0.0.0</code>。然后重新启动 <code>elasticsearch</code> 服务。</p>
+<p>然后我们发现就出现了如下的错误：</p>
+<p><img src="/2020/11/10/CentOS7%E4%B8%AD%E5%AE%89%E8%A3%85ElasticSearch%E6%9C%8D%E5%8A%A1/C:%5CUsers%5Csher6j%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20201110124701548.png" alt="image-20201110124701548"></p>
+<p>当然还有可能是如下的三个错误，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ERROR: [3] bootstrap checks failed</span><br><span class="line">[1]: max file descriptors [4096] for elasticsearch process is too low, increase to at least [65535]</span><br><span class="line">[2]: max number of threads [3802] for user [es6j] is too low, increase to at least [4096]</span><br><span class="line">[3]: max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]</span><br></pre></td></tr></table></figure>
+
+<p>这是因为一旦 <code>elasticsearch</code> 启动了远程连接，其认为是生产模式，所以就需要对内存、线程数等有所要求，所以我们需要将主机调整到符合要求的状态。</p>
+<p>修改主机的状态需要用 <code>root</code> 用户：</p>
+<ul>
+<li><pre><code>[root@sher6j-01 ~]# vim /etc/security/limits.conf
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">在文件末尾插入如下参数后保存退出：</span><br></pre></td></tr></table></figure>
+*               soft    nofile          65536
+*               hard    nofile          65536
+*               soft    nproc           4096
+*               hard    nproc           4096
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  ![image-20201110125408932](C:\Users\sher6j\AppData\Roaming\Typora\typora-user-images\image-20201110125408932.png)</span><br><span class="line"></span><br><span class="line">* 重新登录后，即可发现配置已经生效：</span><br></pre></td></tr></table></figure>
+[root@sher6j-01 ~]# ulimit -Hn
+[root@sher6j-01 ~]# ulimit -Sn
+[root@sher6j-01 ~]# ulimit -Hu
+[root@sher6j-01 ~]# ulimit -Su
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  ![image-20201110125802262](C:\Users\sher6j\AppData\Roaming\Typora\typora-user-images\image-20201110125802262.png)</span><br><span class="line"></span><br><span class="line">*</span><br></pre></td></tr></table></figure>
+[root@sher6j-01 ~]# vim /etc/security/limits.d/20-nproc.conf
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  修改该配置文件，将其 &#96;*&#96; 修改为启动 &#96;elasticsearch&#96; 服务的用户名，此处即为 &#96;es6j&#96;。</span><br><span class="line"></span><br><span class="line">  ![image-20201110130309945](C:\Users\sher6j\AppData\Roaming\Typora\typora-user-images\image-20201110130309945.png)</span><br><span class="line"></span><br><span class="line">  修改后：</span><br><span class="line"></span><br><span class="line">  ![image-20201110130400385](C:\Users\sher6j\AppData\Roaming\Typora\typora-user-images\image-20201110130400385.png)</span><br><span class="line"></span><br><span class="line">*</span><br></pre></td></tr></table></figure>
+[root@sher6j-01 ~]# vim /etc/sysctl.conf
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">修改最大线程数，在该配置文件中加入 &#96;vm.max_map_count&#x3D;655360&#96; 参数</span><br><span class="line"></span><br><span class="line">![image-20201110130604884](C:\Users\sher6j\AppData\Roaming\Typora\typora-user-images\image-20201110130604884.png)</span><br><span class="line"></span><br><span class="line">然后可以执行如下命令对该参数进行检测：</span><br></pre></td></tr></table></figure>
+[root@sher6j-01 ~]# sysctl -p
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  ![image-20201110130719072](C:\Users\sher6j\AppData\Roaming\Typora\typora-user-images\image-20201110130719072.png)</span><br><span class="line"></span><br><span class="line">经过以上配置的修改后，我们重新登录 &#96;es6j&#96; 用户，再次启动 &#96;elasticsearch&#96; 服务，发现可以启动成功了</span><br><span class="line"></span><br><span class="line">![image-20201110131000860](C:\Users\sher6j\AppData\Roaming\Typora\typora-user-images\image-20201110131000860.png)</span><br><span class="line"></span><br><span class="line">再次用外部浏览器访问 &#96;http:&#x2F;&#x2F;192.168.56.102:9200&#x2F;&#96; ，即可访问成功：</span><br><span class="line"></span><br><span class="line">![image-20201110131444383](C:\Users\sher6j\AppData\Roaming\Typora\typora-user-images\image-20201110131444383.png)</span><br><span class="line"></span><br><span class="line">&gt; 需要主机关闭防火墙：</span><br><span class="line">&gt;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+&gt; [root@sher6j-01 ~]# systemctl stop firewalld
+&gt; <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># 安装 &#96;Kibana&#96;</span><br><span class="line"></span><br><span class="line">由于 &#96;elasticsearch&#96; 只对外暴露了端口，而没有操作界面，所以我们需要安装一个图形化界面来操作 &#96;elasticsearch&#96;，这就是官方提供的 &#96;Kibana&#96;，当然了，&#96;Kibana&#96; 的用途还有很多很多，作为图形化界面操作 &#96;elasticsearch&#96; 只是其很小的一部分。</span><br><span class="line"></span><br><span class="line">安装 &#96;kibana&#96; 我们以 &#96;root&#96; 身份安装即可，在 &#96;\usr\local\&#96; 目录下创建 &#96;kibana&#96;目录： </span><br></pre></td></tr></table></figure>
+[root@sher6j-01 local]# mkdir kibana
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">然后用ftp工具将 &#96;kibana&#96; 安装包上传至该目录：</span><br><span class="line"></span><br><span class="line">![image-20201110160137998](C:\Users\sher6j\AppData\Roaming\Typora\typora-user-images\image-20201110160137998.png)</span><br><span class="line"></span><br><span class="line">然后进行解压，解压后进入其目录：</span><br></pre></td></tr></table></figure>
+[root@sher6j-01 kibana]# tar -zxvf kibana-6.8.0-linux-x86_64.tar.gz
+[root@sher6j-01 kibana]# cd kibana-6.8.0-linux-x86_64/
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">比较重要的目录就是 &#96;bin&#96; 和 &#96;config&#96;</span><br><span class="line"></span><br><span class="line">![image-20201110160447371](C:\Users\sher6j\AppData\Roaming\Typora\typora-user-images\image-20201110160447371.png)</span><br><span class="line"></span><br><span class="line">我们进入到 &#96;config&#96; 目录下修改其配置文件：</span><br></pre></td></tr></table></figure>
+[root@sher6j-01 config]# vim kibana.yml
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">修改如下两处配置改成 &#96;kibana&#96; 要监听的 &#96;elasticsearch&#96; 服务的主机地址，当然本机也可以直接用原来的 &#96;localhost&#96;：</span><br><span class="line"></span><br><span class="line">![image-20201110160859583](C:\Users\sher6j\AppData\Roaming\Typora\typora-user-images\image-20201110160859583.png)</span><br><span class="line"></span><br><span class="line">然后进入 &#96;bin&#96; 目录运行启动脚本即可：</span><br></pre></td></tr></table></figure>
+[root@sher6j-01 bin]# ./kibana
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">![image-20201110161425016](C:\Users\sher6j\AppData\Roaming\Typora\typora-user-images\image-20201110161425016.png)</span><br><span class="line"></span><br><span class="line">然后在浏览器中访问该地址即可：</span><br><span class="line"></span><br><span class="line">![image-20201110161613280](C:\Users\sher6j\AppData\Roaming\Typora\typora-user-images\image-20201110161613280.png)</span><br><span class="line"></span><br><span class="line"># 安装中文分词器插件</span><br><span class="line"></span><br><span class="line">&#96;elasticsearch&#96; 默认的分词器为标准分词器(Standard Analyzer)，标准分词器对于英文为**单词分词**，对于中文为**单字分词**。也就是说，如果关键字为“中华人民共和国”，则标准分词器会分为&quot;中&quot;、 &quot;华&quot;、 &quot;人&quot;、 &quot;民&quot;、 &quot;共&quot;、 &quot;和&quot;、 &quot;国&quot;。这无疑对中文的搜索非常不适合，所以我们需要安装 &#96;ik&#96; 分词器的插件， &#96;ik&#96; 分词器的相关文档可以参考[ik分词器GitHub官网](https:&#x2F;&#x2F;github.com&#x2F;medcl&#x2F;elasticsearch-analysis-ik)，安装方式也可以使用本地安装或在线安装，这里使用在线安装。</span><br><span class="line"></span><br><span class="line">* 由于之前的索引库数据是由标准分词器产生的，这会使 &#96;ik&#96; 分词器安装错误，所以需要清空之前的索引库数据，即 &#96;elasticsearch&#96; 安装目录下的 &#96;data&#96; 文件夹：![image-20201110202424729](C:\Users\sher6j\AppData\Roaming\Typora\typora-user-images\image-20201110202424729.png)</span><br></pre></td></tr></table></figure>
+[es6j@sher6j-01 elasticsearch-6.8.0]$ rm -rf data/
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 在 &#96;bin&#96; 目录下之前提到过有各种脚本，其中就有用于在线安装插件的脚本，利用该脚本即可在线安装插件，其用法为：</span><br></pre></td></tr></table></figure>
+elasticsearch-plugin install 插件地址
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">![image-20201110202728732](C:\Users\sher6j\AppData\Roaming\Typora\typora-user-images\image-20201110202728732.png)</span><br><span class="line"></span><br><span class="line">所以在 &#96;bin&#96; 目录下键入如下命令即可，注意该 &#96;ik&#96; 分词器的版本必须和 &#96;elasticsearch&#96; 的版本一致！</span><br></pre></td></tr></table></figure>
+[es6j@sher6j-01 bin]$ ./elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v6.8.0/elasticsearch-analysis-ik-6.8.0.zip
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  当出现 &#96;installed&#96; 即为安装好该插件：</span><br><span class="line"></span><br><span class="line">  ![image-20201110203316841](C:\Users\sher6j\AppData\Roaming\Typora\typora-user-images\image-20201110203316841.png)</span><br><span class="line"></span><br><span class="line">* 然后就可以重启 &#96;elasticsearch&#96; 和 &#96;kibana&#96; 来测试该分词器是否生效，可以看到在 &#96;elasticsearch&#96; 启动过程中加载了 &#96;ik&#96; 分词器的插件：</span><br><span class="line"></span><br><span class="line">  ![image-20201110203534339](C:\Users\sher6j\AppData\Roaming\Typora\typora-user-images\image-20201110203534339.png)</span><br><span class="line"></span><br><span class="line">  在 &#96;kibana&#96; 中键入如下命令测试分词器：</span><br></pre></td></tr></table></figure>
+GET /_analyze
+{
+  &quot;text&quot;: &quot;中华人民共和国国歌&quot;,
+  &quot;analyzer&quot;: &quot;ik_smart&quot;
+}</code></pre><p>可以看到成功对汉语进行了分词：</p>
+<p><img src="/2020/11/10/CentOS7%E4%B8%AD%E5%AE%89%E8%A3%85ElasticSearch%E6%9C%8D%E5%8A%A1/C:%5CUsers%5Csher6j%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20201110203839970.png" alt="image-20201110203839970"></p>
+</li>
+</ul>
+<blockquote>
+<p><code>ik_smart</code> 和 <code>ik_max_word</code> 的区别，在 <code>ik</code> 分词器的官方文档中有所说明：</p>
+<ul>
+<li><code>ik_max_word</code>: 会将文本做最细粒度的拆分，比如会将“中华人民共和国国歌”拆分为“中华人民共和国,中华人民,中华,华人,人民共和国,人民,人,民,共和国,共和,和,国国,国歌”，会穷尽各种可能的组合，适合 Term Query；</li>
+<li><code>ik_smart</code>: 会做最粗粒度的拆分，比如会将“中华人民共和国国歌”拆分为“中华人民共和国,国歌”，适合 Phrase 查询。</li>
+</ul>
+</blockquote>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">搜索</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/10/CentOS7%E4%B8%AD%E5%AE%89%E8%A3%85ElasticSearch%E6%9C%8D%E5%8A%A1/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-CentOS7安装Redis6全过程及出现的问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -938,82 +1122,6 @@
 
 
   
-    <article id="post-排序算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/08/08/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/">排序算法</a>
-    </h1>
-  
-
-        
-        <a href="/2020/08/08/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-08-08T03:01:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="常用的排序算法"><a href="#常用的排序算法" class="headerlink" title="常用的排序算法"></a>常用的排序算法</h1>
-        
-          <a class="article-more-a" href="/2020/08/08/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/08/08/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
@@ -1111,19 +1219,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">力扣</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">搜索</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1147,6 +1251,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">力扣</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">JVM</a>
               </li>
              
@@ -1159,7 +1271,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color5">并发编程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1171,27 +1283,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">并发编程</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">数据库</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">消息队列</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">RabbitMQ</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1203,7 +1295,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
+                <a href="javascript:void(0)" class="js-tag color4">数据库</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">消息队列</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">RabbitMQ</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1212,6 +1316,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">SpringCloud</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1235,10 +1347,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">异常处理</a>
               </li>
              
@@ -1251,6 +1359,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">栈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">哈希表</a>
               </li>
              
@@ -1259,11 +1375,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">栈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">树</a>
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1271,11 +1383,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
+                <a href="javascript:void(0)" class="js-tag color2">树</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+                <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
               </li>
             
             <div class="clearfix"></div>

@@ -172,9 +172,11 @@
       
         <h1 id="Tags"><a href="#Tags" class="headerlink" title="Tags"></a>Tags</h1><h2 id="Sliding-Window"><a href="#Sliding-Window" class="headerlink" title="Sliding Window"></a>Sliding Window</h2><p><a href="https://leetcode.com/problems/add-two-numbers/" target="_blank" rel="noopener">2. Add Two Numbers</a></p>
 <h2 id="Dynamic-Programming"><a href="#Dynamic-Programming" class="headerlink" title="Dynamic Programming"></a>Dynamic Programming</h2><p><a href="https://leetcode.com/problems/longest-palindromic-substring/" target="_blank" rel="noopener">5. Longest Palindromic Substring</a></p>
+<p><a href="https://leetcode.com/problems/regular-expression-matching/" target="_blank" rel="noopener">10. Regular Expression Matching</a></p>
 <h2 id="Merge-Sort"><a href="#Merge-Sort" class="headerlink" title="Merge Sort"></a>Merge Sort</h2><p><a href="https://leetcode.com/problems/median-of-two-sorted-arrays/" target="_blank" rel="noopener">4. Median of Two Sorted Arrays</a></p>
 <h2 id="Linked-List"><a href="#Linked-List" class="headerlink" title="Linked List"></a>Linked List</h2><p><a href="https://leetcode.com/problems/add-two-numbers/" target="_blank" rel="noopener">2. Add Two Numbers</a></p>
 <h2 id="Hash-Table"><a href="#Hash-Table" class="headerlink" title="Hash Table"></a>Hash Table</h2><p><a href="https://leetcode.com/problems/two-sum/" target="_blank" rel="noopener">1. Two Sum</a></p>
+<h2 id="Double-Points"><a href="#Double-Points" class="headerlink" title="Double Points"></a>Double Points</h2><p><a href="https://leetcode.com/problems/container-with-most-water/" target="_blank" rel="noopener">11. Container With Most Water</a></p>
 <h1 id="Questions"><a href="#Questions" class="headerlink" title="Questions"></a>Questions</h1><h2 id="1-Two-Sum"><a href="#1-Two-Sum" class="headerlink" title="1. Two Sum"></a><a href="https://leetcode.com/problems/two-sum/" target="_blank" rel="noopener">1. Two Sum</a></h2><h3 id="Question"><a href="#Question" class="headerlink" title="Question"></a>Question</h3><p>Given an array of integers <code>nums</code> and an integer <code>target</code>, return <em>indices of the two numbers such that they add up to <code>target</code></em>. You may assume that each input would have <strong>exactly one solution</strong>, and you may not use the <em>same</em> element twice. You can return the answer in any order.</p>
 <p><strong>Example 1:</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: nums &#x3D; [2,7,11,15], target &#x3D; 9</span><br><span class="line">Output: [0,1]</span><br><span class="line">Output: Because nums[0] + nums[1] &#x3D;&#x3D; 9, we return [0, 1].</span><br></pre></td></tr></table></figure>
@@ -343,7 +345,130 @@
 <h3 id="Solution-6"><a href="#Solution-6" class="headerlink" title="Solution"></a>Solution</h3><p>当整数溢出时，其减去刚加的尾数再除10和原来的数一定不为一个数。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">reverse</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (x != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">int</span> tail = x % <span class="number">10</span>;</span><br><span class="line">            <span class="keyword">int</span> newRes = res * <span class="number">10</span> + tail;</span><br><span class="line">            <span class="comment">// overflow</span></span><br><span class="line">            <span class="keyword">if</span> ((newRes - tail) / <span class="number">10</span> != res) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            res = newRes;</span><br><span class="line">            x = x / <span class="number">10</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="8-String-to-Integer-atoi-—-gggggarbage"><a href="#8-String-to-Integer-atoi-—-gggggarbage" class="headerlink" title="8. String to Integer (atoi) —- gggggarbage"></a><a href="https://leetcode.com/problems/string-to-integer-atoi/" target="_blank" rel="noopener">8. String to Integer (atoi)</a> —- gggggarbage</h2>
+<h2 id="8-String-to-Integer-atoi-—-gggggarbage"><a href="#8-String-to-Integer-atoi-—-gggggarbage" class="headerlink" title="8. String to Integer (atoi) —- gggggarbage"></a><a href="https://leetcode.com/problems/string-to-integer-atoi/" target="_blank" rel="noopener">8. String to Integer (atoi)</a> —- gggggarbage</h2><h2 id="9-Palindrome-Number"><a href="#9-Palindrome-Number" class="headerlink" title="9. Palindrome Number"></a><a href="https://leetcode.com/problems/palindrome-number/" target="_blank" rel="noopener">9. Palindrome Number</a></h2><h3 id="Question-7"><a href="#Question-7" class="headerlink" title="Question"></a>Question</h3><p>Determine whether an integer is a palindrome. An integer is a palindrome when it reads the same backward as forward.</p>
+<p><strong>Follow up:</strong> Could you solve it without converting the integer to a string?</p>
+<p><strong>Example 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: x &#x3D; 121</span><br><span class="line">Output: true</span><br></pre></td></tr></table></figure>
+
+<p><strong>Example 2:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: x &#x3D; -121</span><br><span class="line">Output: false</span><br><span class="line">Explanation: From left to right, it reads -121. From right to left, it becomes 121-. Therefore it is not a palindrome.</span><br></pre></td></tr></table></figure>
+
+<p><strong>Example 3:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: x &#x3D; 10</span><br><span class="line">Output: false</span><br><span class="line">Explanation: Reads 01 from right to left. Therefore it is not a palindrome.</span><br></pre></td></tr></table></figure>
+
+<p><strong>Example 4:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: x &#x3D; -101</span><br><span class="line">Output: false</span><br></pre></td></tr></table></figure>
+
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>-2^31 &lt;= x &lt;= 2^31 - 1</code></li>
+</ul>
+<h3 id="Solution-7"><a href="#Solution-7" class="headerlink" title="Solution"></a>Solution</h3><p>相同的开始判断条件返回 <code>false</code>：当 x &lt; 0 时，x 不是回文数。同样地，如果数字的最后一位是 0，为了使该数字为回文，则其第一位数字也应该是 0，只有 0 满足这一属性。</p>
+<h4 id="To-String"><a href="#To-String" class="headerlink" title="To String"></a>To String</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isPalindrome</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (x &lt; <span class="number">0</span> || (x % <span class="number">10</span> == <span class="number">0</span> &amp;&amp; x != <span class="number">0</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">char</span>[] chars = String.valueOf(x).toCharArray();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; chars.length / <span class="number">2</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (chars[i] != chars[chars.length - <span class="number">1</span> - i]) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Follow-Up-No-String"><a href="#Follow-Up-No-String" class="headerlink" title="Follow Up No String"></a>Follow Up No String</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isPalindrome</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (x &lt; <span class="number">0</span> || (x % <span class="number">10</span> == <span class="number">0</span> &amp;&amp; x != <span class="number">0</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> revNum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (x &gt; revNum) &#123;</span><br><span class="line">            revNum = revNum * <span class="number">10</span> + x % <span class="number">10</span>;</span><br><span class="line">            x /= <span class="number">10</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// if 12321, loop end we get x = 12，revNum = 123</span></span><br><span class="line">        <span class="keyword">return</span> x == revNum || x == revNum / <span class="number">10</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="10-Regular-Expression-Matching"><a href="#10-Regular-Expression-Matching" class="headerlink" title="10. Regular Expression Matching"></a><a href="https://leetcode.com/problems/regular-expression-matching/" target="_blank" rel="noopener">10. Regular Expression Matching</a></h2><h3 id="Question-8"><a href="#Question-8" class="headerlink" title="Question"></a>Question</h3><p>Given an input string (<code>s</code>) and a pattern (<code>p</code>), implement regular expression matching with support for <code>&#39;.&#39;</code> and <code>&#39;*&#39;</code> where:<code></code></p>
+<ul>
+<li><code>&#39;.&#39;</code> Matches any single character.</li>
+<li><code>&#39;*&#39;</code> Matches zero or more of the preceding element.</li>
+</ul>
+<p>The matching should cover the <strong>entire</strong> input string (not partial).</p>
+<p><strong>Example 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: s &#x3D; &quot;aa&quot;, p &#x3D; &quot;a&quot;</span><br><span class="line">Output: false</span><br><span class="line">Explanation: &quot;a&quot; does not match the entire string &quot;aa&quot;.</span><br></pre></td></tr></table></figure>
+
+<p><strong>Example 2:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: s &#x3D; &quot;aa&quot;, p &#x3D; &quot;a*&quot;</span><br><span class="line">Output: true</span><br><span class="line">Explanation: &#39;*&#39; means zero or more of the preceding element, &#39;a&#39;. Therefore, by repeating &#39;a&#39; once, it becomes &quot;aa&quot;.</span><br></pre></td></tr></table></figure>
+
+<p><strong>Example 3:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: s &#x3D; &quot;ab&quot;, p &#x3D; &quot;.*&quot;</span><br><span class="line">Output: true</span><br><span class="line">Explanation: &quot;.*&quot; means &quot;zero or more (*) of any character (.)&quot;.</span><br></pre></td></tr></table></figure>
+
+<p><strong>Example 4:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: s &#x3D; &quot;aab&quot;, p &#x3D; &quot;c*a*b&quot;</span><br><span class="line">Output: true</span><br><span class="line">Explanation: c can be repeated 0 times, a can be repeated 1 time. Therefore, it matches &quot;aab&quot;.</span><br></pre></td></tr></table></figure>
+
+<p><strong>Example 5:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: s &#x3D; &quot;mississippi&quot;, p &#x3D; &quot;mis*is*p*.&quot;</span><br><span class="line">Output: false</span><br></pre></td></tr></table></figure>
+
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>0 &lt;= s.length &lt;= 20</code></li>
+<li><code>0 &lt;= p.length &lt;= 30</code></li>
+<li><code>s</code> contains only lowercase English letters.</li>
+<li><code>p</code> contains only lowercase English letters, <code>&#39;.&#39;</code>, and <code>&#39;*&#39;</code>.</li>
+<li>It is guaranteed for each appearance of the character <code>&#39;*&#39;</code>, there will be a previous valid character to match.</li>
+</ul>
+<h3 id="Solution-8"><a href="#Solution-8" class="headerlink" title="Solution"></a>Solution</h3><p><strong>DP</strong>:</p>
+<ul>
+<li><p><code>dp[i][j]</code>：<em>s</em> 的前 <em>i</em> 个字符与 <em>p</em> 中的前 <em>j</em> 个字符是否能够匹配。</p>
+</li>
+<li><p><strong>base case</strong>：</p>
+<ul>
+<li><code>dp[0][0] == true</code>，空串一定可以被匹配；</li>
+<li>if <code>p.charAt(i) == &#39;*&#39;</code> &amp;&amp; <code>dp[0][i-1]</code>，then <code>dp[0][i] == true</code>，<code>a*</code> 可以表示 <code>empty</code>，故可匹配。</li>
+</ul>
+</li>
+<li><p><strong>state transition</strong>：</p>
+<ul>
+<li><p>if <code>p.charAt(j) == s.charAt(i)</code>，then <code>dp[i][j] = dp[i - 1][j - 1]</code>     <strong>①</strong>；</p>
+</li>
+<li><p>if <code>p.charAt(j) == &#39;.&#39;</code>，then <code>dp[i][j] = dp[i - 1][j - 1]</code>     <strong>②</strong>；</p>
+</li>
+<li><p>if <code>p.charAt(j) == &#39;*&#39;</code>，two sub conditions:</p>
+<ul>
+<li><p>if <code>p.charAt(j - 1) != s.charAt(i)</code> and <code>p.charAt(j - 1) != &#39;.&#39;</code>，then <code>dp[i][j] = dp[i][j - 2]</code>      <strong>③</strong>；</p>
+<blockquote>
+<p>in this case, a* only counts as empty</p>
+</blockquote>
+</li>
+<li><p>if <code>p.charAt(j - 1) == s.charAt(i)</code> or <code>p.charAt(j - 1) == &#39;.&#39;</code>, then <code>dp[i][j]</code> = <code>dp[i - 1][j]</code> or <code>dp[i][j - 1]</code> or <code>dp[i][j - 2]</code>.</p>
+<blockquote>
+<p><code>dp[i - 1][j]</code>：in this case, a* counts as multiple a.     <strong>④</strong></p>
+<p><code>dp[i][j - 1]</code> ：in this case, a* counts as single a.      <strong>⑤</strong></p>
+<p><code>dp[i][j - 2]</code>：in this case, a* counts as empty.      <strong>⑥</strong></p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>return</strong>：<code>dp[s.length()][p.length()]</code>.</p>
+</li>
+</ul>
+<img src="/2020/11/10/%E5%8A%9B%E6%89%A3%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0/blog\source\_posts\力扣刷题笔记\10dp.jpg" style="zoom: 50%;">
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isMatch</span><span class="params">(String s, String p)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (s == <span class="keyword">null</span> || p == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> m = s.length();</span><br><span class="line">        <span class="keyword">int</span> n = p.length();</span><br><span class="line">        <span class="keyword">boolean</span>[][] dp = <span class="keyword">new</span> <span class="keyword">boolean</span>[m + <span class="number">1</span>][n + <span class="number">1</span>];</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// base case</span></span><br><span class="line">        dp[<span class="number">0</span>][<span class="number">0</span>] = <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (p.charAt(i) == <span class="string">'*'</span> &amp;&amp; dp[<span class="number">0</span>][i - <span class="number">1</span>]) &#123;</span><br><span class="line">                dp[<span class="number">0</span>][i + <span class="number">1</span>] = <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (p.charAt(j) == <span class="string">'.'</span> || p.charAt(j) == s.charAt(i)) &#123;</span><br><span class="line">                    dp[i + <span class="number">1</span>][j + <span class="number">1</span>] = dp[i][j];</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (p.charAt(j) == <span class="string">'*'</span>) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (p.charAt(j - <span class="number">1</span>) != <span class="string">'.'</span> &amp;&amp; p.charAt(j - <span class="number">1</span>) != s.charAt(i)) &#123;</span><br><span class="line">                        dp[i + <span class="number">1</span>][j + <span class="number">1</span>] = dp[i + <span class="number">1</span>][j - <span class="number">1</span>];</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        dp[i + <span class="number">1</span>][j + <span class="number">1</span>] = dp[i+<span class="number">1</span>][j] || dp[i][j+<span class="number">1</span>] || dp[i+<span class="number">1</span>][j-<span class="number">1</span>];</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> dp[m][n];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="11-Container-With-Most-Water"><a href="#11-Container-With-Most-Water" class="headerlink" title="11. Container With Most Water"></a><a href="https://leetcode.com/problems/container-with-most-water/" target="_blank" rel="noopener">11. Container With Most Water</a></h2><h3 id="Question-9"><a href="#Question-9" class="headerlink" title="Question"></a>Question</h3><p>Given <code>n</code> non-negative integers <code>a1, a2, ..., an</code> , where each represents a point at coordinate <code>(i, ai)</code>. <code>n</code> vertical lines are drawn such that the two endpoints of the line <code>i</code> is at <code>(i, ai)</code> and <code>(i, 0)</code>. Find two lines, which, together with the x-axis forms a container, such that the container contains the most water.</p>
+<p><strong>Notice</strong> that you may not slant the container.</p>
+<p><strong>Example 1:</strong></p>
+<img src="https://s3-lc-upload.s3.amazonaws.com/uploads/2018/07/17/question_11.jpg" alt="img" style="zoom:50%;">
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: height &#x3D; [1,8,6,2,5,4,8,3,7]</span><br><span class="line">Output: 49</span><br><span class="line">Explanation: The above vertical lines are represented by array [1,8,6,2,5,4,8,3,7]. In this case, the max area of water (blue section) the container can contain is 49.</span><br></pre></td></tr></table></figure>
+
+<p><strong>Example 2:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: height &#x3D; [1,1]</span><br><span class="line">Output: 1</span><br></pre></td></tr></table></figure>
+
+<p><strong>Example 3:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: height &#x3D; [4,3,2,1,4]</span><br><span class="line">Output: 16</span><br></pre></td></tr></table></figure>
+
+<p><strong>Example 4:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: height &#x3D; [1,2,1]</span><br><span class="line">Output: 2</span><br></pre></td></tr></table></figure>
+
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>n = height.length</code></li>
+<li><code>2 &lt;= n &lt;= 3 * 10^4</code></li>
+<li><code>0 &lt;= height[i] &lt;= 3 * 10^4</code></li>
+</ul>
+<h3 id="Solution-9"><a href="#Solution-9" class="headerlink" title="Solution"></a>Solution</h3><p><strong>左右夹逼</strong>：</p>
+<ul>
+<li>双指针<code>left</code>, <code>right</code>分别代表左柱和右柱，<code>left</code>向右移动，<code>right</code>向左移动。</li>
+<li>当左柱矮于右柱时，高度由左柱决定，右柱左移高度不可能增长，宽反而下降，故无需右柱左移动，即需左柱右移；</li>
+<li>同理，右柱矮于左柱时，为了使面积有可能增大，只能使右柱左移。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxArea</span><span class="params">(<span class="keyword">int</span>[] height)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> left = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> right = height.length - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> max = <span class="number">0</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span> (left &lt; right) &#123;</span><br><span class="line">            <span class="keyword">int</span> h = height[left];</span><br><span class="line">            <span class="keyword">if</span> (height[left] &lt;= height[right]) &#123;</span><br><span class="line">                left++;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                h = height[right];</span><br><span class="line">                right--;</span><br><span class="line">            &#125;</span><br><span class="line">            max = Math.max(max, h * (right - left + <span class="number">1</span>));</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> max;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
       
 
       
@@ -1342,14 +1467,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">力扣</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
@@ -1358,7 +1475,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">力扣</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">JVM</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1382,15 +1511,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JVM</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">多线程</a>
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1402,7 +1523,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color4">多线程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1434,6 +1555,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">微服务</a>
               </li>
              
@@ -1450,11 +1575,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">非关系型数据库</a>
+                <a href="javascript:void(0)" class="js-tag color4">虚拟机</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">虚拟机</a>
+                <a href="javascript:void(0)" class="js-tag color3">非关系型数据库</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1470,15 +1595,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">数组</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">链表</a>
+                <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1486,11 +1607,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">哈希表</a>
+                <a href="javascript:void(0)" class="js-tag color3">链表</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
+                <a href="javascript:void(0)" class="js-tag color4">哈希表</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1498,11 +1619,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">树</a>
+                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
+                <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1510,7 +1635,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+                <a href="javascript:void(0)" class="js-tag color2">树</a>
               </li>
             
             <div class="clearfix"></div>

@@ -150,6 +150,151 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-搭建ElasticSearch集群测试环境" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/12/%E6%90%AD%E5%BB%BAElasticSearch%E9%9B%86%E7%BE%A4%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83/">搭建ElasticSearch集群测试环境</a>
+    </h1>
+  
+
+        
+        <a href="/2020/11/12/%E6%90%AD%E5%BB%BAElasticSearch%E9%9B%86%E7%BE%A4%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83/" class="archive-article-date">
+  	<time datetime="2020-11-12T12:32:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="搭建ElasticSearch集群环境"><a href="#搭建ElasticSearch集群环境" class="headerlink" title="搭建ElasticSearch集群环境"></a>搭建ElasticSearch集群环境</h1><h3 id="安装3个节点的ElasticSearch"><a href="#安装3个节点的ElasticSearch" class="headerlink" title="安装3个节点的ElasticSearch"></a>安装3个节点的ElasticSearch</h3><p>这里就不在不同的机器上测试了，毕竟原理方式都是一样，我们先在原安装目录下建立 <code>escluster</code> 文件夹，然后将安装好的 <code>elasticsearch</code> 分别拷贝到 <code>escluster/node1</code> 、<code>escluster/node2</code>、 <code>escluster/node3</code>，以用作三个集群中不同的节点。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[es6j@sher6j-03 ~]$ mkdir escluster</span><br><span class="line">[es6j@sher6j-03 ~]$ cp -r elasticsearch-6.8.0&#x2F; escluster&#x2F;node1&#x2F;</span><br><span class="line">[es6j@sher6j-03 ~]$ cp -r elasticsearch-6.8.0&#x2F; escluster&#x2F;node2&#x2F;</span><br><span class="line">[es6j@sher6j-03 ~]$ cp -r elasticsearch-6.8.0&#x2F; escluster&#x2F;node3&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/11/12/%E6%90%AD%E5%BB%BAElasticSearch%E9%9B%86%E7%BE%A4%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83/C:%5CUsers%5Csher6j%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20201112204215127.png" alt="image-20201112204215127"></p>
+<p>由于都是新的节点，然后我们将复制的原 <code>es</code> 中的数据清空：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[es6j@sher6j-03 node1]$ rm -rf data</span><br><span class="line">[es6j@sher6j-03 node2]$ rm -rf data</span><br><span class="line">[es6j@sher6j-03 node3]$ rm -rf data</span><br></pre></td></tr></table></figure>
+
+<h3 id="分配Java虚拟机堆内存"><a href="#分配Java虚拟机堆内存" class="headerlink" title="分配Java虚拟机堆内存"></a>分配Java虚拟机堆内存</h3><p>由于 <code>es</code> 要运行在Java虚拟机上，而此时是在一台机器上模拟的集群搭建，我给<code>Linux</code>主机分配的内存为2G，所以为了不让三个 <code>es</code> 节点同时运行导致程序崩溃，将每个节点的虚拟机内存调节至 <code>256M</code>，编辑每个节点的 <code>config</code> 目录下的 <code>jvm.options</code> 配置Java虚拟机参数，添加 <code>-Xms256m -Xmx256m</code> 配置表示Java虚拟机堆分配的最小内存为 <code>256M</code>，最大内存为 <code>256M</code>，即分配固定内存为 <code>256M</code>：</p>
+<p><img src="/2020/11/12/%E6%90%AD%E5%BB%BAElasticSearch%E9%9B%86%E7%BE%A4%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83/C:%5CUsers%5Csher6j%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20201112204911023.png" alt="image-20201112204911023"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[es6j@sher6j-03 node1]$ vim config&#x2F;jvm.options</span><br><span class="line">[es6j@sher6j-03 node2]$ vim config&#x2F;jvm.options</span><br><span class="line">[es6j@sher6j-03 node3]$ vim config&#x2F;jvm.options</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/11/12/%E6%90%AD%E5%BB%BAElasticSearch%E9%9B%86%E7%BE%A4%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83/C:%5CUsers%5Csher6j%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20201112212745838.png" alt="image-20201112212745838"></p>
+<h3 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h3><p>分别修改其 <code>config</code> 目录下的 <code>elasticsearch.yml</code> 文件进行不同节点的配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[es6j@sher6j-03 node1]$ vim config&#x2F;elasticsearch.yml</span><br><span class="line">[es6j@sher6j-03 node2]$ vim config&#x2F;elasticsearch.yml</span><br><span class="line">[es6j@sher6j-03 node3]$ vim config&#x2F;elasticsearch.yml</span><br></pre></td></tr></table></figure>
+
+<p>分别进行如下配置：</p>
+<ul>
+<li><p>node1:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cluster.name: sher6j-ess</span><br><span class="line">node.name: es-01</span><br><span class="line">network.host: 0.0.0.0</span><br><span class="line">http.port: 9201</span><br><span class="line">discovery.zen.ping.unicast.hosts: [&quot;192.168.56.103:9202&quot;, &quot;192.168.56.103:9203&quot;]</span><br><span class="line">gateway.recover_after_nodes: 3</span><br><span class="line">transport.tcp.port: 9301</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>node2:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cluster.name: sher6j-ess</span><br><span class="line">node.name: es-02</span><br><span class="line">network.host: 0.0.0.0</span><br><span class="line">http.port: 9202</span><br><span class="line">discovery.zen.ping.unicast.hosts: [&quot;192.168.56.103:9201&quot;, &quot;192.168.56.103:9203&quot;]</span><br><span class="line">gateway.recover_after_nodes: 3</span><br><span class="line">transport.tcp.port: 9302</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>node3:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cluster.name: sher6j-ess</span><br><span class="line">node.name: es-03</span><br><span class="line">network.host: 0.0.0.0</span><br><span class="line">http.port: 9203</span><br><span class="line">discovery.zen.ping.unicast.hosts: [&quot;192.168.56.103:9201&quot;, &quot;192.168.56.103:9202&quot;]</span><br><span class="line">gateway.recover_after_nodes: 3</span><br><span class="line">transport.tcp.port: 9303</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>其配置文件的含义如下：</p>
+<table>
+<thead>
+<tr>
+<th>配置项</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>cluster.name</code></td>
+<td>集群的名称，作为一个集群名称必须一致</td>
+</tr>
+<tr>
+<td><code>node.name</code></td>
+<td>节点的名称，作为一个集群中的节点其名称不能一致</td>
+</tr>
+<tr>
+<td><code>network.host: 0.0.0.0</code></td>
+<td>允许监听的地址(<code>0.0.0.0</code>表示开启远程权限)</td>
+</tr>
+<tr>
+<td><code>http.port</code></td>
+<td><code>es</code> 服务的监听端口</td>
+</tr>
+<tr>
+<td><code>discovery.zen.ping.unicast.hosts</code></td>
+<td>集群中其他的节点</td>
+</tr>
+<tr>
+<td><code>gateway.recover_after_nodes</code></td>
+<td>集群可做主节点的最小节点数</td>
+</tr>
+<tr>
+<td><code>transport.tcp.port</code></td>
+<td>用于TCP连接的TCP端口</td>
+</tr>
+</tbody></table>
+<p>然后分别将节点启动即可：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[es6j@sher6j-03 node1]$ bin&#x2F;elasticsearch</span><br><span class="line">[es6j@sher6j-03 node2]$ bin&#x2F;elasticsearch</span><br><span class="line">[es6j@sher6j-03 node3]$ bin&#x2F;elasticsearch</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ElasticSearch</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/12/%E6%90%AD%E5%BB%BAElasticSearch%E9%9B%86%E7%BE%A4%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-力扣刷题笔记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -171,6 +316,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="Tags"><a href="#Tags" class="headerlink" title="Tags"></a>Tags</h1><h2 id="Sliding-Window"><a href="#Sliding-Window" class="headerlink" title="Sliding Window"></a>Sliding Window</h2><p><a href="https://leetcode.com/problems/add-two-numbers/" target="_blank" rel="noopener">2. Add Two Numbers</a></p>
+<h2 id="Backtracking"><a href="#Backtracking" class="headerlink" title="Backtracking"></a>Backtracking</h2><p><a href="https://leetcode.com/problems/letter-combinations-of-a-phone-number/" target="_blank" rel="noopener">17. Letter Combinations of a Phone Number</a></p>
 <h2 id="Dynamic-Programming"><a href="#Dynamic-Programming" class="headerlink" title="Dynamic Programming"></a>Dynamic Programming</h2><p><a href="https://leetcode.com/problems/longest-palindromic-substring/" target="_blank" rel="noopener">5. Longest Palindromic Substring</a></p>
 <p><a href="https://leetcode.com/problems/regular-expression-matching/" target="_blank" rel="noopener">10. Regular Expression Matching</a></p>
 <h2 id="Merge-Sort"><a href="#Merge-Sort" class="headerlink" title="Merge Sort"></a>Merge Sort</h2><p><a href="https://leetcode.com/problems/median-of-two-sorted-arrays/" target="_blank" rel="noopener">4. Median of Two Sorted Arrays</a></p>
@@ -524,6 +670,25 @@
 <p>由于本题只需要结果，也没有像15题一样要求不能重复，所以不需要判断重复数字。</p>
 </blockquote>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">threeSumClosest</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res = nums[<span class="number">0</span>] + nums[<span class="number">1</span>] + nums[<span class="number">2</span>];</span><br><span class="line">        Arrays.sort(nums);</span><br><span class="line">        <span class="keyword">int</span> len = nums.length;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len - <span class="number">2</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i == <span class="number">0</span> || (i &gt; <span class="number">0</span> &amp;&amp; nums[i] != nums[i - <span class="number">1</span>])) &#123;</span><br><span class="line">                <span class="keyword">int</span> low = i + <span class="number">1</span>, high = len - <span class="number">1</span>;</span><br><span class="line">                </span><br><span class="line">                <span class="keyword">while</span> (low &lt; high) &#123;</span><br><span class="line">                    <span class="keyword">int</span> sum = nums[i] + nums[low] + nums[high];</span><br><span class="line">                    <span class="keyword">if</span> (Math.abs(sum - target) &lt; Math.abs(res - target)) &#123;</span><br><span class="line">                        res = sum;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span> (sum &gt; target) &#123;</span><br><span class="line">                        high--;</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        low++;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="17-Letter-Combinations-of-a-Phone-Number"><a href="#17-Letter-Combinations-of-a-Phone-Number" class="headerlink" title="17. Letter Combinations of a Phone Number"></a><a href="https://leetcode.com/problems/letter-combinations-of-a-phone-number/" target="_blank" rel="noopener">17. Letter Combinations of a Phone Number</a></h2><h3 id="Question-13"><a href="#Question-13" class="headerlink" title="Question"></a>Question</h3><p>Given a string containing digits from <code>2-9</code> inclusive, return all possible letter combinations that the number could represent. Return the answer in <strong>any order</strong>.</p>
+<p>A mapping of digit to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Telephone-keypad2.svg/200px-Telephone-keypad2.svg.png" alt="img"></p>
+<p><strong>Example 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: digits &#x3D; &quot;23&quot;</span><br><span class="line">Output: [&quot;ad&quot;,&quot;ae&quot;,&quot;af&quot;,&quot;bd&quot;,&quot;be&quot;,&quot;bf&quot;,&quot;cd&quot;,&quot;ce&quot;,&quot;cf&quot;]</span><br></pre></td></tr></table></figure>
+
+<p><strong>Example 2:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: digits &#x3D; &quot;&quot;</span><br><span class="line">Output: []</span><br></pre></td></tr></table></figure>
+
+<p><strong>Example 3:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: digits &#x3D; &quot;2&quot;</span><br><span class="line">Output: [&quot;a&quot;,&quot;b&quot;,&quot;c&quot;]</span><br></pre></td></tr></table></figure>
+
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>0 &lt;= digits.length &lt;= 4</code></li>
+<li><code>digits[i]</code> is a digit in the range <code>[&#39;2&#39;, &#39;9&#39;]</code>.</li>
+</ul>
+<h3 id="Solution-13"><a href="#Solution-13" class="headerlink" title="Solution"></a>Solution</h3><h4 id="Backtracking-1"><a href="#Backtracking-1" class="headerlink" title="Backtracking"></a>Backtracking</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">letterCombinations</span><span class="params">(String digits)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; res = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        <span class="keyword">if</span> (digits == <span class="keyword">null</span> || digits.length() == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> res;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// "0","1"用来站位，这样就能使mapping[2] = "abc"，即数字与所表示字母对应</span></span><br><span class="line">        String[] mapping = <span class="keyword">new</span> String[] &#123;<span class="string">"0"</span>, <span class="string">"1"</span>, <span class="string">"abc"</span>, <span class="string">"def"</span>, <span class="string">"ghi"</span>, <span class="string">"jkl"</span>, <span class="string">"mno"</span>, <span class="string">"pqrs"</span>, <span class="string">"tuv"</span>, <span class="string">"wxyz"</span>&#125;;</span><br><span class="line">        </span><br><span class="line">        backtrack(res, mapping, digits, <span class="number">0</span>, <span class="keyword">new</span> StringBuilder());</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">backtrack</span> <span class="params">(List&lt;String&gt; res, String[] mapping, String digits, <span class="keyword">int</span> idx, StringBuilder cur)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (idx == digits.length()) &#123;</span><br><span class="line">            res.add(cur.toString());</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> num = Character.getNumericValue(digits.charAt(idx));</span><br><span class="line">        String letterMay = mapping[num];</span><br><span class="line">        <span class="keyword">int</span> countMay = letterMay.length();</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; countMay; i++) &#123;</span><br><span class="line">            cur.append(letterMay.charAt(i));</span><br><span class="line">            </span><br><span class="line">            backtrack(res, mapping, digits, idx + <span class="number">1</span>, cur);</span><br><span class="line">            </span><br><span class="line">            cur.deleteCharAt(idx);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
       
@@ -1344,92 +1509,9 @@ GET /_analyze
 
 
   
-    <article id="post-MySQL并发控制相关问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/13/MySQL%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/">MySQL并发控制相关问题</a>
-    </h1>
-  
-
-        
-        <a href="/2020/09/13/MySQL%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/" class="archive-article-date">
-  	<time datetime="2020-09-13T08:27:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="MySQL的并发控制"><a href="#MySQL的并发控制" class="headerlink" title="MySQL的并发控制"></a>MySQL的并发控制</h2><h3 id="读写锁"><a href="#读写锁" class="headerlink" title="读写锁"></a>读写锁</h3><ul>
-<li>共享锁（shared lock）：即读锁（read lock），读锁是共享的，也就是说是相互不阻塞的，多个客户在同一时刻可以同时读取同一个资源，而互不干扰；</li>
-<li>排他锁（exclusive lock）：即写锁（write lock），写锁是排他的，也就是说一个写锁会阻塞其他的写锁和读锁。</li>
-</ul>
-        
-          <a class="article-more-a" href="/2020/09/13/MySQL%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">MySQL</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">数据库</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/09/13/MySQL%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
     </nav>
   
 
@@ -1552,14 +1634,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
@@ -1569,6 +1643,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1596,14 +1678,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">MyBatis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">框架</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">数据库</a>
               </li>
              
@@ -1616,6 +1690,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">MyBatis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">框架</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">微服务</a>
               </li>
              
@@ -1624,11 +1706,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
+                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
+                <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1648,7 +1730,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
+                <a href="javascript:void(0)" class="js-tag color4">ElasticSearch</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">数组</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1656,7 +1742,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数组</a>
+                <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1668,7 +1754,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
+                <a href="javascript:void(0)" class="js-tag color4">哈希表</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1676,19 +1762,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">哈希表</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">树</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
               </li>
              
               <li class="article-tag-list-item">

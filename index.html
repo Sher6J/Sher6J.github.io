@@ -366,6 +366,7 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">res = []</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">backtrack</span><span class="params">(path, selectList)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> (满足结束条件):</span><br><span class="line">        res.add(path)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> select <span class="keyword">in</span> selectList:</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># make selection</span></span><br><span class="line">        selectList.remove(select) <span class="comment"># 将该选择从选择列表中移除</span></span><br><span class="line">        path.add(select) <span class="comment"># 将该选择加入到路径中</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment"># backtracking</span></span><br><span class="line">        backtrack(path, selectList)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># cancel selection</span></span><br><span class="line">        path.remove(select) <span class="comment"># 从路径中移除该选择</span></span><br><span class="line">        selectList.add(select) <span class="comment"># 将该选择再加入到选择列表</span></span><br></pre></td></tr></table></figure>
 
 <p><a href="https://leetcode.com/problems/letter-combinations-of-a-phone-number/" target="_blank" rel="noopener">17. Letter Combinations of a Phone Number</a></p>
+<p><a href="https://leetcode.com/problems/generate-parentheses/" target="_blank" rel="noopener">22. Generate Parentheses</a></p>
 <h2 id="Dynamic-Programming"><a href="#Dynamic-Programming" class="headerlink" title="Dynamic Programming"></a>Dynamic Programming</h2><p><a href="https://leetcode.com/problems/longest-palindromic-substring/" target="_blank" rel="noopener">5. Longest Palindromic Substring</a></p>
 <p><a href="https://leetcode.com/problems/regular-expression-matching/" target="_blank" rel="noopener">10. Regular Expression Matching</a></p>
 <h2 id="Merge-Sort"><a href="#Merge-Sort" class="headerlink" title="Merge Sort"></a>Merge Sort</h2><p><a href="https://leetcode.com/problems/median-of-two-sorted-arrays/" target="_blank" rel="noopener">4. Median of Two Sorted Arrays</a></p>
@@ -373,6 +374,7 @@
 <h2 id="Linked-List"><a href="#Linked-List" class="headerlink" title="Linked List"></a>Linked List</h2><p><a href="https://leetcode.com/problems/add-two-numbers/" target="_blank" rel="noopener">2. Add Two Numbers</a></p>
 <p><a href="https://leetcode.com/problems/remove-nth-node-from-end-of-list/" target="_blank" rel="noopener">19. Remove Nth Node From End of List</a></p>
 <p><a href="https://leetcode.com/problems/merge-two-sorted-lists/" target="_blank" rel="noopener">21. Merge Two Sorted Lists</a></p>
+<p><a href="https://leetcode.com/problems/swap-nodes-in-pairs/" target="_blank" rel="noopener">24. Swap Nodes in Pairs</a></p>
 <p><a href="https://leetcode.com/problems/odd-even-linked-list/" target="_blank" rel="noopener">328. Odd Even Linked List</a></p>
 <h2 id="Hash-Table"><a href="#Hash-Table" class="headerlink" title="Hash Table"></a>Hash Table</h2><p><a href="https://leetcode.com/problems/two-sum/" target="_blank" rel="noopener">1. Two Sum</a></p>
 <h2 id="Double-Points-→-←"><a href="#Double-Points-→-←" class="headerlink" title="Double Points(→     ←)"></a>Double Points(→     ←)</h2><p><a href="https://leetcode.com/problems/container-with-most-water/" target="_blank" rel="noopener">11. Container With Most Water</a></p>
@@ -868,7 +870,97 @@
 <ul>
 <li><code>1 &lt;= n &lt;= 8</code></li>
 </ul>
-<h3 id="Solution-18"><a href="#Solution-18" class="headerlink" title="Solution"></a>Solution</h3><h2 id="328-Odd-Even-Linked-List"><a href="#328-Odd-Even-Linked-List" class="headerlink" title="328. Odd Even Linked List"></a><a href="https://leetcode.com/problems/odd-even-linked-list/" target="_blank" rel="noopener">328. Odd Even Linked List</a></h2><h3 id="Question-19"><a href="#Question-19" class="headerlink" title="Question"></a>Question</h3><p>Given a singly linked list, group all odd nodes together followed by the even nodes. Please note here we are talking about the node number and not the value in the nodes.</p>
+<h3 id="Solution-18"><a href="#Solution-18" class="headerlink" title="Solution"></a>Solution</h3><p><strong>backtracking</strong>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">generateParenthesis</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; res = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        backtrack(res, <span class="keyword">new</span> StringBuilder(), <span class="number">0</span>, <span class="number">0</span>, n);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">backtrack</span><span class="params">(List&lt;String&gt; res, StringBuilder path, <span class="keyword">int</span> open, <span class="keyword">int</span> close, <span class="keyword">int</span> max)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (path.length() == max * <span class="number">2</span>) &#123;</span><br><span class="line">            res.add(path.toString());</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (open &lt; max) &#123;</span><br><span class="line">            path.append(<span class="string">'('</span>);</span><br><span class="line">            backtrack(res, path, open + <span class="number">1</span>, close, max);</span><br><span class="line">            path.deleteCharAt(path.length() - <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (close &lt; open) &#123;</span><br><span class="line">            path.append(<span class="string">')'</span>);</span><br><span class="line">            backtrack(res, path, open, close + <span class="number">1</span>, max);</span><br><span class="line">            path.deleteCharAt(path.length() - <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="23-Merge-k-Sorted-Lists"><a href="#23-Merge-k-Sorted-Lists" class="headerlink" title="23. Merge k Sorted Lists"></a><a href="https://leetcode.com/problems/merge-k-sorted-lists/" target="_blank" rel="noopener">23. Merge k Sorted Lists</a></h2><h3 id="Question-19"><a href="#Question-19" class="headerlink" title="Question"></a>Question</h3><p>You are given an array of <code>k</code> linked-lists <code>lists</code>, each linked-list is sorted in ascending order.</p>
+<p><em>Merge all the linked-lists into one sorted linked-list and return it.</em></p>
+<p><strong>Example 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Input: lists &#x3D; [[1,4,5],[1,3,4],[2,6]]</span><br><span class="line">Output: [1,1,2,3,4,4,5,6]</span><br><span class="line">Explanation: The linked-lists are:</span><br><span class="line">[</span><br><span class="line">  1-&gt;4-&gt;5,</span><br><span class="line">  1-&gt;3-&gt;4,</span><br><span class="line">  2-&gt;6</span><br><span class="line">]</span><br><span class="line">merging them into one sorted list:</span><br><span class="line">1-&gt;1-&gt;2-&gt;3-&gt;4-&gt;4-&gt;5-&gt;6</span><br></pre></td></tr></table></figure>
+
+<p><strong>Example 2:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: lists &#x3D; []</span><br><span class="line">Output: []</span><br></pre></td></tr></table></figure>
+
+<p><strong>Example 3:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: lists &#x3D; [[]]</span><br><span class="line">Output: []</span><br></pre></td></tr></table></figure>
+
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>k == lists.length</code></li>
+<li><code>0 &lt;= k &lt;= 10^4</code></li>
+<li><code>0 &lt;= lists[i].length &lt;= 500</code></li>
+<li><code>-10^4 &lt;= lists[i][j] &lt;= 10^4</code></li>
+<li><code>lists[i]</code> is sorted in <strong>ascending order</strong>.</li>
+<li>The sum of <code>lists[i].length</code> won’t exceed <code>10^4</code>.</li>
+</ul>
+<h2 id="24-Swap-Nodes-in-Pairs"><a href="#24-Swap-Nodes-in-Pairs" class="headerlink" title="24. Swap Nodes in Pairs"></a><a href="https://leetcode.com/problems/swap-nodes-in-pairs/" target="_blank" rel="noopener">24. Swap Nodes in Pairs</a></h2><h3 id="Question-20"><a href="#Question-20" class="headerlink" title="Question"></a>Question</h3><p>Given a linked list, swap every two adjacent nodes and return its head.</p>
+<p>You may <strong>not</strong> modify the values in the list’s nodes. Only nodes itself may be changed.</p>
+<p><strong>Example 1:</strong></p>
+<img src="https://assets.leetcode.com/uploads/2020/10/03/swap_ex1.jpg" alt="img" style="zoom:50%;">
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: head &#x3D; [1,2,3,4]</span><br><span class="line">Output: [2,1,4,3]</span><br></pre></td></tr></table></figure>
+
+<p><strong>Example 2:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: head &#x3D; []</span><br><span class="line">Output: []</span><br></pre></td></tr></table></figure>
+
+<p><strong>Example 3:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: head &#x3D; [1]</span><br><span class="line">Output: [1]</span><br></pre></td></tr></table></figure>
+
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in the list is in the range <code>[0, 100]</code>.</li>
+<li><code>0 &lt;= Node.val &lt;= 100</code></li>
+</ul>
+<h3 id="Solution-19"><a href="#Solution-19" class="headerlink" title="Solution"></a>Solution</h3><h4 id="Recursive-1"><a href="#Recursive-1" class="headerlink" title="Recursive"></a>Recursive</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ListNode <span class="title">swapPairs</span><span class="params">(ListNode head)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (head == <span class="keyword">null</span> || head.next == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> head;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        ListNode next = head.next;</span><br><span class="line">        head.next = swapPairs(next.next);</span><br><span class="line">        next.next = head;</span><br><span class="line">        <span class="keyword">return</span> next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Iteration-1"><a href="#Iteration-1" class="headerlink" title="Iteration"></a>Iteration</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ListNode <span class="title">swapPairs</span><span class="params">(ListNode head)</span> </span>&#123;</span><br><span class="line">        ListNode dummy = <span class="keyword">new</span> ListNode(-<span class="number">1</span>, head);</span><br><span class="line">        ListNode cur = dummy;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span> (cur.next != <span class="keyword">null</span> &amp;&amp; cur.next.next != <span class="keyword">null</span>) &#123;</span><br><span class="line">            ListNode first = cur.next;</span><br><span class="line">            ListNode second = cur.next.next;</span><br><span class="line">            first.next = second.next;</span><br><span class="line">            cur.next = second;</span><br><span class="line">            cur.next.next = first;</span><br><span class="line">            cur = cur.next.next;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> dummy.next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="26-Remove-Duplicates-from-Sorted-Array"><a href="#26-Remove-Duplicates-from-Sorted-Array" class="headerlink" title="26. Remove Duplicates from Sorted Array"></a><a href="https://leetcode.com/problems/remove-duplicates-from-sorted-array/" target="_blank" rel="noopener">26. Remove Duplicates from Sorted Array</a></h2><h3 id="Question-21"><a href="#Question-21" class="headerlink" title="Question"></a>Question</h3><p>Given a sorted array <em>nums</em>, remove the duplicates <a href="https://en.wikipedia.org/wiki/In-place_algorithm" target="_blank" rel="noopener"><strong>in-place</strong></a> such that each element appears only <em>once</em> and returns the new length.</p>
+<p>Do not allocate extra space for another array, you must do this by <strong>modifying the input array <a href="https://en.wikipedia.org/wiki/In-place_algorithm" target="_blank" rel="noopener">in-place</a></strong> with O(1) extra memory.</p>
+<p><strong>Clarification:</strong></p>
+<p>Confused why the returned value is an integer but your answer is an array?</p>
+<p>Note that the input array is passed in by <strong>reference</strong>, which means a modification to the input array will be known to the caller as well.</p>
+<p>Internally you can think of this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; nums is passed in by reference. (i.e., without making a copy)</span><br><span class="line">int len &#x3D; removeDuplicates(nums);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; any modification to nums in your function would be known by the caller.</span><br><span class="line">&#x2F;&#x2F; using the length returned by your function, it prints the first len elements.</span><br><span class="line">for (int i &#x3D; 0; i &lt; len; i++) &#123;</span><br><span class="line">    print(nums[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Example 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: nums &#x3D; [1,1,2]</span><br><span class="line">Output: 2, nums &#x3D; [1,2]</span><br><span class="line">Explanation: Your function should return length &#x3D; 2, with the first two elements of nums being 1 and 2 respectively. It doesn&#39;t matter what you leave beyond the returned length.</span><br></pre></td></tr></table></figure>
+
+<p><strong>Example 2:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: nums &#x3D; [0,0,1,1,1,2,2,3,3,4]</span><br><span class="line">Output: 5, nums &#x3D; [0,1,2,3,4]</span><br><span class="line">Explanation: Your function should return length &#x3D; 5, with the first five elements of nums being modified to 0, 1, 2, 3, and 4 respectively. It doesn&#39;t matter what values are set beyond the returned length.</span><br></pre></td></tr></table></figure>
+
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>0 &lt;= nums.length &lt;= 3 * 10^4</code></li>
+<li><code>-10^4 &lt;= nums[i] &lt;= 10^4</code></li>
+<li><code>nums</code> is sorted in ascending order.</li>
+</ul>
+<h3 id="Solution-20"><a href="#Solution-20" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">removeDuplicates</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (nums == <span class="keyword">null</span> || nums.length == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> idx = <span class="number">0</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (nums[i] != nums[idx]) &#123;</span><br><span class="line">                nums[++idx] = nums[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> idx + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="27-Remove-Element"><a href="#27-Remove-Element" class="headerlink" title="27. Remove Element"></a><a href="https://leetcode.com/problems/remove-element/" target="_blank" rel="noopener">27. Remove Element</a></h2><h3 id="Question-22"><a href="#Question-22" class="headerlink" title="Question"></a>Question</h3><p>Given an array <em>nums</em> and a value <em>val</em>, remove all instances of that value <a href="https://en.wikipedia.org/wiki/In-place_algorithm" target="_blank" rel="noopener"><strong>in-place</strong></a> and return the new length.</p>
+<p>Do not allocate extra space for another array, you must do this by <strong>modifying the input array <a href="https://en.wikipedia.org/wiki/In-place_algorithm" target="_blank" rel="noopener">in-place</a></strong> with O(1) extra memory.</p>
+<p>The order of elements can be changed. It doesn’t matter what you leave beyond the new length.</p>
+<p><strong>Clarification:</strong></p>
+<p>Confused why the returned value is an integer but your answer is an array?</p>
+<p>Note that the input array is passed in by <strong>reference</strong>, which means a modification to the input array will be known to the caller as well.</p>
+<p>Internally you can think of this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; nums is passed in by reference. (i.e., without making a copy)</span><br><span class="line">int len &#x3D; removeElement(nums, val);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; any modification to nums in your function would be known by the caller.</span><br><span class="line">&#x2F;&#x2F; using the length returned by your function, it prints the first len elements.</span><br><span class="line">for (int i &#x3D; 0; i &lt; len; i++) &#123;</span><br><span class="line">    print(nums[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Example 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Input: nums &#x3D; [3,2,2,3], val &#x3D; 3</span><br><span class="line">Output: 2, nums &#x3D; [2,2]</span><br><span class="line">Explanation: Your function should return length &#x3D; 2, with the first two elements of nums being 2.</span><br><span class="line">It doesn&#39;t matter what you leave beyond the returned length. For example if you return 2 with nums &#x3D; [2,2,3,3] or nums &#x3D; [2,3,0,0], your answer will be accepted.</span><br></pre></td></tr></table></figure>
+
+<p><strong>Example 2:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: nums &#x3D; [0,1,2,2,3,0,4,2], val &#x3D; 2</span><br><span class="line">Output: 5, nums &#x3D; [0,1,4,0,3]</span><br><span class="line">Explanation: Your function should return length &#x3D; 5, with the first five elements of nums containing 0, 1, 3, 0, and 4. Note that the order of those five elements can be arbitrary. It doesn&#39;t matter what values are set beyond the returned length.</span><br></pre></td></tr></table></figure>
+
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>0 &lt;= nums.length &lt;= 100</code></li>
+<li><code>0 &lt;= nums[i] &lt;= 50</code></li>
+<li><code>0 &lt;= val &lt;= 100</code></li>
+</ul>
+<h3 id="Solution-21"><a href="#Solution-21" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">removeElement</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> val)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; nums.length; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (nums[j] != val) nums[i++] = nums[j];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> i;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="28-Implement-strStr-—-garbage"><a href="#28-Implement-strStr-—-garbage" class="headerlink" title="28. Implement strStr()—-garbage"></a><a href="https://leetcode.com/problems/implement-strstr/" target="_blank" rel="noopener">28. Implement strStr()</a>—-garbage</h2><h2 id="29-Divide-Two-Integers—-ggggarbage"><a href="#29-Divide-Two-Integers—-ggggarbage" class="headerlink" title="29. Divide Two Integers—-ggggarbage"></a><a href="https://leetcode.com/problems/divide-two-integers/" target="_blank" rel="noopener">29. Divide Two Integers</a>—-ggggarbage</h2><h2 id="328-Odd-Even-Linked-List"><a href="#328-Odd-Even-Linked-List" class="headerlink" title="328. Odd Even Linked List"></a><a href="https://leetcode.com/problems/odd-even-linked-list/" target="_blank" rel="noopener">328. Odd Even Linked List</a></h2><h3 id="Question-23"><a href="#Question-23" class="headerlink" title="Question"></a>Question</h3><p>Given a singly linked list, group all odd nodes together followed by the even nodes. Please note here we are talking about the node number and not the value in the nodes.</p>
 <p>You should try to do it in place. The program should run in O(1) space complexity and O(nodes) time complexity.</p>
 <p><strong>Example 1:</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: 1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL</span><br><span class="line">Output: 1-&gt;3-&gt;5-&gt;2-&gt;4-&gt;NULL</span><br></pre></td></tr></table></figure>
@@ -882,7 +974,7 @@
 <li>The first node is considered odd, the second node even and so on …</li>
 <li>The length of the linked list is between <code>[0, 10^4]</code>.</li>
 </ul>
-<h3 id="Solution-19"><a href="#Solution-19" class="headerlink" title="Solution"></a>Solution</h3><p>如果链表为空，则直接返回链表。</p>
+<h3 id="Solution-22"><a href="#Solution-22" class="headerlink" title="Solution"></a>Solution</h3><p>如果链表为空，则直接返回链表。</p>
 <p>对于原始链表，每个节点都是奇数节点或偶数节点。头节点是奇数节点，头节点的后一个节点是偶数节点，相邻节点的奇偶性不同。因此可以将奇数节点和偶数节点分离成奇数链表和偶数链表，然后将偶数链表连接在奇数链表之后，合并后的链表即为结果链表。</p>
 <p>原始链表的头节点 <code>head</code> 也是奇数链表的头节点以及结果链表的头节点，<code>head</code> 的后一个节点是偶数链表的头节点。令 <code>evenHead</code> = <code>head.next</code>，则 <code>evenHead</code> 是偶数链表的头节点。</p>
 <p>维护两个指针 <code>odd</code> 和 <code>even</code> 分别指向奇数节点和偶数节点，初始时 <code>odd = head</code>，<code>even = evenHead</code>。通过迭代的方式将奇数节点和偶数节点分离成两个链表，<strong>每一步首先更新奇数节点，然后更新偶数节点</strong>。</p>
@@ -1843,19 +1935,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">CentOS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1867,7 +1947,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+                <a href="javascript:void(0)" class="js-tag color1">redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">CentOS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1875,11 +1959,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">多线程</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1891,19 +1975,39 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">并发编程</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
+                <a href="javascript:void(0)" class="js-tag color4">多线程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">数据库</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">MyBatis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">框架</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1923,23 +2027,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">MyBatis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">框架</a>
+                <a href="javascript:void(0)" class="js-tag color4">虚拟机</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">非关系型数据库</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">虚拟机</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1951,19 +2043,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ElasticSearch</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">FastDSF</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">异常处理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ElasticSearch</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1983,10 +2075,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">栈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
               </li>
              
@@ -1995,7 +2083,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">树</a>
+                <a href="javascript:void(0)" class="js-tag color2">栈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2003,7 +2095,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+                <a href="javascript:void(0)" class="js-tag color2">树</a>
               </li>
             
             <div class="clearfix"></div>

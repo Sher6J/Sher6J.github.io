@@ -79,7 +79,7 @@
 <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/0/0f/Insertion-sort-example-300px.gif">
 <meta property="og:image" content="http://yoursite.com/2020/11/10/%E5%8A%9B%E6%89%A3%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0/D:%5Cblog%5Csource_posts%5C%E5%8A%9B%E6%89%A3%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0%5C402%E5%8D%95%E8%B0%83%E6%A0%88%E4%BF%AE%E6%94%B9.jpg">
 <meta property="article:published_time" content="2020-11-10T13:24:57.000Z">
-<meta property="article:modified_time" content="2020-11-20T08:21:18.054Z">
+<meta property="article:modified_time" content="2020-11-22T06:14:23.198Z">
 <meta property="article:author" content="Sher6J">
 <meta property="article:tag" content="算法">
 <meta property="article:tag" content="数据结构">
@@ -263,6 +263,7 @@
 <p><a href="https://leetcode.com/problems/word-search/" target="_blank" rel="noopener">79. Word Search</a></p>
 <p><a href="https://leetcode.com/problems/subsets-ii/" target="_blank" rel="noopener">90. Subsets II</a></p>
 <p><a href="https://leetcode.com/problems/restore-ip-addresses/" target="_blank" rel="noopener">93. Restore IP Addresses</a></p>
+<p><a href="https://leetcode.com/problems/path-sum-ii/" target="_blank" rel="noopener">113. Path Sum II</a></p>
 <h2 id="Binary-Search"><a href="#Binary-Search" class="headerlink" title="Binary Search"></a>Binary Search</h2><p><a href="https://leetcode.com/problems/search-in-rotated-sorted-array/" target="_blank" rel="noopener">33. Search in Rotated Sorted Array</a></p>
 <p><a href="https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/" target="_blank" rel="noopener">34. Find First and Last Position of Element in Sorted Array</a></p>
 <p><a href="https://leetcode.com/problems/search-insert-position/" target="_blank" rel="noopener">35. Search Insert Position</a></p>
@@ -289,6 +290,7 @@
 <p><a href="https://leetcode.com/problems/merge-sorted-array/" target="_blank" rel="noopener">88. Merge Sorted Array</a></p>
 <h2 id="Selection-Sort"><a href="#Selection-Sort" class="headerlink" title="Selection Sort"></a>Selection Sort</h2><p><a href="https://leetcode.com/problems/sort-colors/" target="_blank" rel="noopener">75. Sort Colors</a></p>
 <h2 id="Counting-Sort"><a href="#Counting-Sort" class="headerlink" title="Counting Sort"></a>Counting Sort</h2><p><a href="https://leetcode.com/problems/group-anagrams/" target="_blank" rel="noopener">49. Group Anagrams</a></p>
+<p><a href="https://leetcode.com/problems/valid-anagram/" target="_blank" rel="noopener">242. Valid Anagram</a></p>
 <p><a href="https://leetcode.com/problems/relative-sort-array/" target="_blank" rel="noopener">1122. Relative Sort Array</a></p>
 <h2 id="Linked-List"><a href="#Linked-List" class="headerlink" title="Linked List"></a>Linked List</h2><p><a href="https://leetcode.com/problems/add-two-numbers/" target="_blank" rel="noopener">2. Add Two Numbers</a></p>
 <p><a href="https://leetcode.com/problems/remove-nth-node-from-end-of-list/" target="_blank" rel="noopener">19. Remove Nth Node From End of List</a></p>
@@ -317,6 +319,8 @@
 <p><a href="https://leetcode.com/problems/convert-sorted-list-to-binary-search-tree/" target="_blank" rel="noopener">109. Convert Sorted List to Binary Search Tree</a></p>
 <p><a href="https://leetcode.com/problems/balanced-binary-tree/" target="_blank" rel="noopener">110. Balanced Binary Tree</a></p>
 <p><a href="https://leetcode.com/problems/minimum-depth-of-binary-tree/" target="_blank" rel="noopener">111. Minimum Depth of Binary Tree</a></p>
+<p><a href="https://leetcode.com/problems/path-sum/" target="_blank" rel="noopener">112. Path Sum</a></p>
+<p><a href="https://leetcode.com/problems/flatten-binary-tree-to-linked-list/" target="_blank" rel="noopener">114. Flatten Binary Tree to Linked List</a></p>
 <h2 id="Monotonous-stack"><a href="#Monotonous-stack" class="headerlink" title="Monotonous stack"></a>Monotonous stack</h2><p>单调栈分为单调递增栈和单调递减栈：</p>
 <ul>
 <li>单调递增栈：栈内元素保存递增的栈；</li>
@@ -2465,7 +2469,42 @@ The largest rectangle is shown in the shaded area, which has area = `10` unit.
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">      5</span><br><span class="line">     &#x2F; \</span><br><span class="line">    4   8</span><br><span class="line">   &#x2F;   &#x2F; \</span><br><span class="line">  11  13  4</span><br><span class="line"> &#x2F;  \      \</span><br><span class="line">7    2      1</span><br></pre></td></tr></table></figure>
 
 <p>return true, as there exist a root-to-leaf path <code>5-&gt;4-&gt;11-&gt;2</code> which sum is 22.</p>
-<h3 id="Solution-87"><a href="#Solution-87" class="headerlink" title="Solution"></a>Solution</h3><h2 id="134-Gas-Station"><a href="#134-Gas-Station" class="headerlink" title="134. Gas Station"></a><a href="https://leetcode.com/problems/gas-station/" target="_blank" rel="noopener">134. Gas Station</a></h2><h3 id="Question-89"><a href="#Question-89" class="headerlink" title="Question"></a>Question</h3><p>There are <em>N</em> gas stations along a circular route, where the amount of gas at station <em>i</em> is <code>gas[i]</code>.</p>
+<h3 id="Solution-87"><a href="#Solution-87" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasPathSum</span><span class="params">(TreeNode root, <span class="keyword">int</span> sum)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (root == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (root.left == <span class="keyword">null</span> &amp;&amp; root.right == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> sum == root.val;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> remain = sum - root.val;</span><br><span class="line">        <span class="keyword">return</span> hasPathSum(root.left, remain) || hasPathSum(root.right, remain);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>迭代解法也是可以的，仍然使用<strong>层序遍历的框架</strong>，但是用两个队列，一个是正常的用于层序遍历，另一个队列存放到节点的路径长度。</p>
+<h2 id="113-Path-Sum-II"><a href="#113-Path-Sum-II" class="headerlink" title="113. Path Sum II"></a><a href="https://leetcode.com/problems/path-sum-ii/" target="_blank" rel="noopener">113. Path Sum II</a></h2><h3 id="Question-89"><a href="#Question-89" class="headerlink" title="Question"></a>Question</h3><p>Given a binary tree and a sum, find all root-to-leaf paths where each path’s sum equals the given sum.</p>
+<p><strong>Note:</strong> A leaf is a node with no children.</p>
+<p><strong>Example:</strong></p>
+<p>Given the below binary tree and <code>sum = 22</code>,</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">      5</span><br><span class="line">     &#x2F; \</span><br><span class="line">    4   8</span><br><span class="line">   &#x2F;   &#x2F; \</span><br><span class="line">  11  13  4</span><br><span class="line"> &#x2F;  \    &#x2F; \</span><br><span class="line">7    2  5   1</span><br></pre></td></tr></table></figure>
+
+<p>Return:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">   [5,4,11,2],</span><br><span class="line">   [5,8,4,5]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h3 id="Solution-88"><a href="#Solution-88" class="headerlink" title="Solution"></a>Solution</h3><p><strong>backtracking：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; pathSum(TreeNode root, <span class="keyword">int</span> sum) &#123;</span><br><span class="line">        List&lt;List&lt;Integer&gt;&gt; res = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        backtrack(res, <span class="keyword">new</span> LinkedList&lt;&gt;(), root, sum);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">backtrack</span><span class="params">(List&lt;List&lt;Integer&gt;&gt; res, LinkedList&lt;Integer&gt; path, TreeNode root, <span class="keyword">int</span> sum)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (root == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        path.add(root.val); <span class="comment">// make selection</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (root.left == <span class="keyword">null</span> &amp;&amp; root.right == <span class="keyword">null</span> &amp;&amp; root.val == sum) &#123;</span><br><span class="line">            res.add(<span class="keyword">new</span> ArrayList&lt;&gt;(path));</span><br><span class="line">            path.removeLast(); <span class="comment">// cancel selection</span></span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            backtrack(res, path, root.left, sum - root.val);</span><br><span class="line">            backtrack(res, path, root.right, sum - root.val);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        path.removeLast(); <span class="comment">// cancel selection</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="114-Flatten-Binary-Tree-to-Linked-List"><a href="#114-Flatten-Binary-Tree-to-Linked-List" class="headerlink" title="114. Flatten Binary Tree to Linked List"></a><a href="https://leetcode.com/problems/flatten-binary-tree-to-linked-list/" target="_blank" rel="noopener">114. Flatten Binary Tree to Linked List</a></h2><h3 id="Question-90"><a href="#Question-90" class="headerlink" title="Question"></a>Question</h3><p>Given a binary tree, flatten it to a linked list in-place.</p>
+<p>For example, given the following tree:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">    1</span><br><span class="line">   &#x2F; \</span><br><span class="line">  2   5</span><br><span class="line"> &#x2F; \   \</span><br><span class="line">3   4   6</span><br></pre></td></tr></table></figure>
+
+<p>The flattened tree should look like:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1</span><br><span class="line"> \</span><br><span class="line">  2</span><br><span class="line">   \</span><br><span class="line">    3</span><br><span class="line">     \</span><br><span class="line">      4</span><br><span class="line">       \</span><br><span class="line">        5</span><br><span class="line">         \</span><br><span class="line">          6</span><br></pre></td></tr></table></figure>
+
+<h3 id="Solution-89"><a href="#Solution-89" class="headerlink" title="Solution"></a>Solution</h3><h4 id="preorder"><a href="#preorder" class="headerlink" title="preorder"></a>preorder</h4><p>要求的结果树事实上就是原来树的先序遍历，所以可以得到二叉树的先序遍历，然后利用先序遍历重建二叉树，注意要让每个节点的<strong>左指针置空</strong>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">flatten</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (root == <span class="keyword">null</span> || (root.left == <span class="keyword">null</span> &amp;&amp; root.right == <span class="keyword">null</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        List&lt;TreeNode&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        preorder(list, root);</span><br><span class="line">        TreeNode cur = root;</span><br><span class="line">        cur.left = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; list.size(); i++) &#123;</span><br><span class="line">            TreeNode node = list.get(i);</span><br><span class="line">            node.left = <span class="keyword">null</span>;</span><br><span class="line">            cur.right = node;</span><br><span class="line">            cur = cur.right;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">preorder</span><span class="params">(List&lt;TreeNode&gt; list, TreeNode root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (root == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        list.add(root);</span><br><span class="line">        preorder(list, root.left);</span><br><span class="line">        preorder(list, root.right);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="change-node"><a href="#change-node" class="headerlink" title="change node"></a>change node</h4><p>观察例题中的变换，可以发现，将二叉树展开为链表一直在重复两步：</p>
+<ul>
+<li>将某节点的左子树插入到原来右子树的地方；</li>
+<li>原来的右子树接到左子树的最右边节点。</li>
+</ul>
+<p>详细过程如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">    1</span><br><span class="line">   &#x2F; \</span><br><span class="line">  2   5</span><br><span class="line"> &#x2F; \   \</span><br><span class="line">3   4   6</span><br><span class="line">&#x2F;&#x2F; 将 1 的左子树插入到右子树的地方</span><br><span class="line">    1</span><br><span class="line">     \</span><br><span class="line">      2         5</span><br><span class="line">     &#x2F; \         \</span><br><span class="line">    3   4         6</span><br><span class="line">&#x2F;&#x2F; 将原来的右子树接到左子树的最右边节点</span><br><span class="line">    1</span><br><span class="line">     \</span><br><span class="line">      2</span><br><span class="line">     &#x2F; \</span><br><span class="line">    3   4</span><br><span class="line">         \</span><br><span class="line">          5</span><br><span class="line">           \</span><br><span class="line">            6</span><br><span class="line">&#x2F;&#x2F; 将 2 的左子树插入到右子树的地方</span><br><span class="line">    1</span><br><span class="line">     \</span><br><span class="line">      2</span><br><span class="line">       \</span><br><span class="line">        3       4</span><br><span class="line">                 \</span><br><span class="line">                  5</span><br><span class="line">                   \</span><br><span class="line">                    6</span><br><span class="line">&#x2F;&#x2F; 将原来的右子树接到左子树的最右边节点</span><br><span class="line">    1</span><br><span class="line">     \</span><br><span class="line">      2</span><br><span class="line">       \</span><br><span class="line">        3</span><br><span class="line">         \</span><br><span class="line">          4</span><br><span class="line">           \</span><br><span class="line">            5</span><br><span class="line">             \</span><br><span class="line">              6</span><br><span class="line">  ......</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">flatten</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        TreeNode cur = root;</span><br><span class="line">        <span class="keyword">while</span> (cur != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (cur.left != <span class="keyword">null</span>) &#123;</span><br><span class="line">                TreeNode rightest = cur.left;</span><br><span class="line">                <span class="keyword">while</span> (rightest.right != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    rightest = rightest.right;</span><br><span class="line">                &#125;</span><br><span class="line">                rightest.right = cur.right;</span><br><span class="line">                cur.right = cur.left;</span><br><span class="line">                cur.left = <span class="keyword">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            cur = cur.right;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id><a href="#" class="headerlink" title></a><a href></a></h2><h2 id="134-Gas-Station"><a href="#134-Gas-Station" class="headerlink" title="134. Gas Station"></a><a href="https://leetcode.com/problems/gas-station/" target="_blank" rel="noopener">134. Gas Station</a></h2><h3 id="Question-91"><a href="#Question-91" class="headerlink" title="Question"></a>Question</h3><p>There are <em>N</em> gas stations along a circular route, where the amount of gas at station <em>i</em> is <code>gas[i]</code>.</p>
 <p>You have a car with an unlimited gas tank and it costs <code>cost[i]</code> of gas to travel from station <em>i</em> to its next station (<em>i</em>+1). You begin the journey with an empty tank at one of the gas stations.</p>
 <p>Return the starting gas station’s index if you can travel around the circuit once in the clockwise direction, otherwise return -1.</p>
 <p><strong>Note:</strong></p>
@@ -2480,7 +2519,7 @@ The largest rectangle is shown in the shaded area, which has area = `10` unit.
 <p><strong>Example 2:</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Input: </span><br><span class="line">gas  &#x3D; [2,3,4]</span><br><span class="line">cost &#x3D; [3,4,3]</span><br><span class="line"></span><br><span class="line">Output: -1</span><br><span class="line"></span><br><span class="line">Explanation:</span><br><span class="line">You can&#39;t start at station 0 or 1, as there is not enough gas to travel to the next station.</span><br><span class="line">Let&#39;s start at station 2 and fill up with 4 unit of gas. Your tank &#x3D; 0 + 4 &#x3D; 4</span><br><span class="line">Travel to station 0. Your tank &#x3D; 4 - 3 + 2 &#x3D; 3</span><br><span class="line">Travel to station 1. Your tank &#x3D; 3 - 3 + 3 &#x3D; 3</span><br><span class="line">You cannot travel back to station 2, as it requires 4 unit of gas but you only have 3.</span><br><span class="line">Therefore, you can&#39;t travel around the circuit once no matter where you start.</span><br></pre></td></tr></table></figure>
 
-<h3 id="Solution-88"><a href="#Solution-88" class="headerlink" title="Solution"></a>Solution</h3><h4 id="暴力"><a href="#暴力" class="headerlink" title="暴力"></a>暴力</h4><p>枚举每一个起始点，然后看该起始点能否绕环路形势一周即可。</p>
+<h3 id="Solution-90"><a href="#Solution-90" class="headerlink" title="Solution"></a>Solution</h3><h4 id="暴力"><a href="#暴力" class="headerlink" title="暴力"></a>暴力</h4><p>枚举每一个起始点，然后看该起始点能否绕环路形势一周即可。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">canCompleteCircuit</span><span class="params">(<span class="keyword">int</span>[] gas, <span class="keyword">int</span>[] cost)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = gas.length;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> gasInCar = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">int</span> cur = i;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">while</span> (count &lt; n) &#123;</span><br><span class="line">                gasInCar += gas[cur % n];</span><br><span class="line">                <span class="keyword">if</span> (gasInCar &lt; cost[cur % n]) &#123;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    gasInCar -=cost[cur % n];</span><br><span class="line">                    count++;</span><br><span class="line">                    cur++;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> (count == n) &#123;</span><br><span class="line">                <span class="keyword">return</span> i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h4 id="折线图"><a href="#折线图" class="headerlink" title="折线图"></a>折线图</h4><p>妙到家了真的是，参考<a href="https://leetcode-cn.com/problems/gas-station/solution/shi-yong-tu-de-si-xiang-fen-xi-gai-wen-ti-by-cyayc/" target="_blank" rel="noopener">大佬’神奇的z’的题解</a>，观察如下图解：</p>
@@ -2489,7 +2528,7 @@ The largest rectangle is shown in the shaded area, which has area = `10` unit.
 <p>若要满足题目的要求：跑完全程再回到起点，总油量剩余值的任意部分都需要在X轴以上，且跑到终点时：<strong>总剩余汽油量 &gt;= 0</strong>。为了让深红色折线图任意部分都在 X 轴以上，需要向上移动深红色折线图，直到所有点都在X轴或X轴以上。此时，处在X轴的点即为出发点。即神功特色折线图的最低值的位置，如左图的 <code>index = 3</code>，而有图可以发现终点时总剩余油量 &lt; 0，故不可能绕环一周。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">canCompleteCircuit</span><span class="params">(<span class="keyword">int</span>[] gas, <span class="keyword">int</span>[] cost)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = gas.length;</span><br><span class="line">        <span class="keyword">int</span> gasInCar = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> minGasInCar = Integer.MAX_VALUE;</span><br><span class="line">        <span class="keyword">int</span> idx = <span class="number">0</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            gasInCar += gas[i] - cost[i];</span><br><span class="line">            <span class="keyword">if</span> (gasInCar &lt; minGasInCar) &#123;</span><br><span class="line">                minGasInCar = gasInCar;</span><br><span class="line">                idx = i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> gasInCar &lt; <span class="number">0</span> ? -<span class="number">1</span> : (idx + <span class="number">1</span>) % n;        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="147-Insertion-Sort-List"><a href="#147-Insertion-Sort-List" class="headerlink" title="147. Insertion Sort List"></a><a href="https://leetcode.com/problems/insertion-sort-list/" target="_blank" rel="noopener">147. Insertion Sort List</a></h2><h3 id="Question-90"><a href="#Question-90" class="headerlink" title="Question"></a>Question</h3><p>Sort a linked list using insertion sort.</p>
+<h2 id="147-Insertion-Sort-List"><a href="#147-Insertion-Sort-List" class="headerlink" title="147. Insertion Sort List"></a><a href="https://leetcode.com/problems/insertion-sort-list/" target="_blank" rel="noopener">147. Insertion Sort List</a></h2><h3 id="Question-92"><a href="#Question-92" class="headerlink" title="Question"></a>Question</h3><p>Sort a linked list using insertion sort.</p>
 <img src="https://upload.wikimedia.org/wikipedia/commons/0/0f/Insertion-sort-example-300px.gif" alt="img" style="zoom: 50%;">
 A graphical example of insertion sort. The partial sorted list (black) initially contains only the first element in the list.
 With each iteration one element (red) is removed from the input data and inserted in-place into the sorted list
@@ -2506,9 +2545,21 @@ With each iteration one element (red) is removed from the input data and inserte
 <p><strong>Example 2:</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: -1-&gt;5-&gt;3-&gt;4-&gt;0</span><br><span class="line">Output: -1-&gt;0-&gt;3-&gt;4-&gt;5</span><br></pre></td></tr></table></figure>
 
-<h3 id="Solution-89"><a href="#Solution-89" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">public</span> ListNode <span class="title">insertionSortList</span><span class="params">(ListNode head)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (head == <span class="keyword">null</span> || head.next == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> head;</span><br><span class="line">        &#125;</span><br><span class="line">        ListNode dummy = <span class="keyword">new</span> ListNode(-<span class="number">1</span>, head);</span><br><span class="line">        ListNode lastSorted = head, cur = head.next;</span><br><span class="line">        <span class="keyword">while</span> (cur != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (lastSorted.val &lt;= cur.val) &#123;</span><br><span class="line">                lastSorted = lastSorted.next;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                ListNode pre = dummy;</span><br><span class="line">                <span class="keyword">while</span> (pre.next.val &lt;= cur.val) &#123;</span><br><span class="line">                    pre = pre.next;</span><br><span class="line">                &#125;</span><br><span class="line">                lastSorted.next = cur.next;</span><br><span class="line">                cur.next = pre.next;;</span><br><span class="line">                pre.next = cur;</span><br><span class="line">            &#125;</span><br><span class="line">            cur = lastSorted.next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dummy.next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Solution-91"><a href="#Solution-91" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> ListNode <span class="title">insertionSortList</span><span class="params">(ListNode head)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (head == <span class="keyword">null</span> || head.next == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> head;</span><br><span class="line">        &#125;</span><br><span class="line">        ListNode dummy = <span class="keyword">new</span> ListNode(-<span class="number">1</span>, head);</span><br><span class="line">        ListNode lastSorted = head, cur = head.next;</span><br><span class="line">        <span class="keyword">while</span> (cur != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (lastSorted.val &lt;= cur.val) &#123;</span><br><span class="line">                lastSorted = lastSorted.next;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                ListNode pre = dummy;</span><br><span class="line">                <span class="keyword">while</span> (pre.next.val &lt;= cur.val) &#123;</span><br><span class="line">                    pre = pre.next;</span><br><span class="line">                &#125;</span><br><span class="line">                lastSorted.next = cur.next;</span><br><span class="line">                cur.next = pre.next;;</span><br><span class="line">                pre.next = cur;</span><br><span class="line">            &#125;</span><br><span class="line">            cur = lastSorted.next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dummy.next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="328-Odd-Even-Linked-List"><a href="#328-Odd-Even-Linked-List" class="headerlink" title="328. Odd Even Linked List"></a><a href="https://leetcode.com/problems/odd-even-linked-list/" target="_blank" rel="noopener">328. Odd Even Linked List</a></h2><h3 id="Question-91"><a href="#Question-91" class="headerlink" title="Question"></a>Question</h3><p>Given a singly linked list, group all odd nodes together followed by the even nodes. Please note here we are talking about the node number and not the value in the nodes.</p>
+<h2 id="242-Valid-Anagram"><a href="#242-Valid-Anagram" class="headerlink" title="242. Valid Anagram"></a><a href="https://leetcode.com/problems/valid-anagram/" target="_blank" rel="noopener">242. Valid Anagram</a></h2><h3 id="Question-93"><a href="#Question-93" class="headerlink" title="Question"></a>Question</h3><p>Given two strings <em>s</em> and <em>t</em> , write a function to determine if <em>t</em> is an anagram of <em>s</em>.</p>
+<p><strong>Example 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: s &#x3D; &quot;anagram&quot;, t &#x3D; &quot;nagaram&quot;</span><br><span class="line">Output: true</span><br></pre></td></tr></table></figure>
+
+<p><strong>Example 2:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: s &#x3D; &quot;rat&quot;, t &#x3D; &quot;car&quot;</span><br><span class="line">Output: false</span><br></pre></td></tr></table></figure>
+
+<p><strong>Note:</strong><br>You may assume the string contains only lowercase alphabets.</p>
+<p><strong>Follow up:</strong><br>What if the inputs contain unicode characters? How would you adapt your solution to such case?</p>
+<h3 id="Solution-92"><a href="#Solution-92" class="headerlink" title="Solution"></a>Solution</h3><p>计数排序思想：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isAnagram</span><span class="params">(String s, String t)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] counts = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">26</span>];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> c : s.toCharArray()) &#123;</span><br><span class="line">            counts[c - <span class="string">'a'</span>]++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> c : t.toCharArray()) &#123;</span><br><span class="line">            counts[c - <span class="string">'a'</span>]--;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i : counts) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i != <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="328-Odd-Even-Linked-List"><a href="#328-Odd-Even-Linked-List" class="headerlink" title="328. Odd Even Linked List"></a><a href="https://leetcode.com/problems/odd-even-linked-list/" target="_blank" rel="noopener">328. Odd Even Linked List</a></h2><h3 id="Question-94"><a href="#Question-94" class="headerlink" title="Question"></a>Question</h3><p>Given a singly linked list, group all odd nodes together followed by the even nodes. Please note here we are talking about the node number and not the value in the nodes.</p>
 <p>You should try to do it in place. The program should run in O(1) space complexity and O(nodes) time complexity.</p>
 <p><strong>Example 1:</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: 1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL</span><br><span class="line">Output: 1-&gt;3-&gt;5-&gt;2-&gt;4-&gt;NULL</span><br></pre></td></tr></table></figure>
@@ -2522,7 +2573,7 @@ With each iteration one element (red) is removed from the input data and inserte
 <li>The first node is considered odd, the second node even and so on …</li>
 <li>The length of the linked list is between <code>[0, 10^4]</code>.</li>
 </ul>
-<h3 id="Solution-90"><a href="#Solution-90" class="headerlink" title="Solution"></a>Solution</h3><p>如果链表为空，则直接返回链表。</p>
+<h3 id="Solution-93"><a href="#Solution-93" class="headerlink" title="Solution"></a>Solution</h3><p>如果链表为空，则直接返回链表。</p>
 <p>对于原始链表，每个节点都是奇数节点或偶数节点。头节点是奇数节点，头节点的后一个节点是偶数节点，相邻节点的奇偶性不同。因此可以将奇数节点和偶数节点分离成奇数链表和偶数链表，然后将偶数链表连接在奇数链表之后，合并后的链表即为结果链表。</p>
 <p>原始链表的头节点 <code>head</code> 也是奇数链表的头节点以及结果链表的头节点，<code>head</code> 的后一个节点是偶数链表的头节点。令 <code>evenHead</code> = <code>head.next</code>，则 <code>evenHead</code> 是偶数链表的头节点。</p>
 <p>维护两个指针 <code>odd</code> 和 <code>even</code> 分别指向奇数节点和偶数节点，初始时 <code>odd = head</code>，<code>even = evenHead</code>。通过迭代的方式将奇数节点和偶数节点分离成两个链表，<strong>每一步首先更新奇数节点，然后更新偶数节点</strong>。</p>
@@ -2532,7 +2583,7 @@ With each iteration one element (red) is removed from the input data and inserte
 <p>最后令 <code>odd.next = evenHead</code>，将偶数链表连接在奇数链表之后，即完成了奇数链表和偶数链表的合并，结果链表的头节点仍然是 head。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ListNode <span class="title">oddEvenList</span><span class="params">(ListNode head)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (head == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        ListNode evenHead = head.next;</span><br><span class="line">        ListNode odd = head, even = evenHead;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span> (even != <span class="keyword">null</span> &amp;&amp; even.next != <span class="keyword">null</span>) &#123;</span><br><span class="line">            odd.next = even.next;</span><br><span class="line">            odd = odd.next;</span><br><span class="line">            </span><br><span class="line">            even.next = odd.next;</span><br><span class="line">            even = even.next;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        odd.next = evenHead;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> head;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="402-Remove-K-Digits"><a href="#402-Remove-K-Digits" class="headerlink" title="402. Remove K Digits"></a><a href="https://leetcode.com/problems/remove-k-digits/" target="_blank" rel="noopener">402. Remove K Digits</a></h2><h3 id="Question-92"><a href="#Question-92" class="headerlink" title="Question"></a>Question</h3><p>Given a non-negative integer <em>num</em> represented as a string, remove <em>k</em> digits from the number so that the new number is the smallest possible.</p>
+<h2 id="402-Remove-K-Digits"><a href="#402-Remove-K-Digits" class="headerlink" title="402. Remove K Digits"></a><a href="https://leetcode.com/problems/remove-k-digits/" target="_blank" rel="noopener">402. Remove K Digits</a></h2><h3 id="Question-95"><a href="#Question-95" class="headerlink" title="Question"></a>Question</h3><p>Given a non-negative integer <em>num</em> represented as a string, remove <em>k</em> digits from the number so that the new number is the smallest possible.</p>
 <p><strong>Note:</strong></p>
 <ul>
 <li>The length of <em>num</em> is less than 10002 and will be ≥ <em>k</em>.</li>
@@ -2547,7 +2598,7 @@ With each iteration one element (red) is removed from the input data and inserte
 <p><strong>Example 3:</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: num &#x3D; &quot;10&quot;, k &#x3D; 2</span><br><span class="line">Output: &quot;0&quot;</span><br><span class="line">Explanation: Remove all the digits from the number and it is left with nothing which is 0.</span><br></pre></td></tr></table></figure>
 
-<h3 id="Solution-91"><a href="#Solution-91" class="headerlink" title="Solution"></a>Solution</h3><p>对于两个相同长度的数字序列，<strong>最左边不同的数字</strong>决定了这两个数字的大小，例如，对于 <code>A = 12axx</code>，<code>B = 12bxx</code>，如果 <code>a &gt; b</code> 则 <code>A &gt; B</code>。故若要使得剩下的数字最小，需要保证<strong>靠前的数字尽可能小</strong>。所以可以得到<strong>贪心策略</strong>：</p>
+<h3 id="Solution-94"><a href="#Solution-94" class="headerlink" title="Solution"></a>Solution</h3><p>对于两个相同长度的数字序列，<strong>最左边不同的数字</strong>决定了这两个数字的大小，例如，对于 <code>A = 12axx</code>，<code>B = 12bxx</code>，如果 <code>a &gt; b</code> 则 <code>A &gt; B</code>。故若要使得剩下的数字最小，需要保证<strong>靠前的数字尽可能小</strong>。所以可以得到<strong>贪心策略</strong>：</p>
 <p>对于一个长度为 n 的数字字符序列 <code>num</code>，从左向右找到第一个 <code>i</code>（i &gt; 0），使得 <code>nums[i - 1] &gt; nums[i]</code>，则将 <code>nums[i - 1]</code> 删掉，以此方法共删去 <code>k</code> 个该情况即可，若是没有该情况，则数字字符序列是严格升序，则从尾部删除即可。</p>
 <p>上面的贪心分析是分析如何删除元素，实现的话需要 <code>O(n * k)</code> 的时间复杂度（要删除 <code>k</code> 个数，每次删除都需要遍历一趟），可以逆向思维，即<strong>如何保留元素</strong>，可以看到剩余的<strong>结果元素应该是单调不降</strong>的，这就很容易想到<strong>单调栈</strong>，维护一个单调栈，该栈维护当前的结果序列，也就是当前保留的元素，则应该一直维持栈内元素单调不降，所以对于每个数字，如果该数字小于栈顶元素，我们就不断地弹出栈顶元素，直到</p>
 <ul>
@@ -2567,7 +2618,7 @@ With each iteration one element (red) is removed from the input data and inserte
 </blockquote>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">removeKdigits</span><span class="params">(String num, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        Deque&lt;Character&gt; deque = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> cur : num.toCharArray()) &#123;</span><br><span class="line">            <span class="keyword">while</span> (!deque.isEmpty() &amp;&amp; k &gt; <span class="number">0</span> &amp;&amp; deque.peekLast() &gt; cur) &#123;</span><br><span class="line">                deque.pollLast();</span><br><span class="line">                k--;</span><br><span class="line">            &#125;</span><br><span class="line">            deque.offerLast(cur);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span> (k &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            deque.pollLast();</span><br><span class="line">            k--;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span> (!deque.isEmpty() &amp;&amp; deque.peekFirst() == <span class="string">'0'</span>) &#123;</span><br><span class="line">            deque.pollFirst();</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        StringBuilder res = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        <span class="keyword">while</span> (!deque.isEmpty()) &#123;</span><br><span class="line">            res.append(deque.pollFirst());</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> res.length() == <span class="number">0</span> ? <span class="string">"0"</span> : res.toString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="1122-Relative-Sort-Array"><a href="#1122-Relative-Sort-Array" class="headerlink" title="1122. Relative Sort Array"></a><a href="https://leetcode.com/problems/relative-sort-array/" target="_blank" rel="noopener">1122. Relative Sort Array</a></h2><h3 id="Question-93"><a href="#Question-93" class="headerlink" title="Question"></a>Question</h3><p>Given two arrays <code>arr1</code> and <code>arr2</code>, the elements of <code>arr2</code> are distinct, and all elements in <code>arr2</code> are also in <code>arr1</code>.</p>
+<h2 id="1122-Relative-Sort-Array"><a href="#1122-Relative-Sort-Array" class="headerlink" title="1122. Relative Sort Array"></a><a href="https://leetcode.com/problems/relative-sort-array/" target="_blank" rel="noopener">1122. Relative Sort Array</a></h2><h3 id="Question-96"><a href="#Question-96" class="headerlink" title="Question"></a>Question</h3><p>Given two arrays <code>arr1</code> and <code>arr2</code>, the elements of <code>arr2</code> are distinct, and all elements in <code>arr2</code> are also in <code>arr1</code>.</p>
 <p>Sort the elements of <code>arr1</code> such that the relative ordering of items in <code>arr1</code> are the same as in <code>arr2</code>. Elements that don’t appear in <code>arr2</code> should be placed at the end of <code>arr1</code> in <strong>ascending</strong> order.</p>
 <p><strong>Example 1:</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: arr1 &#x3D; [2,3,1,3,2,4,6,7,9,2,19], arr2 &#x3D; [2,1,4,3,9,6]</span><br><span class="line">Output: [2,2,2,1,4,3,3,9,6,7,19]</span><br></pre></td></tr></table></figure>
@@ -2579,7 +2630,7 @@ With each iteration one element (red) is removed from the input data and inserte
 <li>Each <code>arr2[i]</code> is distinct.</li>
 <li>Each <code>arr2[i]</code> is in <code>arr1</code>.</li>
 </ul>
-<h3 id="Solution-92"><a href="#Solution-92" class="headerlink" title="Solution"></a>Solution</h3><p><strong>计数排序</strong>：</p>
+<h3 id="Solution-95"><a href="#Solution-95" class="headerlink" title="Solution"></a>Solution</h3><p><strong>计数排序</strong>：</p>
 <ul>
 <li>Because <code>0 &lt;= arr1[i], arr2[i] &lt;= 1000</code>, we use an array to count every element.</li>
 <li>Go through every element in the second array, and update values of the first array based on the order in the second array.</li>
@@ -2853,6 +2904,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">redis</a>
               </li>
              
@@ -2865,19 +2924,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JVM</a>
+                <a href="javascript:void(0)" class="js-tag color3">搜索</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2889,23 +2936,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">搜索</a>
+                <a href="javascript:void(0)" class="js-tag color4">JVM</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">源码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">读书笔记</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2913,27 +2948,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">并发编程</a>
+                <a href="javascript:void(0)" class="js-tag color5">读书笔记</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">消息队列</a>
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">RabbitMQ</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">数据库</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">微服务</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">SpringCloud</a>
+                <a href="javascript:void(0)" class="js-tag color3">源码</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2945,7 +2968,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
+                <a href="javascript:void(0)" class="js-tag color4">数据库</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">消息队列</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">RabbitMQ</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">微服务</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">SpringCloud</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2953,7 +2992,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">虚拟机</a>
+                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">并发编程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2969,15 +3016,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ElasticSearch</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">异常处理</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ElasticSearch</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2985,7 +3028,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">链表</a>
+                <a href="javascript:void(0)" class="js-tag color5">异常处理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2993,11 +3036,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">哈希表</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
+                <a href="javascript:void(0)" class="js-tag color4">虚拟机</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3005,7 +3052,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3013,11 +3060,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">栈</a>
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">栈</a>
               </li>
              
               <li class="article-tag-list-item">

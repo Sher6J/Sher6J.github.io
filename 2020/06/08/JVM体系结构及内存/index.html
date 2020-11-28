@@ -8,27 +8,29 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>JVM体系结构及内存 | 菜菜六甲的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="[TOC] JVM与Java体系结构所谓虚拟机，就是一台虚拟的计算机，虚拟机是一款软件，用来执行一系列虚拟计算机指令。大体上，虚拟机可以分为系统虚拟机和程序虚拟机：  系统虚拟机完全是对物理计算机的仿真，提供了一个可运行完整操作系统的软件平台，比如VirtualBox、VMWare就属于系统虚拟机； 程序虚拟机专门为执行单个计算机程序而设计，其典型代表就是JVM即Java虚拟机。  无论是系统虚拟">
+  <meta name="description" content="JVM与Java体系结构所谓虚拟机，就是一台虚拟的计算机，虚拟机是一款软件，用来执行一系列虚拟计算机指令。大体上，虚拟机可以分为系统虚拟机和程序虚拟机：  系统虚拟机完全是对物理计算机的仿真，提供了一个可运行完整操作系统的软件平台，比如VirtualBox、VMWare就属于系统虚拟机； 程序虚拟机专门为执行单个计算机程序而设计，其典型代表就是JVM即Java虚拟机。  无论是系统虚拟机还是程序虚">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JVM体系结构及内存">
 <meta property="og:url" content="http://yoursite.com/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/index.html">
 <meta property="og:site_name" content="菜菜六甲的博客">
-<meta property="og:description" content="[TOC] JVM与Java体系结构所谓虚拟机，就是一台虚拟的计算机，虚拟机是一款软件，用来执行一系列虚拟计算机指令。大体上，虚拟机可以分为系统虚拟机和程序虚拟机：  系统虚拟机完全是对物理计算机的仿真，提供了一个可运行完整操作系统的软件平台，比如VirtualBox、VMWare就属于系统虚拟机； 程序虚拟机专门为执行单个计算机程序而设计，其典型代表就是JVM即Java虚拟机。  无论是系统虚拟">
+<meta property="og:description" content="JVM与Java体系结构所谓虚拟机，就是一台虚拟的计算机，虚拟机是一款软件，用来执行一系列虚拟计算机指令。大体上，虚拟机可以分为系统虚拟机和程序虚拟机：  系统虚拟机完全是对物理计算机的仿真，提供了一个可运行完整操作系统的软件平台，比如VirtualBox、VMWare就属于系统虚拟机； 程序虚拟机专门为执行单个计算机程序而设计，其典型代表就是JVM即Java虚拟机。  无论是系统虚拟机还是程序虚">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://yoursite.com/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/blog/source/_posts/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%95%B4%E4%BD%93%E7%BB%93%E6%9E%84.jpg">
 <meta property="og:image" content="http://yoursite.com/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/blog/source/_posts/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/JVM%E7%BB%93%E6%9E%84%E8%AF%A6%E7%BB%86%E5%9B%BE.jpg">
 <meta property="og:image" content="http://yoursite.com/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/blog/source/_posts/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA.jpg">
 <meta property="og:image" content="http://yoursite.com/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/blog/source/_posts/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA%E8%AF%A6%E6%83%85.jpg">
-<meta property="og:image" content="http://yoursite.com/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/D:%5Cblog%5Csource_posts%5CJVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98%5C11412.jpg">
-<meta property="og:image" content="http://yoursite.com/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/D:%5Cblog%5Csource_posts%5CJVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98%5C%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE.jpg">
-<meta property="og:image" content="http://yoursite.com/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/D:%5Cblog%5Csource_posts%5CJVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98%5C2464.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/blog/source/_posts/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/11412.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/blog/source/_posts/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/blog/source/_posts/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/2464.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/blog/source/_posts/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F%E6%A7%BD%E4%BD%8D%E5%A4%8D%E7%94%A8.jpg">
 <meta property="og:image" content="http://yoursite.com/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/blog/source/_posts/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8%E7%9A%84%E8%A7%92%E8%89%B2.jpg">
 <meta property="og:image" content="http://yoursite.com/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/blog/source/_posts/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/blog/source/_posts/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%B1%82%E6%AC%A1.jpg">
 <meta property="article:published_time" content="2020-06-08T14:29:26.000Z">
-<meta property="article:modified_time" content="2020-11-14T10:39:06.974Z">
+<meta property="article:modified_time" content="2020-11-28T10:42:53.372Z">
 <meta property="article:author" content="Sher6J">
-<meta property="article:tag" content="JVM">
 <meta property="article:tag" content="Java">
+<meta property="article:tag" content="JVM">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://yoursite.com/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/blog/source/_posts/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%95%B4%E4%BD%93%E7%BB%93%E6%9E%84.jpg">
   
@@ -182,8 +184,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>[TOC]</p>
-<h1 id="JVM与Java体系结构"><a href="#JVM与Java体系结构" class="headerlink" title="JVM与Java体系结构"></a>JVM与Java体系结构</h1><p>所谓虚拟机，就是一台虚拟的计算机，虚拟机是一款软件，用来执行一系列虚拟计算机指令。大体上，虚拟机可以分为<font color="red"><strong>系统虚拟机</strong></font>和<font color="red"><strong>程序虚拟机</strong></font>：</p>
+        <h1 id="JVM与Java体系结构"><a href="#JVM与Java体系结构" class="headerlink" title="JVM与Java体系结构"></a>JVM与Java体系结构</h1><p>所谓虚拟机，就是一台虚拟的计算机，虚拟机是一款软件，用来执行一系列虚拟计算机指令。大体上，虚拟机可以分为<font color="red"><strong>系统虚拟机</strong></font>和<font color="red"><strong>程序虚拟机</strong></font>：</p>
 <ul>
 <li>系统虚拟机完全是对物理计算机的仿真，提供了一个可运行完整操作系统的软件平台，比如VirtualBox、VMWare就属于系统虚拟机；</li>
 <li>程序虚拟机专门为执行单个计算机程序而设计，其典型代表就是JVM即Java虚拟机。</li>
@@ -191,7 +192,7 @@
 <p>无论是系统虚拟机还是程序虚拟机，在上面运行的软件/程序都<strong>被限制于虚拟机提供的资源中</strong>。Java虚拟机是一台执行Java字节码的虚拟计算机，它拥有独立的运行机制，其运行的J<strong>字节码文件</strong>也未必由Java语言编译而成（如Kotlin、Groovy等语言都可以编译出字节码），JVM平台的各种语言都可以共享Java虚拟机带来的<strong>跨平台性</strong>、优秀的<strong>垃圾回收器</strong>、可靠的<strong>即时编译器</strong>。</p>
 <a id="more"></a>
 
-<h2 id="JVM的整体结构"><a href="#JVM的整体结构" class="headerlink" title="JVM的整体结构"></a>JVM的整体结构</h2><img src="/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/blog\source\_posts\JVM体系结构及内存\Java虚拟机整体结构.jpg" style="zoom:50%;">
+<h2 id="JVM的整体结构"><a href="#JVM的整体结构" class="headerlink" title="JVM的整体结构"></a>JVM的整体结构</h2><img src="/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/blog\source\_posts\JVM体系结构及内存\Java虚拟机整体结构.jpg" style="zoom: 50%;">
 
 <p>当今最流行的Java虚拟机即为我们安装JDK时Oracle公司为我们准备的HotSpot虚拟机。上面是其大致的见图，其详细图如下：</p>
 <img src="/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/blog\source\_posts\JVM体系结构及内存\JVM结构详细图.jpg" style="zoom: 50%;">
@@ -232,20 +233,23 @@
 </ul>
 </li>
 </ul>
-<h1 id="运行时数据区"><a href="#运行时数据区" class="headerlink" title="运行时数据区"></a>运行时数据区</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>字节码文件在经过类加载子系统加载后就进入到内存，也就是运行时数据区：</p>
+<h1 id="运行时数据区"><a href="#运行时数据区" class="headerlink" title="运行时数据区"></a>运行时数据区</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>字节码文件在<strong>经过类加载子系统加载后</strong>就进入到内存，也就是运行时数据区（可以对应于 <code>java.lang.Runtime</code> 类，一个JVM进程对应于一个 <code>Runtime</code> 类，即 <code>Runtime</code> 类为单例）：</p>
 <img src="/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/blog\source\_posts\JVM体系结构及内存\运行时数据区.jpg" style="zoom:50%;">
 
 <p>图中黄色的是<strong>多个线程共享的数据区</strong>，对应于进程，即每个进程有独立的方法区和堆区，而一个进程中的不同进程则共享该进程的方法区和堆区，可以理解为每个虚拟机进程都对应着一份方法区和堆区，而进程内的各个线程对该区域进行共享（线程共享的数据区还包括堆外内存，即永久代/元空间、代码缓存，也可以理解为方法区的一种实现，见下面的运行时数据区详情图）；</p>
 <p>图中灰色的是<strong>每个线程独有的数据区</strong>，也就是说每个线程都有自己独立的程序计数器、栈、本地方法栈。</p>
-<img src="/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/blog\source\_posts\JVM体系结构及内存\运行时数据区详情.jpg" style="zoom:50%;">
+<img src="/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/blog\source\_posts\JVM体系结构及内存\运行时数据区详情.jpg" style="zoom: 33%;">
 
-<h2 id="程序计数器（PC寄存器）"><a href="#程序计数器（PC寄存器）" class="headerlink" title="程序计数器（PC寄存器）"></a>程序计数器（PC寄存器）</h2><p>PC寄存器用来存储指向下一条指令的地址，也即将要执行的指令代码，然后由执行引擎读取下一条指令。它是一块很小的内存空间，几乎可以忽略，它是唯一一个在Java虚拟机规范中没有规定任何<code>OutOfMemoryError</code>(OOM)异常的区域。任何时间一个线程都只有一个方法在执行，也就是所谓的<strong>当前方法</strong>，程序计数器会存储当前线程正在执行的Java方法的JVM指令地址；或者，如果是在执行native方法，则是为指定值。</p>
+<h2 id="程序计数器（PC寄存器）"><a href="#程序计数器（PC寄存器）" class="headerlink" title="程序计数器（PC寄存器）"></a>程序计数器（PC寄存器）</h2><p>PC寄存器用来存储指向下一条指令的地址，也即将要执行的指令代码，然后由执行引擎读取下一条指令。它是一块很小的内存空间，几乎可以忽略，它是唯一一个在Java虚拟机规范中没有规定任何 <code>OutOfMemoryError</code> (OOM)异常的区域。任何时间一个线程都只有一个方法在执行，也就是所谓的<strong>当前方法</strong>，程序计数器会存储当前线程正在执行的Java方法的JVM指令地址；或者，如果是在执行native方法，则是未指定值（undefined）（因为是本地C方法）。</p>
 <ul>
 <li><p>使用PC寄存器存储字节码指令地址有什么用呢？（为什么使用PC寄存器记录当前线程的执行地址呢？）</p>
 <p>因为CPU需要不停的切换各个线程，这时候切换回来以后，就得知道接着从哪开始继续执行。JVM的字节码解释器就需要通多改变PC寄存器的值来明确下一条应该执行什么样的字节码指令。</p>
 </li>
 </ul>
 <h2 id="虚拟机栈（Java栈）"><a href="#虚拟机栈（Java栈）" class="headerlink" title="虚拟机栈（Java栈）"></a>虚拟机栈（Java栈）</h2><p>Java虚拟机栈（Java Virtual Machine Stack），每个线程在创建时都会创建一个虚拟机栈，其内部保存一个个的栈帧（Stack Frame），对应着一次次的Java方法调用，虚拟机栈是线程私有的，其生命周期与线程保持一致，虚拟机栈保存方法的局部变量、部分结果，并参与方法的调用和返回。</p>
+<blockquote>
+<p>栈管运行，堆管存储。</p>
+</blockquote>
 <h3 id="虚拟机栈中的异常"><a href="#虚拟机栈中的异常" class="headerlink" title="虚拟机栈中的异常"></a>虚拟机栈中的异常</h3><p>对于虚拟机栈，其可能出现<font color="red"><strong><code>StackOverflowError</code>异常和<code>OutOfMemoryError</code>异常</strong></font>：</p>
 <ul>
 <li>如果采用固定大小的Java虚拟机栈，那每一个线程的Java虚拟机栈容量可以在线程创建的时候独立选定。如果线程请求分配的栈容量超过Java虚拟机栈允许的最大容量，Java虚拟机将会抛出一个<code>StackOverflowError</code>异常；</li>
@@ -255,33 +259,53 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StackOverflowErrorTest</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> count = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        System.out.println(count);</span><br><span class="line">        count++;</span><br><span class="line">        main(args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>在<code>main</code>方法中调用了自己，然后用<code>count</code>计数栈的深度，在没有设置栈的大小时（即使用虚拟机默认的栈大小），在count = 11412时发生了<code>java.lang.StackOverflowError</code>异常：</p>
-<p><img src="/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/D:%5Cblog%5Csource_posts%5CJVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98%5C11412.jpg" alt></p>
+<img src="/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/blog\source\_posts\JVM体系结构及内存\11412.jpg" style="zoom: 50%;">
+
 <p>然后我们通过参数设置虚拟机栈的大小为，再观察栈深度到达多少时发生该异常，怎么通过参数设置虚拟机栈的大小呢，在IDEA中我们点击<code>Run</code>中的<code>Edit Configurations</code>，如下图所示：</p>
-<p><img src="/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/D:%5Cblog%5Csource_posts%5CJVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98%5C%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE.jpg" alt></p>
+<img src="/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/blog\source\_posts\JVM体系结构及内存\修改配置.jpg" style="zoom:50%;">
+
 <p>在<code>VM Options</code>中添加要设置的参数，比如我们将虚拟机栈的大小设置为256k（实际栈大小要大于这个值），然后点击<code>OK</code>即可。再次运行我们的异常程序，发现在count = 2464时就发生了异常：</p>
-<p><img src="/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/D:%5Cblog%5Csource_posts%5CJVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98%5C2464.jpg" alt></p>
-<h3 id="栈的存储单位"><a href="#栈的存储单位" class="headerlink" title="栈的存储单位"></a>栈的存储单位</h3><p>每个线程都有自己的栈，栈中的数据都是以<font color="red"><strong>栈帧(Stack Frame)</strong></font>的格式存在，在这个线程上正在执行的<strong>每个方法都对应一个栈帧</strong>，当方法开始执行栈帧进栈，当方法执行结束栈帧出栈，栈帧是一个内存区域，是一个数据集，维系着方法执行过程中的各种数据信息。</p>
-<p>在一条活动线程中的一个时间点上，只会有一个活动的栈帧，即<strong>只有当前正在执行的方法的栈帧（栈顶栈帧）是有效的</strong>，这个栈帧被称为<strong>当前栈帧</strong>（Current Frame），与其对应的方法为<strong>当前方法</strong>（Current Method），定义该方法的类即为<strong>当前类</strong>（Current Class）。当在当前栈帧对应的当前方法中调用了其他方法<code>m</code>时，对应<code>m</code>的新的栈帧就会被创建出来放在栈顶，称为新的当前栈帧，<code>m</code>也相应称为新的当前方法。<strong>不同线程中所包含的栈帧是不允许存在相互引用的</strong>，即不可能在一个栈帧中引用另外一个线程的栈帧。如果方法调用了其他方法<code>m</code>，<code>m</code>对应的栈帧成为当前栈帧，<code>m</code>方法的返回值会传给前一个栈帧，然后虚拟机会丢弃当前栈帧（即<code>m</code>对应的栈帧），然后前一个栈帧重新成为当前栈帧。以下两种方式都会<strong>导致栈帧被弹出</strong>：</p>
+<img src="/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/blog\source\_posts\JVM体系结构及内存\2464.jpg" style="zoom:50%;">
+
+<h3 id="栈的存储单位"><a href="#栈的存储单位" class="headerlink" title="栈的存储单位"></a>栈的存储单位</h3><p>每个线程都有自己的栈，栈中的数据都是以<font color="red"><strong>栈帧(Stack Frame)</strong></font>的格式存在，在这个线程上正在执行的<strong>每个方法都对应一个栈帧</strong>（一一对应，方法执行，栈帧入栈，方法执行结束，栈帧出栈），当方法开始执行栈帧进栈，当方法执行结束栈帧出栈，栈帧是一个内存区域，是一个数据集，维系着方法执行过程中的各种数据信息。</p>
+<p>在一条活动线程中的一个时间点上，只会有一个活动的栈帧，即<strong>只有当前正在执行的方法的栈帧（栈顶栈帧）是有效的</strong>，这个栈帧被称为<strong>当前栈帧</strong>（Current Frame），与其对应的方法为<strong>当前方法</strong>（Current Method），定义该方法的类即为<strong>当前类</strong>（Current Class）。当在当前栈帧对应的当前方法中调用了其他方法<code>m</code>时，对应<code>m</code>的新的栈帧就会被创建出来放在栈顶，称为新的当前栈帧，<code>m</code>也相应称为新的当前方法。<strong>不同线程中所包含的栈帧是不允许存在相互引用的</strong>，即不可能在一个栈帧中引用另外一个线程的栈帧。如果方法调用了其他方法<code>m</code>，<code>m</code>对应的栈帧成为当前栈帧，<code>m</code>方法的返回值会传给前一个栈帧，然后虚拟机会丢弃当前栈帧（即<code>m</code>对应的栈帧），然后前一个栈帧重新成为当前栈帧。以下两种方式都会<strong>导致栈帧被弹出</strong>（即方法结束）：</p>
 <ul>
 <li>正常的函数返回，使用<code>return</code>指令；</li>
-<li>函数抛出异常</li>
+<li>函数抛出异常。</li>
 </ul>
 <h3 id="栈帧的内部结构"><a href="#栈帧的内部结构" class="headerlink" title="栈帧的内部结构"></a>栈帧的内部结构</h3><p>每个栈帧都存储着：</p>
+<h4 id="局部变量表（Local-Variable）"><a href="#局部变量表（Local-Variable）" class="headerlink" title="局部变量表（Local Variable）"></a>局部变量表（Local Variable）</h4><p>局部变量表也称为局部变量数组或本地变量表，其底层为一个<strong>数字数组</strong>，主要用于存储方法参数和定义在方法体内的局部变量，这些数据类型包括各类基本数据类型、对象引用（reference）、以及 <code>returnAddress</code> 类型。由于其建立在线程的栈上，是线程的私有数据，故不存在数据安全问题。<strong>局部变量表所需要的容量大小是在编译期确定下来的</strong>，方法运行期间是不会改变局部变量表的大小的。</p>
+<blockquote>
+<p>所谓数据安全指的是多线程操作数据是否会发送数据安全问题。</p>
+</blockquote>
+<p>局部变量表中最基本的存储单元是<strong>变量槽（Slot）</strong>，在局部变量表中，32位以内的类型只占用一个槽（包括 <code>returnAddress</code> 类型），而64位的类型（<code>long</code> , <code>double</code>）占用两个槽，JVM会为局部变量表中的每一个槽都分配一个访问索引，通过该索引即可成功访问其中的局部变量值。</p>
+<p>如果需要访问局部变量表中一个64位的局部变量时，只需要使用前一个索引即可。</p>
+<p>若当前栈帧是由<strong>构造方法</strong>或者<strong>实例方法</strong>（非静态方法）创建的，则<strong>该对象引用 <code>this</code> 会放在索引为 0 的槽处</strong>，其余参数按照参数表顺序排列。</p>
+<blockquote>
+<p><code>this</code> 局部变量不存在与静态方法的局部变量表中，所以静态方法中不能使用 <code>this</code>。</p>
+</blockquote>
+<p>变量槽是可以重用的，如果一个局部变量过了其作用域，则在其作用域之后申明的新局部变量很有可能会复用过期局部变量的槽位，比如如下的代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">reuse</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a = <span class="number">0</span>;</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> b = <span class="number">0</span>;</span><br><span class="line">        b = a + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> c = a + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到上面应该有 4 个局部变量，分别是 <code>this</code>、<code>a</code>、<code>b</code>、<code>c</code>，但是查看其局部变量表，发现其变量槽却只有3个，可以看到 <code>c</code> 将 <code>b</code> 的槽位进行了复用（下图也可以印证 <code>this</code> 是在非静态方法局部变量表头的）：</p>
+<img src="/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/blog\source\_posts\JVM体系结构及内存\局部变量槽位复用.jpg" style="zoom:50%;">
+
+<blockquote>
+<p>变量：</p>
 <ul>
-<li><p>局部变量表（Local Variable）</p>
-<p>局部变量表也称为局部变量数组或本地变量表，其底层为一个<strong>数字数组</strong>，主要用于存储方法参数和定义在方法体内的局部变量，这些数据类型包括各类基本数据类型、对象引用（reference）、以及returnAddress类型。</p>
-</li>
-<li><p>操作数栈（Operand Stack）</p>
-</li>
-<li><p>动态链接（Dynamic Linking）：指向运行时常量池的方法引用</p>
-</li>
-<li><p>方法返回地址（Return Address）</p>
-</li>
-<li><p>一些附加信息</p>
-</li>
+<li>成员变量：在使用前，都经历过默认初始化赋值<ul>
+<li>类变量（static）：linking的prepare阶段<strong>赋默认值</strong>，initial阶段显示赋值即静态代码块赋值；</li>
+<li>实例变量：随着对象的创建，在堆空间中分配实例变量空间，并进行<strong>默认赋值</strong>。</li>
 </ul>
-<h1 id="类加载器子系统与类的加载过程"><a href="#类加载器子系统与类的加载过程" class="headerlink" title="类加载器子系统与类的加载过程"></a>类加载器子系统与类的加载过程</h1><p>类加载器子系统负载从文件系统或网络中加载<strong>class文件（字节码文件）</strong>，<strong>类加载器只负责class文件的加载，至于class文件是否可以运行，则由执行引擎所决定</strong>。加载的<strong>类信息存放于一块称为方法区的内存空间</strong>，除了类的信息外，<strong>方法区中还存放运行时常量池信息</strong>，可能还包括字符串常量和数字常量。</p>
-<h2 id="类加载器ClassLoader的角色"><a href="#类加载器ClassLoader的角色" class="headerlink" title="类加载器ClassLoader的角色"></a>类加载器ClassLoader的角色</h2><img src="/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/blog\source\_posts\JVM体系结构及内存\类加载器的角色.jpg" style="zoom:67%;">
+</li>
+<li>局部变量：使用前<strong>必须进行显示赋值</strong>，否则编译不通过。</li>
+</ul>
+</blockquote>
+<p>局部变量表中的变量是重要的垃圾回收根节点，只要被局部变量表中直接或简介引用的对象都不会被回收。</p>
+<h4 id="操作数栈（Operand-Stack）"><a href="#操作数栈（Operand-Stack）" class="headerlink" title="操作数栈（Operand Stack）"></a>操作数栈（Operand Stack）</h4><p>操作数栈也称作表达式栈，在方法执行过程中，根据字节码指令，往操作数栈中写入数据或提取数据（入栈/出栈）。操作数栈主要用于保存计算过程的中间结果，同时作为计算过程中变量临时的存储空间，每一个操作数栈都会拥有一个明确的栈深度用于存储数值，其所需最大深度在编译期就定义好了，栈中的任何一个元素可以是任意的Java数据类型，32位的类型占用一个栈单位深度，64位的类型占用两个栈单位深度，操作数栈虽然由数组实现的，但是只能通过入栈/出栈完成数据访问，而不能采用索引访问。</p>
+<h4 id="动态链接（Dynamic-Linking）"><a href="#动态链接（Dynamic-Linking）" class="headerlink" title="动态链接（Dynamic Linking）"></a>动态链接（Dynamic Linking）</h4><p>指向运行时常量池的方法引用（通俗说就是能使当前方法知道自己是谁），可用于将符号引用转换为直接引用。</p>
+<h4 id="方法返回地址（Return-Address）"><a href="#方法返回地址（Return-Address）" class="headerlink" title="方法返回地址（Return Address）"></a>方法返回地址（Return Address）</h4><h4 id="一些附加信息"><a href="#一些附加信息" class="headerlink" title="一些附加信息"></a>一些附加信息</h4><h1 id="类加载器子系统与类的加载过程"><a href="#类加载器子系统与类的加载过程" class="headerlink" title="类加载器子系统与类的加载过程"></a>类加载器子系统与类的加载过程</h1><p>类加载器子系统负载从文件系统或网络中加载<strong>class文件（字节码文件）</strong>，<strong>类加载器只负责class文件的加载，至于class文件是否可以运行，则由执行引擎所决定</strong>。加载的<strong>类信息存放于一块称为方法区的内存空间</strong>，除了类的信息外，<strong>方法区中还存放运行时常量池信息</strong>，可能还包括字符串常量和数字常量。</p>
+<h2 id="类加载器ClassLoader的角色"><a href="#类加载器ClassLoader的角色" class="headerlink" title="类加载器ClassLoader的角色"></a>类加载器ClassLoader的角色</h2><img src="/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/blog\source\_posts\JVM体系结构及内存\类加载器的角色.jpg" style="zoom: 50%;">
 
 <p>以上图为例，Car的字节码文件存在于本地硬盘中，经过类加载器的加载，该字节码文件被加载到JVM中成为一个模板即<code>Car Class</code>，该模板被称为<strong>DNA元数据模板</strong>（存储在方法区），最终这个模板在执行的时候是要根据该模板实例化出多个具体的Car实例（即<code>car1</code>、<code>car2</code>等），而在<strong><code>.class</code>字节码文件→JVM→最终成为元数据模板</strong>这一过程中，类加载器就充当了一个运输工具的作用，是类加载器将字节码文件转化为DNA元数据模板。</p>
 <h2 id="类的加载过程"><a href="#类的加载过程" class="headerlink" title="类的加载过程"></a>类的加载过程</h2><p>在JVM整体结构中我们可以看到，类的加载过程整体分为三个阶段：</p>
@@ -306,8 +330,52 @@
 </blockquote>
 </li>
 </ul>
-<h3 id="3-初始化阶段Initialization"><a href="#3-初始化阶段Initialization" class="headerlink" title="3. 初始化阶段Initialization"></a>3. 初始化阶段Initialization</h3><p>初始化阶段就是<strong>执行类构造器方法<code>&lt;clinit&gt;()</code>的过程</strong>，这个方法不需要定义，是<code>javac</code>编译器自动收集类中的所有类变量的赋值操作和静态代码块中的语句合并而来，构造器方法中指令按语句在源文件中出现的顺序执行。<code>&lt;clinit&gt;()</code>不同于类的构造器（类的构造器在虚拟机视角中实际对应于<code>&lt;init&gt;()</code>方法），在初始化阶段，若某类有父类，JVM会确保子类的<code>&lt;clinit&gt;()</code>在执行前，其父类的<code>&lt;clinit&gt;()</code>已经执行完毕。虚拟机必须保证一个类的<code>&lt;clinit&gt;()</code>方法在多线程下被同步加锁。</p>
-<h2 id="类加载器的分类"><a href="#类加载器的分类" class="headerlink" title="类加载器的分类"></a>类加载器的分类</h2><p>JVM支持两种类型的类加载器，分别为引导类加载器（Boostrap ClassLoader）和自定义类加载器（User-Defined ClassLoader）。Java虚拟机规范中将所有派生于抽象类ClassLoader的类加载器都划分为自定义类加载器。</p>
+<h3 id="3-初始化阶段Initialization"><a href="#3-初始化阶段Initialization" class="headerlink" title="3. 初始化阶段Initialization"></a>3. 初始化阶段Initialization</h3><p>初始化阶段就是<strong>执行类构造器方法<code>&lt;clinit&gt;()</code>的过程</strong>，这个方法不需要定义，是<code>javac</code>编译器自动收集类中的所有<strong>类变量的赋值操作</strong>和<strong>静态代码块</strong>中的语句合并而来（如果没有类似的操作则不会生成 <code>&lt;clinit&gt;()</code> 方法），构造器方法中指令按语句在源文件中出现的顺序执行。<code>&lt;clinit&gt;()</code>不同于类的构造器（类的构造器在虚拟机视角中实际对应于<code>&lt;init&gt;()</code>方法），在初始化阶段，若某类有父类，JVM会确保子类的<code>&lt;clinit&gt;()</code>在执行前，其父类的<code>&lt;clinit&gt;()</code>已经执行完毕。虚拟机必须保证一个类的<code>&lt;clinit&gt;()</code>方法在<strong>多线程下被同步加锁</strong>。</p>
+<h2 id="类加载器的分类"><a href="#类加载器的分类" class="headerlink" title="类加载器的分类"></a>类加载器的分类</h2><p>JVM支持两种类型的类加载器，分别为引导类加载器（Boostrap ClassLoader）和自定义类加载器（User-Defined ClassLoader）。Java虚拟机规范中将所有派生于抽象类 <code>ClassLoader</code> 的类加载器都划分为自定义类加载器。</p>
+<p>下图中蓝色为引导类加载器，其他橙色均为自定义类加载器，因为它们都间接继承了 <code>ClassLoader</code> 类。</p>
+<img src="/2020/06/08/JVM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%8F%8A%E5%86%85%E5%AD%98/blog\source\_posts\JVM体系结构及内存\类加载器层次.jpg" style="zoom:50%;">
+
+<p>获取类加载器的途径：</p>
+<ul>
+<li><p>获取当前类的类加载器：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clazz.getClassLoader();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取当前线程上下文的类加载器：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Thread.currentThread().getContextClassLoader();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取系统的类加载器</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ClassLoader.getSystemClassLoader();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取调用者的类加载器</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DriverManager.getCallerClassLoader();</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="系统自带类加载器"><a href="#系统自带类加载器" class="headerlink" title="系统自带类加载器"></a>系统自带类加载器</h3><h4 id="引导类加载器（启动类加载器Bootstrap-ClassLoader）"><a href="#引导类加载器（启动类加载器Bootstrap-ClassLoader）" class="headerlink" title="引导类加载器（启动类加载器Bootstrap ClassLoader）"></a>引导类加载器（启动类加载器Bootstrap ClassLoader）</h4><p>使用 <code>C/C++</code> 语言实现，用来加载Java的核心类库（<em>JAVA_HOME/jre/lib/rt.jar、resources.jar</em> 或 <em>sun.boot.class.path</em> 路径下的内容），不继承自 <code>java.lang.ClassLoader</code>，没有父加载器。负责<strong>加载</strong>扩展类和系统类加载器，并指定为他们的父类加载器，处于安全考虑，引导类加载器只加载包名含 <em>java、javax、sun</em> 等开头的类。</p>
+<p>对于Java8，引导类加载器会加载以下目录：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Java&#x2F;jdk1.8.0_131&#x2F;jre&#x2F;lib&#x2F;resources.jar</span><br><span class="line">Java&#x2F;jdk1.8.0_131&#x2F;jre&#x2F;lib&#x2F;rt.jar</span><br><span class="line">Java&#x2F;jdk1.8.0_131&#x2F;jre&#x2F;lib&#x2F;sunrsasign.jar</span><br><span class="line">Java&#x2F;jdk1.8.0_131&#x2F;jre&#x2F;lib&#x2F;jsse.jar</span><br><span class="line">Java&#x2F;jdk1.8.0_131&#x2F;jre&#x2F;lib&#x2F;jce.jar</span><br><span class="line">Java&#x2F;jdk1.8.0_131&#x2F;jre&#x2F;lib&#x2F;charsets.jar</span><br><span class="line">Java&#x2F;jdk1.8.0_131&#x2F;jre&#x2F;lib&#x2F;jfr.jar</span><br><span class="line">Java&#x2F;jdk1.8.0_131&#x2F;jre&#x2F;classes</span><br></pre></td></tr></table></figure>
+
+<h4 id="扩展类加载器（ExtClassLoader）"><a href="#扩展类加载器（ExtClassLoader）" class="headerlink" title="扩展类加载器（ExtClassLoader）"></a>扩展类加载器（ExtClassLoader）</h4><p>使用 <code>Java</code> 语言编写，是 <code>sun.misc.Laucher</code> 的内部类，派生于 <code>ClassLoader</code> 类，父类加载器为引导类加载器，从 <em>java.ext.dirs</em> 系统属性所指定的目录中加载类库，或从 JDK 的安装目录的 <em>jre/lib/ext</em> 子目录及其扩展目录下加载类库。若用户创建的 JAR 包放入该目录下，也由其加载。</p>
+<p>对于Java8，扩展类加载器主要加载以下目录：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Java\jdk1.8.0_131\jre\lib\ext</span><br></pre></td></tr></table></figure>
+
+<h4 id="系统类加载器（应用程序类加载器AppClassLoader）"><a href="#系统类加载器（应用程序类加载器AppClassLoader）" class="headerlink" title="系统类加载器（应用程序类加载器AppClassLoader）"></a>系统类加载器（应用程序类加载器AppClassLoader）</h4><p>使用 <code>Java</code> 语言编写，是 <code>sun.misc.Laucher</code> 的内部类，派生于 <code>ClassLoader</code> 类，父类加载器为扩展类加载器，负责加载环境变量 <code>classpath</code> 或系统属性，<em>java.class.path</em> 指定下的类库，该类是程序中默认的类加载器，一般来说，Java应用的类都是由其加载。</p>
+<h3 id="用户自定义类加载器"><a href="#用户自定义类加载器" class="headerlink" title="用户自定义类加载器"></a>用户自定义类加载器</h3><h2 id="双亲委派机制"><a href="#双亲委派机制" class="headerlink" title="双亲委派机制"></a>双亲委派机制</h2><p>Java 虚拟机对 <code>class</code> 文件采用的是按需加载的方式，也就是说当需要使用该类时才会将其 <code>class</code> 文件加载到内存生成 <code>class</code> 对象，加载某个类的 <code>class</code> 文件时，虚拟机采用的是双亲委派模式（是一种任务委派模式），即把请求交由父类处理，</p>
+<ul>
+<li>如果一个类加载器收到了类加载请求，并不会自己先去加载，而是把这个请求委托给父类的加载器去执行；</li>
+<li>如果父类加载器还存在其父类加载器，则进一步向上委托，依次递归，请求最终到达顶层的引导类加载器；</li>
+<li>若父类加载器可以完成类加载任务，就成功返回，只有父类加载器无法完成该加载任务时，才会由子类加载器尝试自己去加载。</li>
+</ul>
+<p>优势：</p>
+<ul>
+<li>避免类的重复加载；</li>
+<li>保护程序安全，防止核心API被随意篡改。</li>
+</ul>
+<p>两个 <code>class</code> 对象是否为同一个类存在两个必要条件：</p>
+<ul>
+<li>类的完整类名必须一致，包括包名；</li>
+<li>加载这个类的类加载器必须相同。</li>
+</ul>
 
       
 
@@ -352,11 +420,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JVM</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JVM</a>
         		</li>
       		
 		</ul>
@@ -571,6 +639,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">力扣</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">redis</a>
               </li>
              
@@ -583,11 +659,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">力扣</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">JVM</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -599,26 +679,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JVM</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">多线程</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">读书笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">源码</a>
               </li>
              
@@ -627,19 +687,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color4">多线程</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">MyBatis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">框架</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">数据库</a>
+                <a href="javascript:void(0)" class="js-tag color5">读书笔记</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -655,7 +707,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">数据库</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">MyBatis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">框架</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -664,6 +728,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">SpringCloud</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -683,19 +751,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">FastDSF</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">异常处理</a>
+                <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ElasticSearch</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">数组</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">异常处理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -704,10 +776,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">链表</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ElasticSearch</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -723,7 +791,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
+                <a href="javascript:void(0)" class="js-tag color2">树</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -731,11 +799,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
+                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">树</a>
+                <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
               </li>
              
               <li class="article-tag-list-item">
